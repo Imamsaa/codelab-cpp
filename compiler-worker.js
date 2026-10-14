@@ -106,7 +106,7 @@ self.onmessage = async (event) => {
         const fds = [
           new OpenFile(new File(encoder.encode(inputText))),
           new ConsoleStdout((bytes) => stdoutParts.push(stdoutDecoder.decode(bytes, { stream: true }))),
-          new ConsoleStdout((bytes) => stderrParts.push(stderrDecoder.decode(bytes, { stream: true }))
+          new ConsoleStdout((bytes) => stderrParts.push(stderrDecoder.decode(bytes, { stream: true })))
         ];
         const wasi = new WASI([], [], fds);
         const instance = await WebAssembly.instantiate(result.module, {
