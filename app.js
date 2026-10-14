@@ -37,6 +37,10 @@ const fallbackStdin = document.getElementById("fallbackStdin");
 const loadNote = document.getElementById("loadNote");
 const lineInfo = document.getElementById("lineInfo");
 const editorRoot = document.getElementById("editor");
+const focusModeBtn = document.getElementById("focusModeBtn");
+const focusModeLabel = document.getElementById("focusModeLabel");
+const appShell = document.querySelector(".shell");
+let focusModeFallback = false;
 const compilerDownloadBtn = document.getElementById("compilerDownloadBtn");
 const compilerProgressBar = document.getElementById("compilerProgressBar") || document.querySelector('[role="progressbar"]');
 const compilerProgressFill = document.getElementById("compilerProgressFill") || (() => {
@@ -790,6 +794,55 @@ if (!interactiveSupported) {
   fallbackStdin.hidden = false;
   setStatus("Terminal siap. Mode stdin cadangan aktif; isi input sebelum Run.", "idle");
 }
+
+function updateFocusMode(enabled) {
+  document.body.classList.toggle("focus-mode", enabled);
+  focusModeBtn.setAttribute("aria-pressed", String(enabled));
+  focusModeLabel.textContent = enabled ? "Keluar fokus" : "Fokus";
+  focusModeBtn.title = enabled ? "Keluar dari mode fokus (Esc)" : "Fokus coding layar penuh";
+}
+
+async function toggleFocusMode() {
+  const isActive = document.body.classList.contains("focus-mode");
+  if (isActive) {
+    focusModeFallback = false;
+    if (document.fullscreenElement && document.exitFullscreen) {
+      try { await document.exitFullscreen(); } catch { /* CSS focus mode can still be closed. */ }
+    }
+    updateFocusMode(false);
+    return;
+  }
+
+  updateFocusMode(true);
+  if (appShell && appShell.requestFullscreen) {
+    try {
+      focusModeFallback = false;
+      await appShell.requestFullscreen();
+    } catch (error) {
+      // Embedded or restricted browsers may refuse Fullscreen API; keep a CSS focus layout.
+      focusModeFallback = true;
+      console.info("Native fullscreen unavailable; using focus layout.", error);
+    }
+  } else {
+    focusModeFallback = true;
+  }
+}
+
+focusModeBtn.addEventListener("click", toggleFocusMode);
+document.addEventListener("fullscreenchange", () => {
+  if (document.fullscreenElement === appShell) {
+    updateFocusMode(true);
+  } else if (!focusModeFallback) {
+    updateFocusMode(false);
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && document.body.classList.contains("focus-mode") && !document.fullscreenElement) {
+    focusModeFallback = false;
+    updateFocusMode(false);
+  }
+});
+
 compilerDownloadBtn.addEventListener("click", prepareCodeLabOffline);
 refreshCompilerCacheState();
 initializeEditor();
