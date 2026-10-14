@@ -215,14 +215,18 @@ function setCompilerProgress(percent, label, status) {
 
 async function getCompilerCacheStatus() {
   if (!("caches" in window)) {
-    return { count: 0, cache: null, available: false };
+    return { count: 0, cachedBytes: 0, cache: null, available: false };
   }
   const cache = await caches.open(COMPILER_CACHE_NAME);
   let count = 0;
+  let cachedBytes = 0;
   for (const asset of COMPILER_ASSETS) {
-    if (await cache.match(asset.url)) count++;
+    if (await cache.match(asset.url)) {
+      count++;
+      cachedBytes += asset.size;
+    }
   }
-  return { count, cache, available: true };
+  return { count, cachedBytes, cache, available: true };
 }
 
 async function refreshCompilerCacheState() {
@@ -233,7 +237,7 @@ async function refreshCompilerCacheState() {
       setCompilerProgress(0, "Progress tidak tersedia", "Browser ini tidak mendukung Cache Storage. Compiler tetap dapat diunduh otomatis saat Run.");
       return;
     }
-    const percent = state.count === COMPILER_ASSETS.length ? 100 : 0;
+    const percent = Math.round((state.cachedBytes / EXPECTED_COMPILER_BYTES) * 100);
     compilerCacheBadge.textContent = state.count === COMPILER_ASSETS.length
       ? "Tersimpan di browser"
       : state.count
@@ -246,8 +250,14 @@ async function refreshCompilerCacheState() {
         : "Unduh compiler (±95 MB)";
     if (state.count === COMPILER_ASSETS.length) {
       setCompilerProgress(100, "Compiler siap digunakan", "Semua aset compiler sudah tersimpan di cache browser. Browser dapat menghapus cache sewaktu-waktu dari pengaturan situs.");
-    } else if (state.count > 0) {
-      setCompilerProgress(percent, "Siap " + state.count + " dari " + COMPILER_ASSETS.length + " aset", "Aset yang sudah tersimpan akan dilewati. Klik tombol untuk melanjutkan pengunduhan.");
+    } else {
+      setCompilerProgress(
+        percent,
+        state.count ? "Tersimpan " + state.count + " dari " + COMPILER_ASSETS.length + " aset" : "Belum ada pengunduhan",
+        state.count
+          ? formatBytes(state.cachedBytes) + " dari sekitar " + formatBytes(EXPECTED_COMPILER_BYTES) + " sudah tersimpan. Aset yang ada akan dilewati saat melanjutkan."
+          : "Klik tombol Unduh compiler untuk menyimpan aset compiler besar ke cache browser."
+      );
     }
   } catch (error) {
     compilerCacheBadge.textContent = "Status belum diketahui";
@@ -334,18 +344,10 @@ async function downloadCompilerAssets() {
 
     for (let index = 0; index < missing.length; index++) {
       const asset = missing[index];
-      let fileBytes = 0;
-      const assetIndex = COMPILER_ASSETS.indexOf(asset);
-      const completedBeforeAsset = COMPILER_ASSETS
-        .slice(0, assetIndex)
-        .reduce((sum, item) => sum + (existing.has(item.url) || item === asset ? item.size : 0), 0);
-
       compilerProgressFill.classList.add("indeterminate");
       compilerProgressLabel.textContent = "Mengunduh " + asset.name + "…";
       compilerDownloadStatus.textContent = "File " + (index + 1) + " dari " + missing.length + ". Aset besar dapat memerlukan waktu beberapa menit.";
       const actualBytes = await downloadAssetToCache(cache, asset, (loaded) => {
-        fileBytes = loaded;
-        transferredThisSession += 0; // total transfer is derived from current file plus finished files below.
         const fileFraction = Math.min(loaded / asset.size, 0.995);
         const finishedExpected = completedExpected;
         const progress = ((finishedExpected + asset.size * fileFraction) / EXPECTED_COMPILER_BYTES) * 100;
