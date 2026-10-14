@@ -1,4 +1,4 @@
-CodeLab C++ — ICT Playground
+ICT Al Firdaus — C++ Playground
 
 This project uses third-party libraries through public CDNs:
 - browsercc (MIT) provides Clang/LLD compiled to WebAssembly.
