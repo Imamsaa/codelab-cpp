@@ -291,7 +291,7 @@ function selectLesson(lessonId) {
   renderLessonList();
   if (currentLesson.kind !== "reading") setCode(savedCodes[currentLesson.id] ?? currentLesson.starter);
   fallbackEdited = false;
-  setStatus("Materi siap. Baca tantangan lalu tulis kode.", "idle");
+  setStatus(currentLesson.kind === "reading" ? "Materi pengantar siap dibaca." : "Materi siap. Baca tantangan lalu tulis kode.", "idle");
   if (cmEditor && currentLesson.kind !== "reading") {
     cmEditor.requestMeasure();
     cmEditor.focus();
