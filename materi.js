@@ -463,7 +463,14 @@ const lessonEditorHost = document.getElementById("lessonEditor");
 const standardSelect = document.getElementById("lessonStandard");
 const checkAnswerBtn = document.getElementById("checkAnswerBtn");
 const runProgramBtn = document.getElementById("runProgramBtn");
-const programInput = document.getElementById("programInput");
+const terminalInput = document.getElementById("terminalInput");
+const terminalForm = document.getElementById("terminalForm");
+const sendInputBtn = document.getElementById("sendInputBtn");
+const endInputBtn = document.getElementById("endInputBtn");
+const terminalMode = document.getElementById("terminalMode");
+const fallbackNotice = document.getElementById("fallbackNotice");
+const fallbackStdin = document.getElementById("fallbackStdin");
+const clearProgramOutputBtn = document.getElementById("clearProgramOutputBtn");
 const programOutput = document.getElementById("programOutput");
 const stopChallengeBtn = document.getElementById("stopChallengeBtn");
 const resetCodeBtn = document.getElementById("resetCodeBtn");
@@ -495,6 +502,13 @@ let completedLessons = new Set();
 let savedCodes = {};
 let savedInputs = {};
 let lastRunSignature = "";
+let sharedInput = null;
+let sharedHeader = null;
+let sharedBytes = null;
+let interactiveSupported = typeof SharedArrayBuffer === "function" && window.crossOriginIsolated;
+let programActive = false;
+let programWaitingForInput = false;
+let programOutputReceived = false;
 let fallbackEdited = false;
 
 function escapeHtml(value) {
@@ -517,7 +531,7 @@ function getRunSignature() {
   return JSON.stringify({
     key: challengeKey(currentLesson, challenge),
     source: getCode(),
-    input: programInput.value,
+    input: interactiveSupported ? "" : fallbackStdin.value,
     standard: standardSelect.value
   });
 }
@@ -534,78 +548,72 @@ function saveProgramInput() {
   const challenge = getCurrentChallenge();
   if (!challenge) return;
   const key = challengeKey(currentLesson, challenge);
-  savedInputs[key] = programInput.value;
-  try { localStorage.setItem(INPUT_KEY_PREFIX + key, programInput.value); } catch { /* Storage is optional. */ }
+  savedInputs[key] = fallbackStdin.value;
+  try { localStorage.setItem(INPUT_KEY_PREFIX + key, fallbackStdin.value); } catch { /* Storage is optional. */ }
   updateCheckButtonState();
 }
 
-function isLessonComplete(lesson) {
-  if (lesson.kind === "reading") return completedLessons.has(lesson.id);
-  const challenges = lesson.challenges || [];
-  return challenges.length > 0 && challenges.every((challenge) => completedChallenges.has(challengeKey(lesson, challenge)));
+function appendProgramOutput(text) {
+  if (!text) return;
+  programOutput.textContent += text;
+  programOutput.scrollTop = programOutput.scrollHeight;
 }
 
-function completedChallengeCount(lesson) {
-  return (lesson.challenges || []).filter((challenge) => completedChallenges.has(challengeKey(lesson, challenge))).length;
+function showProgramOutput(text) {
+  programOutput.textContent = text || "";
+  programOutput.scrollTop = programOutput.scrollHeight;
 }
 
-function loadSavedState() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    if (Array.isArray(saved)) completedLessons = new Set(saved);
-    const savedChallenges = JSON.parse(localStorage.getItem(CHALLENGE_STORAGE_KEY) || "[]");
-    if (Array.isArray(savedChallenges)) completedChallenges = new Set(savedChallenges);
+function setTerminalInputEnabled(enabled) {
+  const canType = enabled && interactiveSupported && programActive;
+  terminalInput.disabled = !canType;
+  sendInputBtn.disabled = !canType;
+  endInputBtn.disabled = !canType || !sharedHeader;
+}
 
-    for (const lesson of lessons) {
-      const legacyValue = localStorage.getItem(CODE_KEY_PREFIX + lesson.id);
-      if (legacyValue !== null) savedCodes[lesson.id] = legacyValue;
-      for (const challenge of lesson.challenges || []) {
-        const key = challengeKey(lesson, challenge);
-        const value = localStorage.getItem(CODE_KEY_PREFIX + key);
-        if (value !== null) savedCodes[key] = value;
-        else if (challenge === lesson.challenges[0] && legacyValue !== null) savedCodes[key] = legacyValue;
-        const savedInput = localStorage.getItem(INPUT_KEY_PREFIX + key);
-        if (savedInput !== null) savedInputs[key] = savedInput;
-      }
-    }
-  } catch (error) {
-    console.warn("Tidak dapat membaca progres lokal:", error);
+function createSharedInputQueue() {
+  sharedInput = new SharedArrayBuffer(16 + 65536);
+  sharedHeader = new Int32Array(sharedInput, 0, 4);
+  sharedBytes = new Uint8Array(sharedInput, 16);
+}
+
+function closeSharedInput() {
+  if (!sharedHeader) return;
+  Atomics.store(sharedHeader, 2, 1);
+  Atomics.notify(sharedHeader, 0);
+}
+
+function enqueueProgramInput(line) {
+  if (!sharedHeader || !sharedBytes) return false;
+  const capacity = sharedBytes.length;
+  const bytes = new TextEncoder().encode(line);
+  const write = Atomics.load(sharedHeader, 0);
+  const read = Atomics.load(sharedHeader, 1);
+  const used = write - read;
+  if (bytes.length > capacity - used) return false;
+  for (let index = 0; index < bytes.length; index++) {
+    sharedBytes[(write + index) & (capacity - 1)] = bytes[index];
   }
+  Atomics.store(sharedHeader, 0, write + bytes.length);
+  Atomics.notify(sharedHeader, 0);
+  return true;
 }
 
-function getCode() {
-  return cmEditor ? cmEditor.state.doc.toString() : (fallbackCode ? fallbackCode.value : "");
+function clearProgramWatchdog() {
+  if (challengeTimeout !== null) clearTimeout(challengeTimeout);
+  challengeTimeout = null;
 }
 
-function saveCode() {
-  const challenge = getCurrentChallenge();
-  const code = getCode();
-  const key = challengeKey(currentLesson, challenge);
-  savedCodes[key] = code;
-  try { localStorage.setItem(CODE_KEY_PREFIX + key, code); } catch { /* Storage is optional. */ }
-  updateLineInfo();
-}
-
-function setCode(code) {
-  if (cmEditor) {
-    cmEditor.dispatch({ changes: { from: 0, to: cmEditor.state.doc.length, insert: code } });
-  } else if (fallbackCode) {
-    fallbackCode.value = code;
-    updateLineInfo();
-    const key = challengeKey(currentLesson, getCurrentChallenge());
-    savedCodes[key] = code;
-    try { localStorage.setItem(CODE_KEY_PREFIX + key, code); } catch { /* Storage is optional. */ }
-  }
-}
-
-function updateLineInfo() {
-  const lines = cmEditor ? cmEditor.state.doc.lines : (fallbackCode ? fallbackCode.value.split("\n").length : 1);
-  lineInfo.textContent = "Baris " + lines;
-}
-
-function setStatus(message, kind = "idle") {
-  statusText.textContent = message;
-  statusDot.className = kind === "busy" ? "busy" : kind === "ok" ? "ok" : kind === "error" ? "error" : "";
+function armProgramWatchdog() {
+  clearProgramWatchdog();
+  if (!activeWorker || programWaitingForInput) return;
+  challengeTimeout = setTimeout(() => {
+    if (!activeWorker) return;
+    stopChallenge("Batas waktu tercapai. Periksa kemungkinan perulangan tanpa akhir.");
+    appendProgramOutput("\n\n[Program dihentikan: batas waktu 90 detik tercapai.]");
+    judgeState.textContent = "Waktu habis";
+    resultsList.innerHTML = '<div class="result-item failed"><div class="result-top"><span>Program dihentikan</span><span class="failed-text">✕ Waktu habis</span></div><div class="result-detail">Periksa kemungkinan perulangan tanpa akhir, lalu jalankan ulang.</div></div>';
+  }, 90000);
 }
 
 function setBusy(busy) {
@@ -613,7 +621,8 @@ function setBusy(busy) {
   checkAnswerBtn.disabled = busy || !hasMatchingRun();
   stopChallengeBtn.disabled = !busy;
   resetCodeBtn.disabled = busy;
-  programInput.disabled = busy;
+  fallbackStdin.disabled = busy;
+  setTerminalInputEnabled(!busy && programActive);
 }
 
 function updateProgress() {
@@ -723,14 +732,19 @@ function renderChallenge() {
 
   const key = challengeKey(currentLesson, challenge);
   const sampleInput = example && example.input && example.input !== "(tidak ada input)" ? example.input : "";
-  programInput.value = Object.prototype.hasOwnProperty.call(savedInputs, key) ? savedInputs[key] : sampleInput;
+  fallbackStdin.value = Object.prototype.hasOwnProperty.call(savedInputs, key) ? savedInputs[key] : sampleInput;
+  terminalInput.value = "";
+  setTerminalInputEnabled(false);
+  terminalMode.textContent = interactiveSupported ? "Interaktif" : "Mode stdin";
+  fallbackNotice.hidden = interactiveSupported;
+  fallbackStdin.hidden = interactiveSupported;
   lastRunSignature = "";
   caseCount.textContent = "— / " + challenge.tests.length;
   judgeState.textContent = completedChallenges.has(key) ? "Latihan selesai" : "Belum diuji";
   compileDiagnostics.classList.remove("show");
   compileDiagnostics.textContent = "";
   resultsList.innerHTML = '<div class="empty-results">Jalankan program terlebih dahulu. Setelah mencoba kode dan melihat outputnya, tekan <b>Periksa Jawaban</b> untuk penilaian otomatis.</div>';
-  programOutput.textContent = "Output program akan tampil di sini setelah kamu menekan Jalankan Program.";
+  showProgramOutput("Terminal siap. Tekan Jalankan Program untuk memulai.");
   setCode(savedCodes[key] ?? challenge.starter);
   updateCheckButtonState();
 }
@@ -813,20 +827,26 @@ function showResults(tests) {
 }
 
 function finishChallenge() {
-  if (challengeTimeout !== null) clearTimeout(challengeTimeout);
-  challengeTimeout = null;
-  if (activeWorker) {
-    activeWorker.terminate();
-    activeWorker = null;
-  }
+  clearProgramWatchdog();
+  closeSharedInput();
+  sharedInput = null; sharedHeader = null; sharedBytes = null;
+  programActive = false;
+  programWaitingForInput = false;
+  setTerminalInputEnabled(false);
+  if (activeWorker) { activeWorker.terminate(); activeWorker = null; }
   setBusy(false);
 }
 
 function stopChallenge(message = "Program dihentikan.") {
-  if (challengeTimeout !== null) clearTimeout(challengeTimeout);
-  challengeTimeout = null;
+  clearProgramWatchdog();
+  closeSharedInput();
   if (activeWorker) activeWorker.terminate();
   activeWorker = null;
+  sharedInput = null; sharedHeader = null; sharedBytes = null;
+  programActive = false;
+  programWaitingForInput = false;
+  lastRunSignature = "";
+  setTerminalInputEnabled(false);
   setBusy(false);
   setStatus(message, "error");
   judgeState.textContent = "Dihentikan";
@@ -835,13 +855,24 @@ function stopChallenge(message = "Program dihentikan.") {
 function runProgram() {
   if (currentLesson.kind === "reading") return;
   if (activeWorker) stopChallenge("Proses sebelumnya dihentikan.");
-
   const source = getCode();
   if (!source.trim()) {
     setStatus("Editor masih kosong.", "error");
+    showProgramOutput("Tidak ada kode untuk dijalankan.");
     return;
   }
-
+  interactiveSupported = typeof SharedArrayBuffer === "function" && window.crossOriginIsolated;
+  if (interactiveSupported) {
+    try { createSharedInputQueue(); }
+    catch (error) {
+      interactiveSupported = false;
+      sharedInput = null; sharedHeader = null; sharedBytes = null;
+      console.warn("Terminal interaktif tidak tersedia; memakai stdin sebelum Run.", error);
+    }
+  }
+  terminalMode.textContent = interactiveSupported ? "Interaktif" : "Mode stdin";
+  fallbackNotice.hidden = interactiveSupported;
+  fallbackStdin.hidden = interactiveSupported;
   saveCode();
   saveProgramInput();
   lastRunSignature = "";
@@ -853,55 +884,74 @@ function runProgram() {
   caseCount.textContent = "— / —";
   compileDiagnostics.classList.remove("show");
   compileDiagnostics.textContent = "";
-  programOutput.textContent = "Program sedang dikompilasi dan dijalankan…";
-  resultsList.innerHTML = '<div class="empty-results">Selesai mencoba program? Tinjau output di atas, lalu tekan <b>Periksa Jawaban</b> untuk menjalankan test otomatis.</div>';
-
-  try {
-    activeWorker = new Worker(new URL("./compiler-worker.js", import.meta.url), { type: "module" });
-  } catch (error) {
+  showProgramOutput("Menyiapkan compiler WebAssembly…\n");
+  programActive = false;
+  programWaitingForInput = false;
+  programOutputReceived = false;
+  terminalInput.value = "";
+  terminalInput.placeholder = "Program menunggu input… ketik lalu tekan Enter";
+  setTerminalInputEnabled(false);
+  resultsList.innerHTML = '<div class="empty-results">Coba program dan lihat output terminal terlebih dahulu. Setelah selesai, tekan <b>Periksa Jawaban</b> untuk menjalankan test otomatis.</div>';
+  try { activeWorker = new Worker(new URL("./compiler-worker.js", import.meta.url), { type: "module" }); }
+  catch (error) {
     setBusy(false);
     setStatus("Tidak dapat memulai compiler worker.", "error");
     compileDiagnostics.textContent = error?.message || String(error);
     compileDiagnostics.classList.add("show");
-    programOutput.textContent = "Program tidak dapat dijalankan.";
+    showProgramOutput("Tidak dapat memulai compiler worker.");
     return;
   }
-
-  challengeTimeout = setTimeout(() => {
-    if (!activeWorker) return;
-    stopChallenge("Batas waktu tercapai. Periksa kemungkinan perulangan tanpa akhir.");
-    programOutput.textContent += "\n\nProgram dihentikan setelah melewati batas waktu 90 detik.";
-    judgeState.textContent = "Waktu habis";
-    resultsList.innerHTML = '<div class="result-item failed"><div class="result-top"><span>Program dihentikan</span><span class="failed-text">✕ Waktu habis</span></div><div class="result-detail">Periksa kemungkinan perulangan tanpa akhir, lalu jalankan ulang.</div></div>';
-  }, 90000);
-
+  armProgramWatchdog();
   activeWorker.onmessage = (event) => {
     const data = event.data || {};
     if (data.type === "status") {
-      setStatus(data.message || "Sedang memproses…", "busy");
-      return;
-    }
-    if (data.type === "output") {
-      programOutput.textContent += data.text || "";
-      programOutput.scrollTop = programOutput.scrollHeight;
+      setStatus(data.message || "Memproses…", "busy");
       return;
     }
     if (data.type === "started") {
-      setStatus("Program berjalan dengan input yang kamu siapkan.", "busy");
+      programActive = true;
+      programWaitingForInput = false;
+      setTerminalInputEnabled(interactiveSupported);
+      if (interactiveSupported) {
+        terminalInput.placeholder = "Ketik input untuk cin, lalu tekan Enter…";
+        terminalInput.focus();
+      }
+      setStatus(data.message || "Program berjalan.", "busy");
+      armProgramWatchdog();
+      return;
+    }
+    if (data.type === "waiting-input") {
+      programWaitingForInput = true;
+      clearProgramWatchdog();
+      if (interactiveSupported) {
+        terminalInput.placeholder = "Program menunggu input… ketik lalu tekan Enter";
+        setTerminalInputEnabled(true);
+        terminalInput.focus();
+      }
+      setStatus("Program menunggu input dari terminal…", "busy");
+      return;
+    }
+    if (data.type === "output") {
+      programOutputReceived = true;
+      appendProgramOutput(data.text || "");
+      if (interactiveSupported && programActive && terminalInput.disabled) setTerminalInputEnabled(true);
       return;
     }
     if (data.type === "result") {
+      const outputWasReceived = programOutputReceived;
       finishChallenge();
       if (data.compileOutput && data.compileOutput.trim()) {
         compileDiagnostics.textContent = data.compileOutput.trim();
         compileDiagnostics.classList.add("show");
+        appendProgramOutput("\n[Compiler]\n" + data.compileOutput.trim());
       }
-      programOutput.textContent = data.runtimeOutput || (data.ok ? "(Program selesai tanpa menghasilkan output.)" : "Program gagal dijalankan.");
+      if (!outputWasReceived && data.ok) appendProgramOutput("(Program selesai tanpa menghasilkan output.)\n");
+      if (data.error) appendProgramOutput("\n[Runtime error]\n" + data.error);
       if (data.ok) {
         lastRunSignature = runSignature;
         judgeState.textContent = "Sudah dijalankan";
-        resultsList.innerHTML = '<div class="empty-results">Program berhasil dijalankan. Periksa hasil outputnya, lalu tekan <b>Periksa Jawaban</b> jika ingin menguji jawaban secara otomatis.</div>';
-        setStatus("Program selesai. Tinjau output, lalu periksa jawaban.", "ok");
+        resultsList.innerHTML = '<div class="empty-results">Program berhasil dijalankan. Tinjau output terminal, lalu tekan <b>Periksa Jawaban</b> untuk menguji jawaban otomatis.</div>';
+        setStatus("Program selesai. Tinjau terminal, lalu periksa jawaban.", "ok");
       } else {
         lastRunSignature = "";
         judgeState.textContent = "Program gagal";
@@ -913,22 +963,21 @@ function runProgram() {
       return;
     }
   };
-
   activeWorker.onerror = (event) => {
     finishChallenge();
     lastRunSignature = "";
     compileDiagnostics.textContent = event?.message || "Terjadi kesalahan pada compiler worker.";
     compileDiagnostics.classList.add("show");
     judgeState.textContent = "Terjadi error";
-    programOutput.textContent = "Compiler mengalami kesalahan saat menjalankan program.";
+    appendProgramOutput("\n[Kesalahan worker]\n" + (event?.message || "Kesalahan tidak diketahui."));
     setStatus("Compiler gagal berjalan.", "error");
     updateCheckButtonState();
   };
-
   activeWorker.postMessage({
     source,
-    input: programInput.value,
-    standard: standardSelect.value
+    standard: standardSelect.value,
+    input: interactiveSupported ? "" : fallbackStdin.value,
+    sharedInput
   });
 }
 
@@ -1133,8 +1182,35 @@ challengeButtons.addEventListener("click", (event) => {
 });
 runProgramBtn.addEventListener("click", runProgram);
 checkAnswerBtn.addEventListener("click", runChallenge);
-programInput.addEventListener("input", saveProgramInput);
+fallbackStdin.addEventListener("input", saveProgramInput);
 standardSelect.addEventListener("change", updateCheckButtonState);
+terminalForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!programActive || !interactiveSupported) return;
+  const line = terminalInput.value;
+  if (!enqueueProgramInput(line + "\n")) {
+    setStatus("Buffer input penuh. Tunggu program membaca input lalu coba lagi.", "error");
+    return;
+  }
+  appendProgramOutput(line + "\n");
+  terminalInput.value = "";
+  programWaitingForInput = false;
+  terminalInput.placeholder = "Ketik input berikutnya, lalu tekan Enter…";
+  setTerminalInputEnabled(true);
+  terminalInput.focus();
+  setStatus("Input dikirim ke program.", "busy");
+  armProgramWatchdog();
+});
+endInputBtn.addEventListener("click", () => {
+  if (!sharedHeader || !programActive) return;
+  closeSharedInput();
+  endInputBtn.disabled = true;
+  terminalInput.disabled = true;
+  sendInputBtn.disabled = true;
+  appendProgramOutput("^D\n");
+  setStatus("Input ditutup (EOF dikirim).", "busy");
+});
+clearProgramOutputBtn.addEventListener("click", () => showProgramOutput(""));
 markReadBtn.addEventListener("click", markReadingComplete);
 stopChallengeBtn.addEventListener("click", () => stopChallenge("Pemeriksaan dihentikan oleh pengguna."));
 resetCodeBtn.addEventListener("click", () => {
