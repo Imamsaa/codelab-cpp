@@ -17,6 +17,7 @@ File \`index.html\`, \`app.js\`, \`compiler-worker.js\`, dan \`coi-serviceworker
 - Tulis kode di editor. Editor teks langsung ditampilkan agar tetap bisa digunakan saat library syntax highlighting sedang dimuat; jika CodeMirror gagal dimuat, editor teks cadangan tetap tersedia.
 - Pilih standar C++17, C++20, C++14, atau C++11.
 - Klik **Jalankan** atau tekan **Ctrl + Enter**.
+- Klik **Unduh compiler (±95 MB)** untuk menyiapkan file besar compiler sebelum coding. Progress bar menunjukkan estimasi progres dan status setiap file. Aset disimpan di Cache Storage browser; jika pengunduhan terputus, tombol akan menawarkan untuk melanjutkan dan file yang sudah tersimpan akan dilewati.
 - Jika program membaca \`cin\`, terminal menerima input saat program berjalan. Ketik satu baris, lalu tekan **Enter** atau **Kirim**. Kamu bisa mengirim lebih dari satu baris selama program meminta input.
 - Tombol **EOF** menutup input standar; tombol **Stop** menghentikan proses kompilasi atau eksekusi.
 - Gunakan **Buka .cpp** dan **Unduh kode** untuk membuka atau menyimpan file.
@@ -24,7 +25,8 @@ File \`index.html\`, \`app.js\`, \`compiler-worker.js\`, dan \`coi-serviceworker
 
 ## Cara kerja dan batasan
 
-- Compiler Clang/LLD WebAssembly dimuat saat runtime dari CDN publik. Penggunaan pertama dapat mengunduh aset besar (compiler, linker, dan sysroot berukuran sekitar 95 MB sebelum kompresi/cache menurut dokumentasi browsercc).
+- Compiler Clang/LLD WebAssembly dimuat saat runtime dari CDN publik. Tombol **Unduh compiler** dapat mengunduh dan menyimpan `index.js`, `clang.js`, `lld.js`, `clang.wasm`, `lld.wasm`, dan `sysroot.tar` ke Cache Storage browser. Ukuran total aset besar sekitar 95 MB sebelum kompresi/cache menurut dokumentasi browsercc.
+- Progress bar memperkirakan persentase berdasarkan ukuran aset upstream, karena CDN dapat mengirimkan respons terkompresi. Aset yang sudah tersimpan akan dilewati saat pengunduhan dilanjutkan.
 - \`coi-serviceworker.min.js\` membantu mengaktifkan \`SharedArrayBuffer\` pada static hosting yang tidak menyediakan header COOP/COEP langsung. Browser harus mengizinkan Service Worker. Saat pertama kali membuka website, halaman dapat memuat ulang sekali untuk mengaktifkan mode tersebut.
 - Pada mode interaktif, antrean input dibagikan antara halaman dan Worker. Program dapat berhenti menunggu \`cin\` sementara pengguna mengetik di terminal, sedangkan stdout/stderr dikirim ke terminal saat diproduksi.
 - Kode C++ dijalankan dalam sandbox WebAssembly di browser. Kode program tidak dikirim ke backend milik pemilik website, tetapi compiler dan dependensi diunduh dari CDN pihak ketiga.
