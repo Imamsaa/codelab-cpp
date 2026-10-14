@@ -21,4 +21,5 @@ jobs:
         run: |
           node --check --input-type=module < app.js
           node --check --input-type=module < compiler-worker.js
+          node --check --input-type=module < materi.js
           node --check --input-type=module < coi-serviceworker.min.js
