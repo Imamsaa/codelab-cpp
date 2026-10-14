@@ -15,6 +15,22 @@ const lessons = [
     tests: []
   },
   {
+    id: "output", title: "Menampilkan Output dengan cout", category: "Dasar C++", level: "Pemula", duration: "8 menit",
+    summary: "Setelah mengenal C++, sekarang mulai menulis program sederhana. cout digunakan untuk menampilkan teks atau nilai ke terminal.",
+    concepts: [
+      { title: "Apa itu cout?", body: "cout menampilkan teks atau nilai. Teks ditulis di antara tanda petik dua dan diteruskan dengan operator <code>&lt;&lt;</code>." },
+      { title: "Library iostream", body: "Tambahkan <code>#include &lt;iostream&gt;</code> agar program dapat menggunakan <code>cout</code> dan <code>cin</code>." }
+    ],
+    example: { input: "(tidak ada input)", output: "Halo, Dunia!" },
+    task: "Lengkapi program agar menampilkan tepat satu baris teks: Halo, Dunia!",
+    requirements: ["Gunakan cout untuk menampilkan teks.", "Pastikan tulisan dan tanda baca sama persis dengan contoh output."],
+    starter: [
+      "#include <iostream>", "using namespace std;", "", "int main() {",
+      "    // TODO: tampilkan Halo, Dunia!", "    return 0;", "}"
+    ].join("\\n"),
+    tests: [{ input: "", expected: "Halo, Dunia!", visible: true }]
+  },
+  {
     id: "sum", title: "Input, Variabel, dan Penjumlahan", category: "Input / Output", level: "Pemula", duration: "12 menit",
     summary: "Variabel menyimpan nilai yang dapat digunakan oleh program. Perintah cin membaca data dari input, sedangkan cout menampilkan hasilnya. Operator + digunakan untuk menjumlahkan angka.",
     concepts: [
@@ -269,14 +285,17 @@ function markReadingComplete() {
   const lesson = lessons.find((item) => item.id === lessonId);
   if (!lesson || lesson.id === currentLesson.id) return;
   if (activeWorker) stopChallenge("Pemeriksaan dihentikan karena materi diganti.");
-  saveCode();
+  if (currentLesson.kind !== "reading") saveCode();
   currentLesson = lesson;
   renderLesson(currentLesson);
   renderLessonList();
   if (currentLesson.kind !== "reading") setCode(savedCodes[currentLesson.id] ?? currentLesson.starter);
   fallbackEdited = false;
   setStatus("Materi siap. Baca tantangan lalu tulis kode.", "idle");
-  if (cmEditor) cmEditor.focus();
+  if (cmEditor && currentLesson.kind !== "reading") {
+    cmEditor.requestMeasure();
+    cmEditor.focus();
+  }
 }
 
 function showResults(tests) {
@@ -410,7 +429,7 @@ async function initializeEditor() {
   fallbackCode.spellcheck = false;
   fallbackCode.autocapitalize = "off";
   fallbackCode.setAttribute("aria-label", "Editor kode untuk latihan C++");
-  fallbackCode.value = savedCodes[currentLesson.id] ?? currentLesson.starter;
+  fallbackCode.value = savedCodes[currentLesson.id] ?? currentLesson.starter ?? "";
   lessonEditorHost.replaceChildren(fallbackCode);
   fallbackCode.addEventListener("input", () => {
     fallbackEdited = true;
