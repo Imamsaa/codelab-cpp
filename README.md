@@ -12,6 +12,8 @@ Di **Settings → Pages**, pilih **Deploy from a branch**, branch \`main\`, fold
 
 File \`index.html\`, \`app.js\`, \`compiler-worker.js\`, dan \`coi-serviceworker.min.js\` harus berada di root repository. Website statis ini tidak membutuhkan \`npm install\`, build step, API key, database, atau backend.
 
+Logo header tersedia sebagai SVG di `assets/ict-al-firdaus-logo.svg`, dan ikut disimpan oleh Service Worker agar tetap muncul dalam mode offline.
+
 ## Menyiapkan mode offline
 
 1. Buka ICT C++ Playground melalui GitHub Pages saat internet masih tersedia.
