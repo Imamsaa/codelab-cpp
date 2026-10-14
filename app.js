@@ -316,9 +316,16 @@ async function downloadCompilerAssets() {
 
   compilerDownloadInProgress = true;
   compilerDownloadBtn.disabled = true;
-  compilerDownloadBtn.textContent = "Sedang mengunduh…";
-  compilerProgressFill.classList.remove("indeterminate");
+  compilerDownloadBtn.textContent = "Menyiapkan unduhan…";
+  compilerCacheBadge.textContent = "Sedang menyiapkan";
+  compilerProgressFill.classList.add("indeterminate");
+  setCompilerProgress(
+    parseInt(compilerProgressBar.getAttribute("aria-valuenow") || "0", 10),
+    "Menyiapkan unduhan compiler…",
+    "Membuka cache browser dan menghubungi CDN. Untuk aset besar, progres akan muncul setelah data pertama diterima."
+  );
   let transferredThisSession = 0;
+  let downloadError = null;
 
   try {
     const cache = await caches.open(COMPILER_CACHE_NAME);
@@ -346,8 +353,8 @@ async function downloadCompilerAssets() {
     for (let index = 0; index < missing.length; index++) {
       const asset = missing[index];
       compilerProgressFill.classList.add("indeterminate");
-      compilerProgressLabel.textContent = "Mengunduh " + asset.name + "…";
-      compilerDownloadStatus.textContent = "File " + (index + 1) + " dari " + missing.length + ". Aset besar dapat memerlukan waktu beberapa menit.";
+      compilerProgressLabel.textContent = "Menghubungi CDN untuk " + asset.name + "…";
+      compilerDownloadStatus.textContent = "File " + (index + 1) + " dari " + missing.length + ". URL: " + asset.url;
       const actualBytes = await downloadAssetToCache(cache, asset, (loaded) => {
         const fileFraction = Math.min(loaded / asset.size, 0.995);
         const finishedExpected = completedExpected;
@@ -373,20 +380,37 @@ async function downloadCompilerAssets() {
     compilerCacheBadge.textContent = "Tersimpan di browser";
     compilerDownloadBtn.textContent = "Compiler tersimpan ✓";
   } catch (error) {
-    compilerCacheBadge.textContent = "Unduhan belum selesai";
+    downloadError = error?.message || String(error);
+    compilerCacheBadge.textContent = "Unduhan gagal";
+    compilerProgressFill.classList.remove("indeterminate");
+    compilerDownloadBtn.textContent = "Coba lagi / lanjutkan";
+    const detail = /Failed to fetch|NetworkError|Load failed/i.test(downloadError)
+      ? "Browser gagal membaca respons CDN. Periksa koneksi internet, ekstensi pemblokir konten, atau izin jaringan untuk cdn.jsdelivr.net."
+      : /quota|storage|storage space/i.test(downloadError)
+        ? "Penyimpanan browser mungkin tidak cukup. Hapus cache situs lain atau lanjutkan pada browser dengan ruang tersedia."
+        : "File yang sudah tersimpan tetap dipertahankan; klik Coba lagi / lanjutkan untuk meneruskan aset yang belum ada.";
     setCompilerProgress(
       parseInt(compilerProgressBar.getAttribute("aria-valuenow") || "0", 10),
       "Pengunduhan terhenti",
-      (error?.message || String(error)) + " Aset yang berhasil diunduh tetap tersimpan; tekan tombol lagi untuk melanjutkan."
+      downloadError + " " + detail
     );
     console.error("Compiler asset download failed:", error);
   } finally {
     compilerDownloadInProgress = false;
     compilerDownloadBtn.disabled = false;
-    if (compilerDownloadBtn.textContent === "Sedang mengunduh…") {
-      compilerDownloadBtn.textContent = "Lanjutkan unduhan compiler";
+    if (downloadError) {
+      // Refresh only the badge/button state. Do not overwrite the actionable error
+      // with the generic "Belum ada pengunduhan" message.
+      try {
+        const state = await getCompilerCacheStatus();
+        compilerCacheBadge.textContent = state.count
+          ? state.count + "/" + COMPILER_ASSETS.length + " aset tersimpan"
+          : "Unduhan gagal";
+        compilerDownloadBtn.textContent = state.count ? "Coba lagi / lanjutkan" : "Coba lagi / lanjutkan";
+      } catch { /* Keep the error visible even if cache inspection also fails. */ }
+    } else {
+      await refreshCompilerCacheState();
     }
-    await refreshCompilerCacheState();
   }
 }
 
