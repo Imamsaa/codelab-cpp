@@ -206,7 +206,10 @@ function formatBytes(value) {
 
 function setCompilerProgress(percent, label, status) {
   const safePercent = Math.max(0, Math.min(100, percent));
-  compilerProgressFill.style.width = safePercent + "%";
+  // An inline width overrides the CSS animation; keep a visible moving bar while waiting for CDN headers.
+  compilerProgressFill.style.width = compilerProgressFill.classList.contains("indeterminate")
+    ? "35%"
+    : safePercent + "%";
   compilerProgressBar.setAttribute("aria-valuenow", String(Math.round(safePercent)));
   compilerProgressPercent.textContent = Math.round(safePercent) + "%";
   compilerProgressLabel.textContent = label;
