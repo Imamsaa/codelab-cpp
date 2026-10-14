@@ -46,6 +46,10 @@ const compilerDownloadStatus = document.getElementById("compilerDownloadStatus")
 const compilerCacheBadge = document.getElementById("compilerCacheBadge");
 
 const COMPILER_CACHE_NAME = "codelab-compiler-assets-v1";
+const RUNTIME_CACHE_NAME = "codelab-runtime-assets-v1";
+const APP_CACHE_NAME = "codelab-offline-shell-v1";
+const APP_SHELL_FILES = ["index.html", "app.js", "compiler-worker.js", "coi-serviceworker.min.js"];
+const OFFLINE_PROGRESS_WEIGHT = 82;
 const COMPILER_ASSETS = [
   { name: "index.js", url: "https://cdn.jsdelivr.net/npm/browsercc@0.1.1/dist/index.js", size: 5_000, type: "text/javascript" },
   { name: "clang.js", url: "https://cdn.jsdelivr.net/npm/browsercc@0.1.1/dist/clang.js", size: 70_000, type: "text/javascript" },
@@ -206,7 +210,6 @@ function formatBytes(value) {
 
 function setCompilerProgress(percent, label, status) {
   const safePercent = Math.max(0, Math.min(100, percent));
-  // An inline width overrides the CSS animation; keep a visible moving bar while waiting for CDN headers.
   compilerProgressFill.style.width = compilerProgressFill.classList.contains("indeterminate")
     ? "35%"
     : safePercent + "%";
@@ -232,40 +235,126 @@ async function getCompilerCacheStatus() {
   return { count, cachedBytes, cache, available: true };
 }
 
+async function getOfflineReadiness() {
+  const compiler = await getCompilerCacheStatus();
+  if (!compiler.available) {
+    return { ready: false, reasons: ["Cache Storage tidak didukung browser."], compiler, shell: [], modules: [] };
+  }
+
+  const appCache = await caches.open(APP_CACHE_NAME);
+  const shell = [];
+  for (const file of APP_SHELL_FILES) {
+    const url = new URL(file, location.href).href;
+    if (!(await appCache.match(url, { ignoreSearch: true }))) shell.push(file);
+  }
+
+  const runtimeCache = await caches.open(RUNTIME_CACHE_NAME);
+  const runtimeUrls = (await runtimeCache.keys()).map((request) => request.url);
+  const requiredModules = [
+    { name: "CodeMirror", test: (url) => /codemirror/i.test(url) && !/lang-cpp|theme-one-dark/i.test(url) },
+    { name: "bahasa C++ untuk editor", test: (url) => /lang-cpp/i.test(url) },
+    { name: "tema editor", test: (url) => /theme-one-dark/i.test(url) },
+    { name: "runtime WASI", test: (url) => /browser_wasi_shim/i.test(url) }
+  ];
+  const modules = requiredModules.filter((module) => !runtimeUrls.some(module.test)).map((module) => module.name);
+  const controlled = Boolean(navigator.serviceWorker && navigator.serviceWorker.controller);
+  const reasons = [];
+  if (compiler.count !== COMPILER_ASSETS.length) reasons.push("Compiler tersimpan " + compiler.count + "/" + COMPILER_ASSETS.length + " aset.");
+  if (shell.length) reasons.push("File aplikasi belum ada di cache: " + shell.join(", ") + ".");
+  if (modules.length) reasons.push("Dependensi belum tercache: " + modules.join(", ") + ".");
+  if (!controlled) reasons.push("Service Worker belum mengendalikan halaman ini; muat ulang halaman setelah terdaftar.");
+
+  return {
+    ready: reasons.length === 0,
+    reasons,
+    compiler,
+    shell,
+    modules,
+    runtimeAssetCount: runtimeUrls.length,
+    controlled
+  };
+}
+
+async function waitForServiceWorkerControl() {
+  if (navigator.serviceWorker && navigator.serviceWorker.controller) return true;
+  if (!("serviceWorker" in navigator)) return false;
+  return await new Promise((resolve) => {
+    let done = false;
+    const finish = (value) => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      navigator.serviceWorker.removeEventListener("controllerchange", onChange);
+      resolve(value);
+    };
+    const onChange = () => finish(Boolean(navigator.serviceWorker.controller));
+    const timer = setTimeout(() => finish(Boolean(navigator.serviceWorker.controller)), 8000);
+    navigator.serviceWorker.addEventListener("controllerchange", onChange);
+  });
+}
+
+async function warmupOfflineDependencies() {
+  setCompilerProgress(84, "Menyimpan editor…", "Memuat CodeMirror, mode C++, dan tema editor. Browser menyimpan modul yang diperlukan ke cache offline.");
+  await Promise.all([
+    import("codemirror"),
+    import("@codemirror/lang-cpp"),
+    import("@codemirror/theme-one-dark")
+  ]);
+
+  setCompilerProgress(88, "Menyimpan runtime WASI…", "Memuat runtime yang menghubungkan input/output C++ dengan browser.");
+  await import("https://esm.sh/@bjorn3/browser_wasi_shim@0.4.2");
+
+  setCompilerProgress(91, "Menyiapkan modul compiler…", "Memastikan modul JavaScript Clang/LLD juga tersedia offline.");
+  await import("https://cdn.jsdelivr.net/npm/browsercc@0.1.1/dist/index.js");
+}
+
 async function refreshCompilerCacheState() {
   try {
-    const state = await getCompilerCacheStatus();
-    if (!state.available) {
+    const readiness = await getOfflineReadiness();
+    const compiler = readiness.compiler;
+    if (!compiler.available) {
       compilerCacheBadge.textContent = "Cache tidak didukung";
-      setCompilerProgress(0, "Progress tidak tersedia", "Browser ini tidak mendukung Cache Storage. Compiler tetap dapat diunduh otomatis saat Run.");
+      compilerDownloadBtn.disabled = true;
+      setCompilerProgress(0, "Mode offline tidak tersedia", "Browser ini tidak mendukung Cache Storage yang diperlukan untuk menyimpan aset secara offline.");
       return;
     }
-    const percent = Math.round((state.cachedBytes / EXPECTED_COMPILER_BYTES) * 100);
-    compilerCacheBadge.textContent = state.count === COMPILER_ASSETS.length
-      ? "Tersimpan di browser"
-      : state.count
-        ? state.count + "/" + COMPILER_ASSETS.length + " aset tersimpan"
-        : "Belum disiapkan";
-    compilerDownloadBtn.disabled = state.count === COMPILER_ASSETS.length || compilerDownloadInProgress;
-    compilerDownloadBtn.textContent = state.count === COMPILER_ASSETS.length
-      ? "Compiler tersimpan ✓"
-      : state.count
-        ? "Lanjutkan unduhan compiler"
-        : "Unduh compiler (±95 MB)";
-    if (state.count === COMPILER_ASSETS.length) {
-      setCompilerProgress(100, "Compiler siap digunakan", "Semua aset compiler sudah tersimpan di cache browser. Browser dapat menghapus cache sewaktu-waktu dari pengaturan situs.");
-    } else {
+
+    const assetPercent = Math.round((compiler.cachedBytes / EXPECTED_COMPILER_BYTES) * OFFLINE_PROGRESS_WEIGHT);
+    if (readiness.ready) {
+      compilerCacheBadge.textContent = "Siap offline";
+      compilerDownloadBtn.disabled = true;
+      compilerDownloadBtn.textContent = "CodeLab siap offline ✓";
+      setCompilerProgress(100, "CodeLab siap digunakan offline", "Compiler, editor, runtime, dan file aplikasi sudah tersedia di cache browser. Matikan internet untuk menguji mode offline.");
+      return;
+    }
+
+    compilerDownloadBtn.disabled = compilerDownloadInProgress;
+    compilerDownloadBtn.textContent = compiler.count
+      ? "Lanjutkan persiapan offline"
+      : "Siapkan CodeLab untuk Offline";
+    if (compiler.count === COMPILER_ASSETS.length) {
+      compilerCacheBadge.textContent = "Compiler tersimpan";
       setCompilerProgress(
-        percent,
-        state.count ? "Tersimpan " + state.count + " dari " + COMPILER_ASSETS.length + " aset" : "Belum ada pengunduhan",
-        state.count
-          ? formatBytes(state.cachedBytes) + " dari sekitar " + formatBytes(EXPECTED_COMPILER_BYTES) + " sudah tersimpan. Aset yang ada akan dilewati saat melanjutkan."
-          : "Klik tombol Unduh compiler untuk menyimpan aset compiler besar ke cache browser."
+        Math.max(assetPercent, 82),
+        "Compiler sudah tersimpan; dependensi offline belum lengkap",
+        readiness.reasons.join(" ") || "Klik Siapkan CodeLab untuk Offline untuk menyiapkan komponen lain."
+      );
+    } else {
+      compilerCacheBadge.textContent = compiler.count
+        ? compiler.count + "/" + COMPILER_ASSETS.length + " aset compiler"
+        : "Belum disiapkan";
+      setCompilerProgress(
+        assetPercent,
+        compiler.count ? "Compiler tersimpan sebagian" : "Belum disiapkan untuk offline",
+        compiler.count
+          ? formatBytes(compiler.cachedBytes) + " dari sekitar " + formatBytes(EXPECTED_COMPILER_BYTES) + " aset compiler tersimpan. " + readiness.reasons.join(" ")
+          : "Klik Siapkan CodeLab untuk Offline. Compiler, editor, runtime, dan file aplikasi akan disimpan ke cache browser."
       );
     }
   } catch (error) {
     compilerCacheBadge.textContent = "Status belum diketahui";
-    compilerDownloadStatus.textContent = "Tidak dapat membaca cache browser: " + (error?.message || error);
+    compilerDownloadBtn.disabled = false;
+    compilerDownloadStatus.textContent = "Tidak dapat memeriksa cache offline: " + (error?.message || error);
   }
 }
 
@@ -293,8 +382,7 @@ async function downloadAssetToCache(cache, asset, onProgress) {
     onProgress(actualBytes);
   }
 
-  const body = new Blob(chunks, { type: asset.type });
-  const cachedResponse = new Response(body, {
+  const cachedResponse = new Response(new Blob(chunks, { type: asset.type }), {
     status: 200,
     headers: {
       "Content-Type": asset.type,
@@ -303,14 +391,11 @@ async function downloadAssetToCache(cache, asset, onProgress) {
       "Cache-Control": "public, max-age=31536000"
     }
   });
-
-  // Keep the original CDN URL as the key: the service worker can then intercept
-  // browsercc's own fetch() calls and return the saved file instead of redownloading.
   await cache.put(asset.url, cachedResponse);
   return actualBytes;
 }
 
-async function downloadCompilerAssets() {
+async function prepareCodeLabOffline() {
   if (compilerDownloadInProgress) return;
   if (!("caches" in window) || !window.fetch) {
     setCompilerProgress(0, "Unduhan tidak didukung", "Browser ini tidak menyediakan Fetch API atau Cache Storage yang diperlukan.");
@@ -319,18 +404,23 @@ async function downloadCompilerAssets() {
 
   compilerDownloadInProgress = true;
   compilerDownloadBtn.disabled = true;
-  compilerDownloadBtn.textContent = "Menyiapkan unduhan…";
+  compilerDownloadBtn.textContent = "Menyiapkan offline…";
   compilerCacheBadge.textContent = "Sedang menyiapkan";
   compilerProgressFill.classList.add("indeterminate");
   setCompilerProgress(
-    parseInt(compilerProgressBar.getAttribute("aria-valuenow") || "0", 10),
-    "Menyiapkan unduhan compiler…",
-    "Membuka cache browser dan menghubungi CDN. Untuk aset besar, progres akan muncul setelah data pertama diterima."
+    0,
+    "Menyiapkan unduhan offline…",
+    "Memastikan Service Worker aktif dan membuka cache. Setelah terhubung ke CDN, progres download akan muncul."
   );
   let transferredThisSession = 0;
   let downloadError = null;
 
   try {
+    const controlled = await waitForServiceWorkerControl();
+    if (!controlled) {
+      throw new Error("Service Worker belum aktif. Pastikan halaman dibuka melalui GitHub Pages, tunggu beberapa detik, lalu muat ulang halaman.");
+    }
+
     const cache = await caches.open(COMPILER_CACHE_NAME);
     const existing = new Set();
     let completedExpected = 0;
@@ -341,81 +431,92 @@ async function downloadCompilerAssets() {
       }
     }
     const missing = COMPILER_ASSETS.filter((asset) => !existing.has(asset.url));
+    compilerProgressFill.classList.remove("indeterminate");
     setCompilerProgress(
-      (completedExpected / EXPECTED_COMPILER_BYTES) * 100,
-      missing.length ? "Menyiapkan " + missing.length + " aset…" : "Compiler sudah siap",
-      existing.size ? existing.size + " dari " + COMPILER_ASSETS.length + " aset sudah tersimpan. " : "Menyiapkan pengunduhan compiler…"
+      Math.round((completedExpected / EXPECTED_COMPILER_BYTES) * OFFLINE_PROGRESS_WEIGHT),
+      missing.length ? "Menyiapkan " + missing.length + " aset compiler…" : "Compiler sudah tersimpan",
+      existing.size
+        ? existing.size + " dari " + COMPILER_ASSETS.length + " aset compiler sudah tersimpan; menyiapkan dependensi aplikasi berikutnya."
+        : "Sedang mengunduh compiler, linker, dan pustaka standar C++."
     );
-
-    if (!missing.length) {
-      setCompilerProgress(100, "Compiler sudah tersimpan", "Semua aset sudah tersedia di cache browser; tidak ada file besar yang perlu diunduh ulang.");
-      compilerCacheBadge.textContent = "Tersimpan di browser";
-      return;
-    }
 
     for (let index = 0; index < missing.length; index++) {
       const asset = missing[index];
       compilerProgressFill.classList.add("indeterminate");
       compilerProgressLabel.textContent = "Menghubungi CDN untuk " + asset.name + "…";
       compilerDownloadStatus.textContent = "File " + (index + 1) + " dari " + missing.length + ". URL: " + asset.url;
+
       const actualBytes = await downloadAssetToCache(cache, asset, (loaded) => {
         const fileFraction = Math.min(loaded / asset.size, 0.995);
-        const finishedExpected = completedExpected;
-        const progress = ((finishedExpected + asset.size * fileFraction) / EXPECTED_COMPILER_BYTES) * 100;
+        const progress = ((completedExpected + asset.size * fileFraction) / EXPECTED_COMPILER_BYTES) * OFFLINE_PROGRESS_WEIGHT;
         compilerProgressFill.classList.remove("indeterminate");
         setCompilerProgress(
           progress,
           "Mengunduh " + asset.name + " · " + formatBytes(loaded),
-          "Progres keseluruhan merupakan estimasi ukuran file asli. Diterima pada file ini: " + formatBytes(loaded) + "."
+          "Progres keseluruhan menghitung aset compiler (82% tahap persiapan). Diterima pada file ini: " + formatBytes(loaded) + "."
         );
       });
       transferredThisSession += actualBytes;
       completedExpected += asset.size;
       existing.add(asset.url);
+      compilerProgressFill.classList.remove("indeterminate");
       setCompilerProgress(
-        (completedExpected / EXPECTED_COMPILER_BYTES) * 100,
-        "Selesai " + (index + 1) + " dari " + missing.length + " file",
+        (completedExpected / EXPECTED_COMPILER_BYTES) * OFFLINE_PROGRESS_WEIGHT,
+        "Aset compiler " + (index + 1) + " dari " + missing.length + " selesai",
         asset.name + " tersimpan. Data diterima sesi ini: " + formatBytes(transferredThisSession) + "."
       );
     }
 
-    setCompilerProgress(100, "Compiler berhasil diunduh", "Semua " + COMPILER_ASSETS.length + " aset tersimpan di cache browser (" + formatBytes(transferredThisSession) + " diterima pada sesi ini). Kamu dapat mulai menjalankan C++.");
-    compilerCacheBadge.textContent = "Tersimpan di browser";
-    compilerDownloadBtn.textContent = "Compiler tersimpan ✓";
+    compilerProgressFill.classList.remove("indeterminate");
+    setCompilerProgress(83, "Compiler tersimpan; menyiapkan dependensi…", "Sekarang memuat editor, runtime WASI, dan modul browsercc agar permintaan CDN bisa disimpan untuk penggunaan offline.");
+    await warmupOfflineDependencies();
+
+    setCompilerProgress(95, "Memverifikasi kesiapan offline…", "Memeriksa file aplikasi, editor, runtime WASI, dan seluruh aset compiler yang tersimpan.");
+    const readiness = await getOfflineReadiness();
+    if (!readiness.ready) {
+      throw new Error("Persiapan belum lengkap. " + readiness.reasons.join(" ") + " Periksa apakah Cache Storage dapat digunakan dan Service Worker masih mengendalikan halaman.");
+    }
+
+    compilerCacheBadge.textContent = "Siap offline";
+    compilerDownloadBtn.textContent = "CodeLab siap offline ✓";
+    setCompilerProgress(
+      100,
+      "CodeLab siap digunakan offline",
+      "Semua aset utama tersedia di cache browser. Aset compiler yang diunduh pada sesi ini: " + formatBytes(transferredThisSession) + ". Uji dengan mematikan koneksi internet lalu memuat ulang halaman."
+    );
   } catch (error) {
     downloadError = error?.message || String(error);
-    compilerCacheBadge.textContent = "Unduhan gagal";
+    compilerCacheBadge.textContent = "Belum siap offline";
     compilerProgressFill.classList.remove("indeterminate");
     compilerDownloadBtn.textContent = "Coba lagi / lanjutkan";
     const detail = /Failed to fetch|NetworkError|Load failed/i.test(downloadError)
-      ? "Browser gagal membaca respons CDN. Periksa koneksi internet, ekstensi pemblokir konten, atau izin jaringan untuk cdn.jsdelivr.net."
+      ? "Browser gagal membaca respons CDN. Periksa koneksi internet atau pemblokir konten."
       : /quota|storage|storage space/i.test(downloadError)
-        ? "Penyimpanan browser mungkin tidak cukup. Hapus cache situs lain atau lanjutkan pada browser dengan ruang tersedia."
-        : "File yang sudah tersimpan tetap dipertahankan; klik Coba lagi / lanjutkan untuk meneruskan aset yang belum ada.";
+        ? "Penyimpanan browser mungkin tidak cukup. Hapus cache situs lain atau lanjutkan di browser dengan ruang tersedia."
+        : "Aset yang sudah tersimpan tetap dipertahankan. Setelah memperbaiki penyebabnya, klik Coba lagi / lanjutkan.";
     setCompilerProgress(
       parseInt(compilerProgressBar.getAttribute("aria-valuenow") || "0", 10),
-      "Pengunduhan terhenti",
+      "Persiapan offline belum selesai",
       downloadError + " " + detail
     );
-    console.error("Compiler asset download failed:", error);
+    console.error("CodeLab offline preparation failed:", error);
   } finally {
     compilerDownloadInProgress = false;
     compilerDownloadBtn.disabled = false;
     if (downloadError) {
-      // Refresh only the badge/button state. Do not overwrite the actionable error
-      // with the generic "Belum ada pengunduhan" message.
       try {
-        const state = await getCompilerCacheStatus();
-        compilerCacheBadge.textContent = state.count
-          ? state.count + "/" + COMPILER_ASSETS.length + " aset tersimpan"
-          : "Unduhan gagal";
-        compilerDownloadBtn.textContent = state.count ? "Coba lagi / lanjutkan" : "Coba lagi / lanjutkan";
-      } catch { /* Keep the error visible even if cache inspection also fails. */ }
+        const compiler = await getCompilerCacheStatus();
+        compilerCacheBadge.textContent = compiler.count
+          ? compiler.count + "/" + COMPILER_ASSETS.length + " aset compiler tersimpan"
+          : "Belum siap offline";
+        compilerDownloadBtn.textContent = "Coba lagi / lanjutkan";
+      } catch { /* Preserve the visible error. */ }
     } else {
       await refreshCompilerCacheState();
     }
   }
 }
+
 
 async function initializeEditor() {
   let savedCode = "";
@@ -673,6 +774,6 @@ if (!interactiveSupported) {
   fallbackStdin.hidden = false;
   setStatus("Terminal siap. Mode stdin cadangan aktif; isi input sebelum Run.", "idle");
 }
-compilerDownloadBtn.addEventListener("click", downloadCompilerAssets);
+compilerDownloadBtn.addEventListener("click", prepareCodeLabOffline);
 refreshCompilerCacheState();
 initializeEditor();
