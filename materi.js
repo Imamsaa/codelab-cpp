@@ -312,7 +312,6 @@ const EXTRA_CHALLENGES = {
       tests:[{input:"",expected:"Baris pertama\n\nBaris kedua",visible:true}]
     }
   ],
-  ,
   comments: [
     {
       id: "comments-2", title: "Latihan 2 · Komentar blok", difficulty: "Mudah",
