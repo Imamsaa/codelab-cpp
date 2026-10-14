@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1020">
-  <meta name="description" content="Playground C++ untuk belajar pemrograman langsung di browser. Tanpa instalasi compiler dan tanpa backend sendiri.">
-  <title>CodeLab C++ — ICT Playground</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%237c5cff'/%3E%3Cpath d='M38 30 18 50l20 20M62 30l20 20-20 20M57 22 43 78' fill='none' stroke='white' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <meta name="description" content="ICT Al Firdaus Fun Coding Schools — playground C++ untuk siswa belajar coding, menguji ide, dan berkarya langsung di browser.">
+  <title>ICT Al Firdaus | C++ Playground</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2308366d'/%3E%3Cg stroke-linecap='round' stroke-width='9' fill='none'%3E%3Cpath d='M22 48 51 31M22 66 68 39M36 80 80 55' stroke='%2300b9e9'/%3E%3C/g%3E%3Ccircle cx='77' cy='76' r='6' fill='%2300b9e9'/%3E%3C/svg%3E">
   <style>
     :root{color-scheme:dark;--bg:#090d18;--panel:#101729;--panel2:#0c1323;--line:#25314a;--text:#e8edf8;--muted:#96a3bd;--accent:#8b7bff;--cyan:#66e3d5;--green:#42d392;--red:#ff6f91;--radius:16px}
     *{box-sizing:border-box}
@@ -16,10 +16,10 @@
     button{cursor:pointer}
     .shell{max-width:1500px;margin:0 auto;padding:24px clamp(14px,3vw,40px) 22px}
     header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
-    .brand{display:flex;gap:13px;align-items:center;min-width:0}
-    .brand-mark{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:linear-gradient(145deg,#8b7bff,#5d49cb);box-shadow:0 9px 28px #6651dc40;color:white;font-weight:850;letter-spacing:-2px;font-size:16px;flex-shrink:0}
-    .brand h1{font-size:18px;line-height:1.2;letter-spacing:-.5px;margin:0;font-weight:760}
-    .brand p{margin:5px 0 0;color:var(--muted);font-size:12px}
+    .brand{display:flex;gap:12px;align-items:center;min-width:0}
+    .brand-logo{display:block;width:clamp(230px,25vw,310px);height:auto;max-height:78px;object-fit:contain;background:#fff;border:1px solid #e9eff7;border-radius:9px;padding:2px;flex-shrink:0}
+    .brand-context{font-size:11px;line-height:1.55;color:#aab8ce;letter-spacing:.15px}
+    .brand-context strong{display:block;color:#e1e9f6;font-size:12px;font-weight:750}
     .top-right{display:flex;align-items:center;gap:9px}
     .pill{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;background:#111b2c;border:1px solid var(--line);border-radius:999px;color:#c1cee2;font-size:12px;white-space:nowrap}
     .dot{height:7px;width:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px #42d39280}
@@ -120,11 +120,11 @@
     .compiler-download.ready .compiler-download-actions .btn{background:#111a29;border-color:#2b3b4e;color:#9fb0c4;box-shadow:none}
     @media(max-width:700px){.compiler-download-head{align-items:flex-start;flex-direction:column}.compiler-download-actions{width:100%}.compiler-download-actions .btn{flex:1}.compiler-download-title{font-size:11px}}
     @media(max-width:900px){.intro{align-items:flex-start;flex-direction:column}.privacy{max-width:100%}.workspace{grid-template-columns:1fr}.editor-panel{border-right:0;border-bottom:1px solid var(--line)}#editor{min-height:420px}.side-panel{min-height:510px}.toolbar{align-items:flex-start}.toolbar-left,.toolbar-right{max-width:100%}}
-    @media(max-width:580px){.shell{padding:15px 10px}.top-right .pill{display:none}.brand h1{font-size:16px}.toolbar{flex-direction:column}.toolbar-right{width:100%}.toolbar-right .btn{flex:1}.toolbar-left{width:100%;justify-content:space-between}.field{flex:1}.field select{max-width:130px}.below{grid-template-columns:1fr}.workspace{min-height:0}.editor-panel #editor{min-height:390px}#plainEditor{min-height:390px}.output-block{min-height:280px}#output{min-height:230px}.statusbar{align-items:flex-start}.panel-meta{display:none}}
+    @media(max-width:580px){.shell{padding:15px 10px}.top-right .pill{display:none}.brand-logo{width:min(250px,68vw);max-height:64px}.brand-context{display:none}.toolbar{flex-direction:column}.toolbar-right{width:100%}.toolbar-right .btn{flex:1}.toolbar-left{width:100%;justify-content:space-between}.field{flex:1}.field select{max-width:130px}.below{grid-template-columns:1fr}.workspace{min-height:0}.editor-panel #editor{min-height:390px}#plainEditor{min-height:390px}.output-block{min-height:280px}#output{min-height:230px}.statusbar{align-items:flex-start}.panel-meta{display:none}}
     @media(max-width:900px){body.focus-mode .workspace{grid-template-columns:1fr;overflow:auto}body.focus-mode .editor-panel{height:58vh;min-height:360px}body.focus-mode .side-panel{height:42vh;min-height:320px}body.focus-mode #editor,body.focus-mode #plainEditor{min-height:0}}
     @media(max-width:580px){body.focus-mode .toolbar{flex-direction:row;align-items:center;padding:7px 8px}body.focus-mode .toolbar-left{width:auto;justify-content:flex-start}body.focus-mode .toolbar-right{width:auto;flex:1}body.focus-mode .toolbar-right .btn{flex:1;padding:7px 6px;font-size:10px}body.focus-mode .file-label span:last-child{display:none}body.focus-mode .workspace{display:flex;flex-direction:column}body.focus-mode .editor-panel{height:58vh;min-height:320px;flex:none}body.focus-mode .side-panel{height:42vh;min-height:300px;flex:none}body.focus-mode .panel-meta{display:none}}
   </style>
-  <script src="./coi-serviceworker.min.js?v=20261014-formatter-cache-fix"></script>
+  <script src="./coi-serviceworker.min.js?v=20261014-ict-brand"></script>
   <script type="importmap">
     {
       "imports": {
@@ -143,19 +143,19 @@
   <div class="shell">
     <header>
       <div class="brand">
-        <div class="brand-mark">C++</div>
-        <div><h1>CodeLab <span style="color:#aa9eff">C++</span></h1><p>ICT Playground · Belajar, tulis, jalankan.</p></div>
+        <img class="brand-logo" src="./assets/ict-al-firdaus-logo.svg" alt="ICT Al Firdaus — Fun Coding Schools">
+        <div class="brand-context"><strong>C++ PLAYGROUND</strong>Belajar, tulis, jalankan.</div>
       </div>
-      <div class="top-right"><span class="pill"><span class="dot"></span> Compiler di browser</span><span class="pill">C++17 / C++20</span></div>
+      <div class="top-right"><span class="pill"><span class="dot"></span> Compiler di browser</span><span class="pill">C++11–C++20</span></div>
     </header>
 
     <section class="intro">
       <div>
-        <p class="eyebrow">Online C++ playground</p>
-        <h2>Tulis kode. <span>Uji ide.</span> Terus belajar.</h2>
-        <p class="desc">Editor C++ yang bisa menjalankan program langsung di browser. Tidak perlu memasang compiler di komputer dan tidak membutuhkan backend milikmu sendiri.</p>
+        <p class="eyebrow">ICT AL FIRDAUS · FUN CODING SCHOOLS</p>
+        <h2>Belajar coding. <span>Uji ide.</span> Terus berkarya.</h2>
+        <p class="desc">C++ Playground untuk siswa ICT SMPIT Al Firdaus Purwodadi. Tulis, rapikan, kompilasi, dan jalankan program langsung di browser—tanpa perlu memasang compiler.</p>
       </div>
-      <div class="privacy"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Kode dikompilasi di browser. Compiler dimuat dari CDN saat dibutuhkan; pertama kali bisa memerlukan unduhan cukup besar.</span></div>
+      <div class="privacy"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Kode dikompilasi langsung di browser menggunakan WebAssembly. Compiler dan dependensi dimuat dari CDN ketika diperlukan.</span></div>
     </section>
 
     <section id="compilerDownloadSection" class="compiler-download" aria-labelledby="compilerDownloadTitle">
@@ -166,10 +166,10 @@
             Compiler WebAssembly
             <span class="muted-note compiler-cache-badge" id="compilerCacheBadge">Belum disiapkan</span>
           </div>
-          <p class="compiler-download-desc">Siapkan compiler, editor, runtime, dan file aplikasi agar CodeLab bisa dibuka kembali tanpa internet. Unduhan pertama sekitar 95 MB untuk aset compiler, ditambah dependensi editor/runtime.</p>
+          <p class="compiler-download-desc">Siapkan compiler, editor, runtime, dan file aplikasi agar playground ICT dapat dibuka kembali tanpa internet. Unduhan pertama sekitar 95 MB untuk aset compiler, ditambah dependensi editor/runtime.</p>
         </div>
         <div class="compiler-download-actions">
-          <button class="btn" id="compilerDownloadBtn" type="button">Siapkan CodeLab untuk Offline</button>
+          <button class="btn" id="compilerDownloadBtn" type="button">Siapkan untuk Offline</button>
         </div>
       </div>
       <div class="compiler-progress-wrap">
@@ -180,7 +180,7 @@
         <div id="compilerProgressBar" role="progressbar" aria-label="Progress pengunduhan compiler" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
           <div id="compilerProgressFill"></div>
         </div>
-        <div id="compilerDownloadStatus" aria-live="polite">Klik Siapkan CodeLab untuk Offline. Website akan menyiapkan aset compiler, dependensi runtime/editor, dan file aplikasi; status siap hanya ditampilkan setelah pemeriksaan selesai.</div>
+        <div id="compilerDownloadStatus" aria-live="polite">Klik Siapkan untuk Offline. Website menyiapkan aset compiler, editor, runtime, dan file aplikasi; status siap ditampilkan setelah pemeriksaan selesai.</div>
       </div>
     </section>
 
@@ -245,8 +245,8 @@
       <div class="info-card"><h3><span style="color:#a89cff">⌘</span> Pintasan keyboard</h3><p><kbd>Ctrl</kbd> + <kbd>Enter</kbd> jalankan program · <kbd>Tab</kbd> sisipkan indentasi · tombol <b>Unduh kode</b> untuk menyimpan file .cpp.</p></div>
       <div class="info-card"><h3><span style="color:var(--cyan)">◈</span> Catatan lingkungan</h3><p>Program berjalan dalam sandbox WebAssembly. Akses sistem operasi, jaringan, file permanen, thread, dan beberapa fitur seperti exception C++ tidak tersedia atau terbatas.</p></div>
     </section>
-    <footer><span>CodeLab C++ · Untuk pembelajaran pemrograman</span><span>Compiler oleh <a href="https://github.com/BertalanD/browsercc" target="_blank" rel="noreferrer">browsercc</a> · UI dapat kamu modifikasi sendiri</span></footer>
+    <footer><span>ICT Al Firdaus · Fun Coding Schools · C++ Playground</span><span>Compiler oleh <a href="https://github.com/BertalanD/browsercc" target="_blank" rel="noreferrer">browsercc</a> · Dibuat untuk pembelajaran coding</span></footer>
   </div>
-  <script type="module" src="./app.js?v=20261014-formatter-cache-fix" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
+  <script type="module" src="./app.js?v=20261014-ict-brand" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
 </body>
 </html>
