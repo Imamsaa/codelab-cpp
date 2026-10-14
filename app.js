@@ -38,13 +38,18 @@ const loadNote = document.getElementById("loadNote");
 const lineInfo = document.getElementById("lineInfo");
 const editorRoot = document.getElementById("editor");
 const compilerDownloadBtn = document.getElementById("compilerDownloadBtn");
-const compilerProgressFill = document.getElementById("compilerProgressFill");
-const compilerProgressBar = document.getElementById("compilerProgressBar");
+const compilerProgressBar = document.getElementById("compilerProgressBar") || document.querySelector('[role="progressbar"]');
+const compilerProgressFill = document.getElementById("compilerProgressFill") || (() => {
+  const fill = document.createElement("div");
+  fill.id = "compilerProgressFill";
+  if (compilerProgressBar) compilerProgressBar.appendChild(fill);
+  return fill;
+})();
 const compilerProgressLabel = document.getElementById("compilerProgressLabel");
 const compilerProgressPercent = document.getElementById("compilerProgressPercent");
 const compilerDownloadStatus = document.getElementById("compilerDownloadStatus");
 const compilerCacheBadge = document.getElementById("compilerCacheBadge");
-const compilerDownloadSection = document.getElementById("compilerDownloadSection");
+const compilerDownloadSection = document.getElementById("compilerDownloadSection") || document.querySelector(".compiler-download");
 
 const COMPILER_CACHE_NAME = "codelab-compiler-assets-v1";
 const RUNTIME_CACHE_NAME = "codelab-runtime-assets-v1";
@@ -211,7 +216,7 @@ function formatBytes(value) {
 
 function setCompilerProgress(percent, label, status) {
   const safePercent = Math.max(0, Math.min(100, percent));
-  compilerProgressFill.style.width = compilerProgressFill.classList.contains("indeterminate")
+  compilerProgressFill.style.width = compilerProgressFill?.classList.contains("indeterminate")
     ? "35%"
     : safePercent + "%";
   compilerProgressBar.setAttribute("aria-valuenow", String(Math.round(safePercent)));
@@ -322,7 +327,7 @@ async function refreshCompilerCacheState() {
 
     const assetPercent = Math.round((compiler.cachedBytes / EXPECTED_COMPILER_BYTES) * OFFLINE_PROGRESS_WEIGHT);
     if (readiness.ready) {
-      compilerDownloadSection.classList.add("ready");
+      compilerDownloadSection?.classList.add("ready");
       compilerCacheBadge.textContent = "Siap offline";
       compilerDownloadBtn.disabled = true;
       compilerDownloadBtn.textContent = "CodeLab siap offline ✓";
@@ -330,7 +335,7 @@ async function refreshCompilerCacheState() {
       return;
     }
 
-    compilerDownloadSection.classList.remove("ready");
+    compilerDownloadSection?.classList.remove("ready");
     compilerDownloadBtn.disabled = compilerDownloadInProgress;
     compilerDownloadBtn.textContent = compiler.count
       ? "Lanjutkan persiapan offline"
@@ -410,7 +415,7 @@ async function prepareCodeLabOffline() {
   compilerDownloadBtn.disabled = true;
   compilerDownloadBtn.textContent = "Menyiapkan offline…";
   compilerCacheBadge.textContent = "Sedang menyiapkan";
-  compilerProgressFill.classList.add("indeterminate");
+  compilerProgressFill?.classList.add("indeterminate");
   setCompilerProgress(
     0,
     "Menyiapkan unduhan offline…",
@@ -435,7 +440,7 @@ async function prepareCodeLabOffline() {
       }
     }
     const missing = COMPILER_ASSETS.filter((asset) => !existing.has(asset.url));
-    compilerProgressFill.classList.remove("indeterminate");
+    compilerProgressFill?.classList.remove("indeterminate");
     setCompilerProgress(
       Math.round((completedExpected / EXPECTED_COMPILER_BYTES) * OFFLINE_PROGRESS_WEIGHT),
       missing.length ? "Menyiapkan " + missing.length + " aset compiler…" : "Compiler sudah tersimpan",
