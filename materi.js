@@ -1,6 +1,7 @@
 const STORAGE_KEY = "cpp-playground-lesson-progress-v1";
 const CODE_KEY_PREFIX = "cpp-playground-lesson-code-";
 const CHALLENGE_STORAGE_KEY = "cpp-playground-completed-challenges-v1";
+const INPUT_KEY_PREFIX = "cpp-playground-lesson-input-";
 const lessons = [
   {
     id: "intro", kind: "reading", title: "Pengenalan C++", category: "Pengantar", level: "Pemula", duration: "5 menit",
@@ -461,6 +462,9 @@ const taskRequirements = document.getElementById("taskRequirements");
 const lessonEditorHost = document.getElementById("lessonEditor");
 const standardSelect = document.getElementById("lessonStandard");
 const checkAnswerBtn = document.getElementById("checkAnswerBtn");
+const runProgramBtn = document.getElementById("runProgramBtn");
+const programInput = document.getElementById("programInput");
+const programOutput = document.getElementById("programOutput");
 const stopChallengeBtn = document.getElementById("stopChallengeBtn");
 const resetCodeBtn = document.getElementById("resetCodeBtn");
 const statusText = document.getElementById("statusText");
@@ -489,6 +493,8 @@ let activeWorker = null;
 let challengeTimeout = null;
 let completedLessons = new Set();
 let savedCodes = {};
+let savedInputs = {};
+let lastRunSignature = "";
 let fallbackEdited = false;
 
 function escapeHtml(value) {
@@ -503,6 +509,34 @@ function challengeKey(lesson = currentLesson, challenge = getCurrentChallenge())
 
 function getCurrentChallenge() {
   return currentLesson.challenges?.[currentChallengeIndex] || null;
+}
+
+function getRunSignature() {
+  const challenge = getCurrentChallenge();
+  if (!challenge) return "";
+  return JSON.stringify({
+    key: challengeKey(currentLesson, challenge),
+    source: getCode(),
+    input: programInput.value,
+    standard: standardSelect.value
+  });
+}
+
+function hasMatchingRun() {
+  return Boolean(lastRunSignature) && lastRunSignature === getRunSignature();
+}
+
+function updateCheckButtonState() {
+  if (checkAnswerBtn) checkAnswerBtn.disabled = Boolean(activeWorker) || !hasMatchingRun();
+}
+
+function saveProgramInput() {
+  const challenge = getCurrentChallenge();
+  if (!challenge) return;
+  const key = challengeKey(currentLesson, challenge);
+  savedInputs[key] = programInput.value;
+  try { localStorage.setItem(INPUT_KEY_PREFIX + key, programInput.value); } catch { /* Storage is optional. */ }
+  updateCheckButtonState();
 }
 
 function isLessonComplete(lesson) {
@@ -530,6 +564,8 @@ function loadSavedState() {
         const value = localStorage.getItem(CODE_KEY_PREFIX + key);
         if (value !== null) savedCodes[key] = value;
         else if (challenge === lesson.challenges[0] && legacyValue !== null) savedCodes[key] = legacyValue;
+        const savedInput = localStorage.getItem(INPUT_KEY_PREFIX + key);
+        if (savedInput !== null) savedInputs[key] = savedInput;
       }
     }
   } catch (error) {
@@ -573,9 +609,11 @@ function setStatus(message, kind = "idle") {
 }
 
 function setBusy(busy) {
-  checkAnswerBtn.disabled = busy;
+  runProgramBtn.disabled = busy;
+  checkAnswerBtn.disabled = busy || !hasMatchingRun();
   stopChallengeBtn.disabled = !busy;
   resetCodeBtn.disabled = busy;
+  programInput.disabled = busy;
 }
 
 function updateProgress() {
@@ -684,12 +722,17 @@ function renderChallenge() {
   }
 
   const key = challengeKey(currentLesson, challenge);
+  const sampleInput = example && example.input && example.input !== "(tidak ada input)" ? example.input : "";
+  programInput.value = Object.prototype.hasOwnProperty.call(savedInputs, key) ? savedInputs[key] : sampleInput;
+  lastRunSignature = "";
   caseCount.textContent = "— / " + challenge.tests.length;
   judgeState.textContent = completedChallenges.has(key) ? "Latihan selesai" : "Belum diuji";
   compileDiagnostics.classList.remove("show");
   compileDiagnostics.textContent = "";
-  resultsList.innerHTML = '<div class="empty-results">Kerjakan latihan ini, lalu tekan <b>Periksa Jawaban</b>. Setiap latihan memiliki progres dan kode tersimpan sendiri.</div>';
+  resultsList.innerHTML = '<div class="empty-results">Jalankan program terlebih dahulu. Setelah mencoba kode dan melihat outputnya, tekan <b>Periksa Jawaban</b> untuk penilaian otomatis.</div>';
+  programOutput.textContent = "Output program akan tampil di sini setelah kamu menekan Jalankan Program.";
   setCode(savedCodes[key] ?? challenge.starter);
+  updateCheckButtonState();
 }
 
 function selectChallenge(indexValue) {
@@ -789,8 +832,113 @@ function stopChallenge(message = "Program dihentikan.") {
   judgeState.textContent = "Dihentikan";
 }
 
+function runProgram() {
+  if (currentLesson.kind === "reading") return;
+  if (activeWorker) stopChallenge("Proses sebelumnya dihentikan.");
+
+  const source = getCode();
+  if (!source.trim()) {
+    setStatus("Editor masih kosong.", "error");
+    return;
+  }
+
+  saveCode();
+  saveProgramInput();
+  lastRunSignature = "";
+  const runSignature = getRunSignature();
+  updateCheckButtonState();
+  setBusy(true);
+  setStatus("Menyiapkan compiler untuk menjalankan program…", "busy");
+  judgeState.textContent = "Menjalankan program";
+  caseCount.textContent = "— / —";
+  compileDiagnostics.classList.remove("show");
+  compileDiagnostics.textContent = "";
+  programOutput.textContent = "Program sedang dikompilasi dan dijalankan…";
+  resultsList.innerHTML = '<div class="empty-results">Selesai mencoba program? Tinjau output di atas, lalu tekan <b>Periksa Jawaban</b> untuk menjalankan test otomatis.</div>';
+
+  try {
+    activeWorker = new Worker(new URL("./compiler-worker.js", import.meta.url), { type: "module" });
+  } catch (error) {
+    setBusy(false);
+    setStatus("Tidak dapat memulai compiler worker.", "error");
+    compileDiagnostics.textContent = error?.message || String(error);
+    compileDiagnostics.classList.add("show");
+    programOutput.textContent = "Program tidak dapat dijalankan.";
+    return;
+  }
+
+  challengeTimeout = setTimeout(() => {
+    if (!activeWorker) return;
+    stopChallenge("Batas waktu tercapai. Periksa kemungkinan perulangan tanpa akhir.");
+    programOutput.textContent += "\n\nProgram dihentikan setelah melewati batas waktu 90 detik.";
+    judgeState.textContent = "Waktu habis";
+    resultsList.innerHTML = '<div class="result-item failed"><div class="result-top"><span>Program dihentikan</span><span class="failed-text">✕ Waktu habis</span></div><div class="result-detail">Periksa kemungkinan perulangan tanpa akhir, lalu jalankan ulang.</div></div>';
+  }, 90000);
+
+  activeWorker.onmessage = (event) => {
+    const data = event.data || {};
+    if (data.type === "status") {
+      setStatus(data.message || "Sedang memproses…", "busy");
+      return;
+    }
+    if (data.type === "output") {
+      programOutput.textContent += data.text || "";
+      programOutput.scrollTop = programOutput.scrollHeight;
+      return;
+    }
+    if (data.type === "started") {
+      setStatus("Program berjalan dengan input yang kamu siapkan.", "busy");
+      return;
+    }
+    if (data.type === "result") {
+      finishChallenge();
+      if (data.compileOutput && data.compileOutput.trim()) {
+        compileDiagnostics.textContent = data.compileOutput.trim();
+        compileDiagnostics.classList.add("show");
+      }
+      programOutput.textContent = data.runtimeOutput || (data.ok ? "(Program selesai tanpa menghasilkan output.)" : "Program gagal dijalankan.");
+      if (data.ok) {
+        lastRunSignature = runSignature;
+        judgeState.textContent = "Sudah dijalankan";
+        resultsList.innerHTML = '<div class="empty-results">Program berhasil dijalankan. Periksa hasil outputnya, lalu tekan <b>Periksa Jawaban</b> jika ingin menguji jawaban secara otomatis.</div>';
+        setStatus("Program selesai. Tinjau output, lalu periksa jawaban.", "ok");
+      } else {
+        lastRunSignature = "";
+        judgeState.textContent = "Program gagal";
+        const errorText = data.compileOutput || data.error || "Periksa sintaks dan coba jalankan kembali.";
+        resultsList.innerHTML = '<div class="result-item failed"><div class="result-top"><span>Jalankan program</span><span class="failed-text">✕ Gagal</span></div><div class="result-detail">' + escapeHtml(errorText) + '</div></div>';
+        setStatus("Program gagal dijalankan. Perbaiki error lalu coba kembali.", "error");
+      }
+      updateCheckButtonState();
+      return;
+    }
+  };
+
+  activeWorker.onerror = (event) => {
+    finishChallenge();
+    lastRunSignature = "";
+    compileDiagnostics.textContent = event?.message || "Terjadi kesalahan pada compiler worker.";
+    compileDiagnostics.classList.add("show");
+    judgeState.textContent = "Terjadi error";
+    programOutput.textContent = "Compiler mengalami kesalahan saat menjalankan program.";
+    setStatus("Compiler gagal berjalan.", "error");
+    updateCheckButtonState();
+  };
+
+  activeWorker.postMessage({
+    source,
+    input: programInput.value,
+    standard: standardSelect.value
+  });
+}
+
 function runChallenge() {
   if (currentLesson.kind === "reading") return;
+  if (!hasMatchingRun()) {
+    setStatus("Jalankan program terlebih dahulu. Jika kode atau input berubah, jalankan lagi sebelum memeriksa.", "error");
+    updateCheckButtonState();
+    return;
+  }
   if (activeWorker) stopChallenge("Pemeriksaan sebelumnya dihentikan.");
   const source = getCode();
   if (!source.trim()) {
@@ -879,6 +1027,7 @@ async function initializeEditor() {
   fallbackCode.addEventListener("input", () => {
     fallbackEdited = true;
     saveCode();
+    updateCheckButtonState();
   });
   fallbackCode.addEventListener("keydown", (event) => {
     if (event.key !== "Tab") return;
@@ -952,7 +1101,10 @@ async function initializeEditor() {
           }
         }),
         EditorView.updateListener.of((update) => {
-          if (update.docChanged) saveCode();
+          if (update.docChanged) {
+            saveCode();
+            updateCheckButtonState();
+          }
         }),
         EditorView.theme({
           "&": { height: "100%", fontSize: "12px" },
@@ -979,7 +1131,10 @@ challengeButtons.addEventListener("click", (event) => {
   const button = event.target.closest("[data-challenge-index]");
   if (button) selectChallenge(button.dataset.challengeIndex);
 });
+runProgramBtn.addEventListener("click", runProgram);
 checkAnswerBtn.addEventListener("click", runChallenge);
+programInput.addEventListener("input", saveProgramInput);
+standardSelect.addEventListener("change", updateCheckButtonState);
 markReadBtn.addEventListener("click", markReadingComplete);
 stopChallengeBtn.addEventListener("click", () => stopChallenge("Pemeriksaan dihentikan oleh pengguna."));
 resetCodeBtn.addEventListener("click", () => {
@@ -990,12 +1145,15 @@ resetCodeBtn.addEventListener("click", () => {
   resultsList.innerHTML = '<div class="empty-results">Kode latihan direset. Tulis solusi, lalu periksa jawaban.</div>';
   caseCount.textContent = "— / " + challenge.tests.length;
   judgeState.textContent = completedChallenges.has(challengeKey(currentLesson, challenge)) ? "Latihan selesai" : "Belum diuji";
+  lastRunSignature = "";
+  programOutput.textContent = "Kode direset. Jalankan program untuk melihat output, lalu periksa jawaban.";
+  updateCheckButtonState();
   setStatus("Kode latihan dikembalikan ke template awal.", "idle");
 });
 window.addEventListener("keydown", (event) => {
   if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
     event.preventDefault();
-    runChallenge();
+    runProgram();
   }
 });
 
