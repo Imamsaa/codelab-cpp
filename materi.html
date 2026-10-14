@@ -56,6 +56,11 @@
     .tag.level{color:#c0b6ff;border-color:#51488b;background:#241f43}
     .lesson-content h2{margin:0;font-size:23px;line-height:1.2;letter-spacing:-.45px}
     .lesson-summary{margin:9px 0 18px;color:var(--muted);font-size:12px;line-height:1.7;max-width:900px}
+    .lesson-source{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:-7px 0 15px;font-size:10px;line-height:1.5}
+    .lesson-source[hidden]{display:none}
+    .lesson-source span{color:#7f8eaa;text-transform:uppercase;font-size:9px;font-weight:800;letter-spacing:.7px}
+    .lesson-source a{color:#a99bff;text-decoration:underline;text-underline-offset:3px}
+    .lesson-source a:hover{color:#d4ceff}
     .content-blocks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
     .concept{padding:13px 14px;border:1px solid #27344d;border-radius:10px;background:#0c1423}
     .concept h3{margin:0 0 6px;font-size:11px}
@@ -117,7 +122,7 @@
     @media(max-width:720px){.page{padding:14px 10px 22px}.topbar{margin-bottom:18px}.intro{align-items:stretch;flex-direction:column}.progress-card{min-width:0}.layout{grid-template-columns:1fr}.lesson-nav{position:static}.lesson-nav #lessonList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.lesson-content{padding:16px}.content-blocks{grid-template-columns:1fr}.example-grid{grid-template-columns:1fr 1fr}.challenge{min-height:0}.editor-actions{align-items:flex-start}.actions-left,.actions-right{flex-wrap:wrap}.judge-side{min-height:300px}}
     @media(max-width:440px){.top-actions .btn span{display:none}.lesson-nav #lessonList{grid-template-columns:1fr}.lesson-content h2{font-size:20px}.example-grid{grid-template-columns:1fr}.btn{padding:8px 9px}.actions-right{width:100%}.actions-right .btn{flex:1}}
   </style>
-  <script src="./coi-serviceworker.min.js?v=20261014-intro-reading"></script>
+  <script src="./coi-serviceworker.min.js?v=20261014-six-lessons"></script>
   <script type="importmap">
     {
       "imports": {
@@ -151,7 +156,7 @@
         <p class="desc">Pelajari konsep, lihat contoh, lalu kerjakan tantangan di editor. Jawaban diperiksa dengan beberapa test case agar kamu bisa langsung mengetahui apakah program sudah benar.</p>
       </div>
       <div class="progress-card">
-        <div class="progress-row"><span>Progres belajar</span><strong id="progressCount">0/1 selesai</strong></div>
+        <div class="progress-row"><span>Progres belajar</span><strong id="progressCount">0/6 selesai</strong></div>
         <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
       </div>
     </section>
@@ -168,6 +173,10 @@
           <div class="lesson-kicker"><span class="tag" id="lessonCategory">Dasar</span><span class="tag level" id="lessonLevel">Pemula</span><span class="tag" id="lessonDuration">10 menit</span></div>
           <h2 id="lessonTitle">Memuat materi…</h2>
           <p class="lesson-summary" id="lessonSummary"></p>
+          <div class="lesson-source" id="lessonSource" hidden>
+            <span>Referensi</span>
+            <a id="lessonSourceLink" href="#" target="_blank" rel="noreferrer">Buka sumber materi ↗</a>
+          </div>
           <div class="content-blocks" id="conceptBlocks"></div>
           <div class="example" id="lessonExample"></div>
           <div class="statement">
@@ -176,9 +185,7 @@
             <ul id="taskRequirements"></ul>
           </div>
           <div id="readingActions" class="reading-actions" hidden>
-            <p>Materi pengantar ini berfokus pada konsep, belum membutuhkan editor kode.<br>
-              Sumber referensi: <a href="https://www.w3schools.com/cpp/cpp_intro.asp" target="_blank" rel="noreferrer">W3Schools — C++ Introduction</a>.
-            </p>
+            <p>Materi pengantar ini berfokus pada konsep, belum membutuhkan editor kode.<br>Tandai selesai setelah kamu memahami pengertian dan kegunaan C++.</p>
             <button class="btn btn-primary" id="markReadBtn" type="button">Tandai selesai membaca</button>
           </div>
         </article>
@@ -221,6 +228,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./materi.js?v=20261014-intro-only"></script>
+  <script type="module" src="./materi.js?v=20261014-six-lessons"></script>
 </body>
 </html>
