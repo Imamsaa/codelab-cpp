@@ -40,7 +40,7 @@ class SharedQueueStdin extends OpenFile {
 }
 
 self.onmessage = async (event) => {
-  const { source, input = "", standard = "c++17", sharedInput = null } = event.data || {};
+  const { source, input = "", standard = "c++17", sharedInput = null, testCases = null } = event.data || {};
   let compileOutput = "";
   let runtimeOutput = "";
   let sharedHeader = sharedInput ? new Int32Array(sharedInput, 0, 4) : null;
@@ -74,6 +74,75 @@ self.onmessage = async (event) => {
         compileOutput: compileOutput || "Kompilasi gagal. Tidak ada modul WebAssembly yang dihasilkan.",
         runtimeOutput: "",
         error: ""
+      });
+      return;
+    }
+
+    if (Array.isArray(testCases)) {
+      const normalizeOutput = (value) => String(value ?? "")
+        .replace(/\r\n/g, "\n")
+        .trim()
+        .replace(/[ \t]+/g, " ")
+        .replace(/\n+/g, "\n");
+      const testResults = [];
+
+      for (let index = 0; index < testCases.length; index++) {
+        const testCase = testCases[index];
+        self.postMessage({
+          type: "test-case-start",
+          index,
+          total: testCases.length,
+          message: "Menjalankan test case " + (index + 1) + " dari " + testCases.length + "…"
+        });
+
+        const encoder = new TextEncoder();
+        const inputText = testCase.input && !testCase.input.endsWith("\n")
+          ? testCase.input + "\n"
+          : (testCase.input || "");
+        const stdoutParts = [];
+        const stderrParts = [];
+        const stdoutDecoder = new TextDecoder("utf-8");
+        const stderrDecoder = new TextDecoder("utf-8");
+        const fds = [
+          new OpenFile(new File(encoder.encode(inputText))),
+          new ConsoleStdout((bytes) => stdoutParts.push(stdoutDecoder.decode(bytes, { stream: true }))),
+          new ConsoleStdout((bytes) => stderrParts.push(stderrDecoder.decode(bytes, { stream: true }))
+        ];
+        const wasi = new WASI([], [], fds);
+        const instance = await WebAssembly.instantiate(result.module, {
+          wasi_snapshot_preview1: wasi.wasiImport
+        });
+
+        let runtimeError = "";
+        try {
+          wasi.start(instance);
+        } catch (error) {
+          runtimeError = error && (error.message || String(error));
+        }
+        stdoutParts.push(stdoutDecoder.decode());
+        stderrParts.push(stderrDecoder.decode());
+
+        const actual = stdoutParts.join("");
+        const stderr = stderrParts.join("");
+        const expected = String(testCase.expected ?? "");
+        const passed = !runtimeError && normalizeOutput(actual) === normalizeOutput(expected);
+
+        testResults.push({
+          index,
+          input: testCase.input || "",
+          expected,
+          actual,
+          stderr,
+          runtimeError,
+          passed
+        });
+      }
+
+      self.postMessage({
+        type: "challenge-result",
+        ok: true,
+        compileOutput,
+        tests: testResults
       });
       return;
     }
