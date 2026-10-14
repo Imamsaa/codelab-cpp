@@ -59,8 +59,8 @@ const compilerCacheBadge = document.getElementById("compilerCacheBadge");
 const compilerDownloadSection = document.getElementById("compilerDownloadSection") || document.querySelector(".compiler-download");
 
 const COMPILER_CACHE_NAME = "codelab-compiler-assets-v1";
-const RUNTIME_CACHE_NAME = "codelab-runtime-assets-v12";
-const APP_CACHE_NAME = "codelab-offline-shell-v12";
+const RUNTIME_CACHE_NAME = "codelab-runtime-assets-v13";
+const APP_CACHE_NAME = "codelab-offline-shell-v13";
 const APP_SHELL_FILES = ["index.html", "app.js", "compiler-worker.js", "coi-serviceworker.min.js", "materi.html", "materi.js"];
 const OFFLINE_PROGRESS_WEIGHT = 82;
 const FORMATTER_BASE_URL = "https://cdn.jsdelivr.net/npm/@wasm-fmt/clang-format@23.1.0/";
