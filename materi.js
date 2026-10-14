@@ -120,6 +120,104 @@ const lessons = [
     ].join("\n"),
     tests: [{ input: "", expected: "Halo!\nSaya belajar C++.", visible: true }]
   }
+,
+  {
+    id: "comments", title: "Komentar dalam C++", category: "Dasar C++", level: "Pemula", duration: "8 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_comments.asp", sourceLabel: "W3Schools — C++ Comments",
+    summary: "Komentar adalah catatan di dalam kode yang diabaikan compiler. Komentar membantu menjelaskan maksud kode, memberi pengingat, dan memudahkan orang lain membaca program.",
+    concepts: [
+      { title: "Komentar satu baris", body: "Gunakan <code>//</code> untuk menulis komentar sampai akhir baris. Contohnya <code>// Menampilkan salam</code>. Komentar tidak ikut tampil sebagai output program." },
+      { title: "Komentar beberapa baris", body: "Gunakan <code>/*</code> untuk memulai komentar blok dan <code>*/</code> untuk mengakhirinya. Komentar ini dapat mencakup beberapa baris, tetapi harus ditutup dengan benar." },
+      { title: "Kapan menggunakan komentar?", body: "Tulis komentar untuk menjelaskan tujuan atau logika yang tidak langsung terlihat. Hindari komentar yang hanya mengulang sesuatu yang sudah jelas. Komentar bukan instruksi yang dijalankan program." }
+    ],
+    example: { input: "(tidak ada input)", output: "Halo C++" },
+    task: "Tambahkan komentar satu baris yang menjelaskan bahwa program akan menampilkan salam, lalu tampilkan Halo C++.",
+    requirements: ["Gunakan komentar yang dimulai dengan //.", "Tampilkan Halo C++ menggunakan cout.", "Komentar tidak boleh menjadi bagian dari output."],
+    starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: tulis komentar tentang salam", "    cout << \"Halo C++\";", "    return 0;", "}"].join("\n"),
+    tests: [{ input: "", expected: "Halo C++", visible: true }]
+  },
+  {
+    id: "variables", title: "Variabel dalam C++", category: "Variabel", level: "Pemula", duration: "10 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_variables.asp", sourceLabel: "W3Schools — C++ Variables",
+    summary: "Variabel adalah tempat bernama untuk menyimpan nilai. Setiap variabel memiliki tipe data, nama, dan dapat diberi nilai yang kemudian digunakan kembali di dalam program.",
+    concepts: [
+      { title: "Deklarasi variabel", body: "Tulis tipe data lalu nama variabel, misalnya <code>int umur;</code>. Baris ini membuat variabel bernama <code>umur</code> yang menyimpan bilangan bulat." },
+      { title: "Memberikan nilai", body: "Tanda <code>=</code> digunakan untuk memberi nilai, misalnya <code>int umur = 13;</code>. Pemberian nilai saat deklarasi disebut inisialisasi." },
+      { title: "Tipe data umum", body: "<code>int</code> menyimpan bilangan bulat, <code>double</code> menyimpan bilangan desimal, <code>char</code> menyimpan satu karakter, dan <code>string</code> menyimpan teks. Gunakan <code>#include &lt;string&gt;</code> saat memakai string." },
+      { title: "Menggunakan variabel", body: "Setelah dibuat, nilai variabel dapat digunakan dalam perhitungan atau ditampilkan dengan <code>cout</code>. Nama variabel membedakan nilai tersebut dari teks biasa." }
+    ],
+    example: { input: "(tidak ada input)", output: "Alya 13" },
+    task: "Buat variabel string bernama nama dengan nilai Alya dan variabel int bernama umur dengan nilai 13. Tampilkan keduanya dipisahkan satu spasi.",
+    requirements: ["Deklarasikan string nama dan int umur.", "Gunakan variabel di dalam cout, bukan menulis nilainya sebagai teks.", "Output harus tepat: Alya 13."],
+    starter: ["#include <iostream>", "#include <string>", "using namespace std;", "", "int main() {", "    // TODO: deklarasikan nama dan umur", "    // TODO: tampilkan kedua variabel", "    return 0;", "}"].join("\n"),
+    tests: [{ input: "", expected: "Alya 13", visible: true }]
+  },
+  {
+    id: "variables-multiple", title: "Membuat Beberapa Variabel", category: "Variabel", level: "Pemula", duration: "8 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_variables_multiple.asp", sourceLabel: "W3Schools — Multiple Variables",
+    summary: "Program dapat memiliki banyak variabel. Variabel dengan tipe data sama bisa dideklarasikan pada satu baris menggunakan koma, atau ditulis pada baris terpisah agar lebih mudah dibaca.",
+    concepts: [
+      { title: "Deklarasi pada satu baris", body: "Contoh <code>int x = 5, y = 10, z = 15;</code> membuat tiga variabel bertipe <code>int</code>. Setiap nama memiliki nilai masing-masing." },
+      { title: "Deklarasi terpisah", body: "Kamu juga dapat menulis <code>int x = 5;</code> lalu <code>int y = 10;</code>. Pilih format yang paling mudah dipahami untuk kode yang sedang dibuat." },
+      { title: "Nilai yang sama", body: "Beberapa variabel dapat diberi nilai yang sama dalam satu pernyataan, contohnya <code>int a, b, c; a = b = c = 7;</code>. Semua variabel tersebut akan menyimpan nilai 7." }
+    ],
+    example: { input: "(tidak ada input)", output: "5 10 15" },
+    task: "Deklarasikan tiga variabel bertipe int dalam satu baris: x bernilai 5, y bernilai 10, dan z bernilai 15. Tampilkan ketiganya dengan satu spasi sebagai pemisah.",
+    requirements: ["Gunakan satu deklarasi int untuk x, y, dan z.", "Tampilkan nilai variabel sesuai urutan x, y, z.", "Output harus tepat: 5 10 15."],
+    starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: deklarasikan x, y, z dalam satu baris", "    // TODO: tampilkan x, y, z", "    return 0;", "}"].join("\n"),
+    tests: [{ input: "", expected: "5 10 15", visible: true }]
+  },
+  {
+    id: "identifiers", title: "Nama Variabel (Identifiers)", category: "Variabel", level: "Pemula", duration: "8 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_variables_identifiers.asp", sourceLabel: "W3Schools — C++ Identifiers",
+    summary: "Identifier adalah nama yang digunakan untuk variabel dan elemen program lain. Nama yang jelas membuat kode lebih mudah dibaca, dan aturan penamaan harus dipatuhi agar program dapat dikompilasi.",
+    concepts: [
+      { title: "Aturan nama identifier", body: "Nama dapat berisi huruf, angka, dan garis bawah (<code>_</code>), tetapi tidak boleh diawali angka. Contoh valid: <code>nilaiSiswa</code>, <code>nilai_akhir</code>, dan <code>kelas7</code>." },
+      { title: "Hindari spasi dan simbol", body: "Nama seperti <code>nama siswa</code> tidak valid karena mengandung spasi. Tanda seperti <code>@</code> dan <code>-</code> juga tidak dapat digunakan sebagai bagian identifier biasa." },
+      { title: "Peka huruf besar-kecil", body: "<code>nilai</code>, <code>Nilai</code>, dan <code>NILAI</code> dianggap nama yang berbeda. Nama identifier juga tidak boleh memakai kata kunci C++ seperti <code>int</code> atau <code>return</code>." }
+    ],
+    example: { input: "(tidak ada input)", output: "Nilai akhir: 95" },
+    task: "Buat variabel nilai_awal bernilai 80 dan bonus bernilai 15. Simpan jumlahnya ke variabel nilai_akhir, lalu tampilkan dengan format Nilai akhir: 95.",
+    requirements: ["Gunakan nama variabel nilai_awal, bonus, dan nilai_akhir persis seperti instruksi.", "Hitung nilai_akhir dari dua variabel sebelumnya.", "Tampilkan label dan nilai akhir menggunakan cout."],
+    starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: buat variabel dengan identifier yang diminta", "    // TODO: hitung dan tampilkan nilai akhir", "    return 0;", "}"].join("\n"),
+    tests: [{ input: "", expected: "Nilai akhir: 95", visible: true }]
+  },
+  {
+    id: "constants", title: "Konstanta dalam C++", category: "Variabel", level: "Pemula", duration: "8 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_variables_constants.asp", sourceLabel: "W3Schools — C++ Constants",
+    summary: "Konstanta mirip variabel, tetapi nilainya tidak boleh diubah setelah diinisialisasi. Kata kunci const membantu menjaga nilai yang seharusnya tetap, seperti jumlah hari dalam seminggu atau harga tetap.",
+    concepts: [
+      { title: "Menggunakan const", body: "Tambahkan kata kunci <code>const</code> saat deklarasi, contohnya <code>const int hari = 7;</code>. Variabel konstanta harus diberi nilai saat dibuat." },
+      { title: "Nilai tidak dapat diubah", body: "Setelah deklarasi <code>const</code>, mencoba memberi nilai baru akan menyebabkan error kompilasi. Ini mencegah nilai penting berubah tanpa sengaja." },
+      { title: "Konstanta dalam perhitungan", body: "Nilai konstanta dapat digunakan seperti variabel biasa untuk menghitung total atau hasil lainnya. Gunakan nama yang menjelaskan tujuan nilai tersebut." }
+    ],
+    example: { input: "(tidak ada input)", output: "Total: 15000" },
+    task: "Buat konstanta biaya bernilai 5000 dan konstanta jumlah bernilai 3. Hitung total biaya dan tampilkan dengan format Total: 15000.",
+    requirements: ["Gunakan const int untuk biaya dan jumlah.", "Hitung total dengan mengalikan biaya dan jumlah.", "Jangan mengubah nilai konstanta setelah deklarasi."],
+    starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: buat dua konstanta", "    // TODO: hitung dan tampilkan total biaya", "    return 0;", "}"].join("\n"),
+    tests: [{ input: "", expected: "Total: 15000", visible: true }]
+  },
+  {
+    id: "user-input", title: "Input Pengguna dengan cin", category: "Input", level: "Pemula", duration: "10 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_user_input.asp", sourceLabel: "W3Schools — C++ User Input",
+    summary: "Program interaktif dapat menerima data dari pengguna. Di C++, cin digunakan bersama operator >> untuk membaca nilai dari input standar, lalu nilai tersebut dapat diproses atau ditampilkan kembali.",
+    concepts: [
+      { title: "Membaca input dengan cin", body: "Contoh <code>int umur;</code> lalu <code>cin &gt;&gt; umur;</code> membaca sebuah bilangan bulat yang diketik pengguna. Operator <code>&gt;&gt;</code> memasukkan nilai input ke variabel." },
+      { title: "Input harus sesuai tipe data", body: "Jika variabel bertipe <code>int</code>, masukkan bilangan bulat. Untuk teks satu kata, gunakan <code>string</code> dan sertakan <code>#include &lt;string&gt;</code>. <code>cin &gt;&gt; nama</code> berhenti membaca teks saat bertemu spasi." },
+      { title: "Membaca beberapa nilai", body: "Kamu dapat menulis <code>cin &gt;&gt; nama &gt;&gt; umur;</code> untuk membaca lebih dari satu nilai secara berurutan. Data dapat dipisahkan spasi atau baris baru." },
+      { title: "Mengolah input", body: "Nilai yang dibaca dapat digunakan dalam operasi matematika dan ditampilkan dengan <code>cout</code>. Program yang baik tidak menganggap input pengguna selalu sama." }
+    ],
+    example: { input: "Alya 13", output: "Nama: Alya, umur: 13" },
+    task: "Baca satu kata nama dan satu bilangan umur dari pengguna. Tampilkan dengan format Nama: Alya, umur: 13 sesuai data input.",
+    requirements: ["Baca nama dan umur menggunakan cin.", "Gunakan variabel string nama dan int umur.", "Output harus mengikuti format Nama: [nama], umur: [umur]."],
+    starter: ["#include <iostream>", "#include <string>", "using namespace std;", "", "int main() {", "    string nama;", "    int umur;", "    // TODO: baca nama dan umur menggunakan cin", "    // TODO: tampilkan kedua nilai sesuai format", "    return 0;", "}"].join("\n"),
+    tests: [
+      { input: "Alya 13", expected: "Nama: Alya, umur: 13", visible: true },
+      { input: "Bima 14", expected: "Nama: Bima, umur: 14", visible: true },
+      { input: "Nisa 12", expected: "Nama: Nisa, umur: 12", visible: true }
+    ]
+  }
+
 ];
 
 
@@ -213,7 +311,124 @@ const EXTRA_CHALLENGES = {
       starter:["#include <iostream>","using namespace std;","","int main() {","    // TODO: tampilkan dua kalimat dengan satu baris kosong","    return 0;","}"].join("\n"),
       tests:[{input:"",expected:"Baris pertama\n\nBaris kedua",visible:true}]
     }
+  ],
+  ,
+  comments: [
+    {
+      id: "comments-2", title: "Latihan 2 · Komentar blok", difficulty: "Mudah",
+      task: "Gunakan komentar blok /* ... */ untuk menjelaskan bahwa program menampilkan pesan, lalu tampilkan Komentar tidak tampil.",
+      requirements: ["Tambahkan komentar blok yang ditutup dengan */.", "Gunakan cout untuk menampilkan pesan.", "Output tidak boleh berisi teks komentar."],
+      example: { input: "(tidak ada input)", output: "Komentar tidak tampil" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    /* TODO: tulis komentar blok */", "    cout << \"Komentar tidak tampil\";", "    return 0;", "}"].join("\n"),
+      tests: [{ input: "", expected: "Komentar tidak tampil", visible: true }]
+    },
+    {
+      id: "comments-3", title: "Latihan 3 · Dokumentasikan perhitungan", difficulty: "Tantangan",
+      task: "Gunakan komentar untuk menjelaskan perhitungan total dari harga 10 dan ongkir 5. Tampilkan dengan format Total: 15.",
+      requirements: ["Gunakan variabel harga dan ongkir yang sudah disediakan.", "Tambahkan komentar yang menjelaskan perhitungan.", "Hitung dan tampilkan total dengan cout."],
+      example: { input: "(tidak ada input)", output: "Total: 15" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    int harga = 10;", "    int ongkir = 5;", "    // TODO: jelaskan dan tampilkan total harga + ongkir", "    return 0;", "}"].join("\n"),
+      tests: [{ input: "", expected: "Total: 15", visible: true }]
+    }
+  ],
+  variables: [
+    {
+      id: "variables-2", title: "Latihan 2 · Simpan skor", difficulty: "Mudah",
+      task: "Buat variabel int bernama skor bernilai 95, lalu tampilkan nilainya.",
+      requirements: ["Deklarasikan int skor = 95.", "Tampilkan nilai dari variabel skor.", "Jangan menulis 95 sebagai teks literal di cout."],
+      example: { input: "(tidak ada input)", output: "95" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: deklarasikan skor dan tampilkan nilainya", "    return 0;", "}"].join("\n"),
+      tests: [{ input: "", expected: "95", visible: true }]
+    },
+    {
+      id: "variables-3", title: "Latihan 3 · Hitung luas persegi panjang", difficulty: "Tantangan",
+      task: "Buat variabel int panjang bernilai 8 dan lebar bernilai 4. Hitung luas dengan mengalikan kedua variabel dan tampilkan hasilnya.",
+      requirements: ["Gunakan variabel panjang dan lebar bertipe int.", "Simpan hasil perkalian pada variabel luas.", "Output harus tepat: 32."],
+      example: { input: "(tidak ada input)", output: "32" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: deklarasikan panjang dan lebar", "    // TODO: hitung serta tampilkan luas", "    return 0;", "}"].join("\n"),
+      tests: [{ input: "", expected: "32", visible: true }]
+    }
+  ],
+  "variables-multiple": [
+    {
+      id: "variables-multiple-2", title: "Latihan 2 · Nilai variabel sama", difficulty: "Mudah",
+      task: "Deklarasikan variabel a, b, dan c bertipe int. Beri ketiganya nilai 7 dalam satu pernyataan assignment, lalu tampilkan dengan pemisah spasi.",
+      requirements: ["Deklarasikan a, b, dan c sebagai int.", "Gunakan assignment berantai a = b = c = 7.", "Output harus tepat: 7 7 7."],
+      example: { input: "(tidak ada input)", output: "7 7 7" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    int a, b, c;", "    // TODO: beri nilai yang sama lalu tampilkan semuanya", "    return 0;", "}"].join("\n"),
+      tests: [{ input: "", expected: "7 7 7", visible: true }]
+    },
+    {
+      id: "variables-multiple-3", title: "Latihan 3 · Total barang", difficulty: "Tantangan",
+      task: "Deklarasikan buku = 2 dan pensil = 3 pada satu baris bertipe int. Hitung total jumlah barang dan tampilkan dengan format Total barang: 5.",
+      requirements: ["Deklarasikan buku dan pensil dalam satu baris.", "Hitung total dari kedua variabel.", "Tampilkan sesuai format yang diminta."],
+      example: { input: "(tidak ada input)", output: "Total barang: 5" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: deklarasikan buku dan pensil bersama-sama", "    // TODO: hitung dan tampilkan total barang", "    return 0;", "}"].join("\n"),
+      tests: [{ input: "", expected: "Total barang: 5", visible: true }]
+    }
+  ],
+  identifiers: [
+    {
+      id: "identifiers-2", title: "Latihan 2 · Identifier dengan garis bawah", difficulty: "Mudah",
+      task: "Buat variabel jumlah_buku bernilai 4. Tampilkan dengan format Jumlah buku: 4.",
+      requirements: ["Gunakan nama variabel jumlah_buku dengan garis bawah.", "Simpan nilai 4 sebagai int.", "Tampilkan nilai melalui variabel."],
+      example: { input: "(tidak ada input)", output: "Jumlah buku: 4" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: gunakan identifier jumlah_buku", "    return 0;", "}"].join("\n"),
+      tests: [{ input: "", expected: "Jumlah buku: 4", visible: true }]
+    },
+    {
+      id: "identifiers-3", title: "Latihan 3 · Identifier dengan angka", difficulty: "Tantangan",
+      task: "Buat variabel nilai1 = 70 dan nilai2 = 85. Tampilkan keduanya dengan format Nilai 1: 70, Nilai 2: 85.",
+      requirements: ["Gunakan nama nilai1 dan nilai2; nama diawali huruf, bukan angka.", "Deklarasikan keduanya bertipe int.", "Tampilkan nilai sesuai format."],
+      example: { input: "(tidak ada input)", output: "Nilai 1: 70, Nilai 2: 85" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: deklarasikan nilai1 dan nilai2", "    // TODO: tampilkan kedua nilai", "    return 0;", "}"].join("\n"),
+      tests: [{ input: "", expected: "Nilai 1: 70, Nilai 2: 85", visible: true }]
+    }
+  ],
+  constants: [
+    {
+      id: "constants-2", title: "Latihan 2 · Konstanta hari", difficulty: "Mudah",
+      task: "Buat konstanta int bernama hariDalamMinggu bernilai 7, lalu tampilkan nilainya.",
+      requirements: ["Gunakan const int hariDalamMinggu = 7.", "Tampilkan konstanta tersebut menggunakan cout.", "Output harus tepat: 7."],
+      example: { input: "(tidak ada input)", output: "7" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: deklarasikan dan tampilkan konstanta", "    return 0;", "}"].join("\n"),
+      tests: [{ input: "", expected: "7", visible: true }]
+    },
+    {
+      id: "constants-3", title: "Latihan 3 · Total harga tetap", difficulty: "Tantangan",
+      task: "Gunakan konstanta harga = 7000 dan jumlah = 2 untuk menghitung total. Tampilkan hasilnya dengan format Total: 14000.",
+      requirements: ["Deklarasikan kedua nilai menggunakan const int.", "Hitung total dengan mengalikan harga dan jumlah.", "Jangan mengubah nilai konstanta setelah deklarasi."],
+      example: { input: "(tidak ada input)", output: "Total: 14000" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: deklarasikan konstanta harga dan jumlah", "    // TODO: hitung dan tampilkan total", "    return 0;", "}"].join("\n"),
+      tests: [{ input: "", expected: "Total: 14000", visible: true }]
+    }
+  ],
+  "user-input": [
+    {
+      id: "user-input-2", title: "Latihan 2 · Input nama dan kelas", difficulty: "Mudah",
+      task: "Baca satu kata nama dan angka kelas menggunakan cin. Tampilkan dengan format Alya kelas 7 sesuai input.",
+      requirements: ["Gunakan variabel string nama dan int kelas.", "Baca kedua nilai melalui cin.", "Output mengikuti format [nama] kelas [kelas]."],
+      example: { input: "Alya 7", output: "Alya kelas 7" },
+      starter: ["#include <iostream>", "#include <string>", "using namespace std;", "", "int main() {", "    string nama;", "    int kelas;", "    // TODO: baca nama dan kelas", "    // TODO: tampilkan nama dan kelas", "    return 0;", "}"].join("\n"),
+      tests: [
+        { input: "Alya 7", expected: "Alya kelas 7", visible: true },
+        { input: "Bima 8", expected: "Bima kelas 8", visible: true }
+      ]
+    },
+    {
+      id: "user-input-3", title: "Latihan 3 · Jumlahkan input", difficulty: "Tantangan",
+      task: "Baca dua bilangan bulat dari input, hitung jumlahnya, lalu tampilkan hasil penjumlahan saja.",
+      requirements: ["Baca dua bilangan menggunakan cin.", "Simpan keduanya di variabel int.", "Hitung dan tampilkan jumlahnya; uji juga dengan input lain."],
+      example: { input: "12 8", output: "20" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    int a, b;", "    // TODO: baca dua bilangan, jumlahkan, lalu tampilkan hasilnya", "    return 0;", "}"].join("\n"),
+      tests: [
+        { input: "12 8", expected: "20", visible: true },
+        { input: "45 55", expected: "100", visible: true },
+        { input: "-3 10", expected: "7", visible: true }
+      ]
+    }
   ]
+
 };
 
 for (const lesson of lessons) {
