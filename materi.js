@@ -281,7 +281,7 @@ function markReadingComplete() {
   updateProgress();
 }
 
-
+function selectLesson(lessonId) {
   const lesson = lessons.find((item) => item.id === lessonId);
   if (!lesson || lesson.id === currentLesson.id) return;
   if (activeWorker) stopChallenge("Pemeriksaan dihentikan karena materi diganti.");
