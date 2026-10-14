@@ -1,6 +1,6 @@
-# CodeLab C++ — ICT Playground
+# ICT Al Firdaus — C++ Playground
 
-Playground C++ statis untuk belajar pemrograman langsung di browser. Kode C++ dikompilasi menjadi WebAssembly menggunakan proyek open-source [browsercc](https://github.com/BertalanD/browsercc), tanpa backend compiler milik sendiri.
+Playground C++ statis untuk siswa ICT Al Firdaus Purwodadi, dengan identitas Fun Coding Schools. Kode C++ dikompilasi menjadi WebAssembly menggunakan proyek open-source [browsercc](https://github.com/BertalanD/browsercc), tanpa backend compiler milik sendiri.
 
 ## Deploy di GitHub Pages
 
@@ -14,11 +14,11 @@ File \`index.html\`, \`app.js\`, \`compiler-worker.js\`, dan \`coi-serviceworker
 
 ## Menyiapkan mode offline
 
-1. Buka CodeLab melalui GitHub Pages saat internet masih tersedia.
+1. Buka ICT C++ Playground melalui GitHub Pages saat internet masih tersedia.
 2. Tunggu halaman selesai memuat editor. Pastikan Service Worker sudah mengendalikan halaman.
-3. Klik **Siapkan CodeLab untuk Offline**. Proses mengunduh aset compiler (sekitar 95 MB) dan memuat dependensi editor/runtime yang digunakan aplikasi.
-4. Tunggu hingga status berubah menjadi **CodeLab siap digunakan offline**. Persiapan belum dianggap selesai bila ada berkas atau dependensi yang gagal disimpan.
-5. Matikan internet lalu muat ulang alamat CodeLab untuk menguji mode offline.
+3. Klik **Siapkan ICT C++ Playground untuk Offline**. Proses mengunduh aset compiler (sekitar 95 MB) dan memuat dependensi editor/runtime yang digunakan aplikasi.
+4. Tunggu hingga status berubah menjadi **ICT C++ Playground siap digunakan offline**. Persiapan belum dianggap selesai bila ada berkas atau dependensi yang gagal disimpan.
+5. Matikan internet lalu muat ulang alamat ICT C++ Playground untuk menguji mode offline.
 
 Tombol ini menggunakan Cache Storage untuk menyimpan aset compiler, modul editor/runtime dari CDN, dan file aplikasi lokal. Browser dapat menghapus data situs secara otomatis saat ruang penyimpanan terbatas; bila itu terjadi, sambungkan internet lalu siapkan ulang mode offline.
 
@@ -36,9 +36,9 @@ Tombol ini menggunakan Cache Storage untuk menyimpan aset compiler, modul editor
 - Jika browser tidak mengaktifkan cross-origin isolation, website beralih ke mode stdin cadangan: isi input sebelum menekan Jalankan.
 ## Cara kerja dan batasan
 
-- Compiler Clang/LLD WebAssembly dimuat saat runtime dari CDN publik. Tombol **Siapkan CodeLab untuk Offline** mengunduh dan menyimpan `index.js`, `clang.js`, `lld.js`, `clang.wasm`, `lld.wasm`, dan `sysroot.tar`, lalu memuat modul editor/runtime agar tersimpan dalam cache. Ukuran aset compiler besar sekitar 95 MB sebelum kompresi/cache menurut dokumentasi browsercc.
+- Compiler Clang/LLD WebAssembly dimuat saat runtime dari CDN publik. Tombol **Siapkan ICT C++ Playground untuk Offline** mengunduh dan menyimpan `index.js`, `clang.js`, `lld.js`, `clang.wasm`, `lld.wasm`, dan `sysroot.tar`, lalu memuat modul editor/runtime agar tersimpan dalam cache. Ukuran aset compiler besar sekitar 95 MB sebelum kompresi/cache menurut dokumentasi browsercc.
 - Persiapan offline juga memuat modul `@wasm-fmt/clang-format` dan file WASM formatter untuk mendukung tombol Format ketika internet mati. Formatter menambah unduhan awal di luar ukuran compiler C++ sekitar 95 MB.
-- Progress bar memperkirakan progres berdasarkan ukuran aset compiler dan memiliki tahap terpisah untuk memuat dependensi serta memverifikasi mode offline. Status **CodeLab siap digunakan offline** baru ditampilkan jika aset compiler, file aplikasi, editor, runtime WASI, dan Service Worker terdeteksi.
+- Progress bar memperkirakan progres berdasarkan ukuran aset compiler dan memiliki tahap terpisah untuk memuat dependensi serta memverifikasi mode offline. Status **ICT C++ Playground siap digunakan offline** baru ditampilkan jika aset compiler, file aplikasi, editor, runtime WASI, dan Service Worker terdeteksi.
 - Aset eksternal disimpan di Cache Storage oleh Service Worker. Uji offline sebenarnya dengan mematikan koneksi dan memuat ulang situs setelah status siap. Browser dapat membersihkan cache situs; mode offline tidak dapat dijamin jika data tersebut dihapus.
 - \`coi-serviceworker.min.js\` membantu mengaktifkan \`SharedArrayBuffer\` pada static hosting yang tidak menyediakan header COOP/COEP langsung. Browser harus mengizinkan Service Worker. Saat pertama kali membuka website, halaman dapat memuat ulang sekali untuk mengaktifkan mode tersebut.
 - Pada mode interaktif, antrean input dibagikan antara halaman dan Worker. Program dapat berhenti menunggu \`cin\` sementara pengguna mengetik di terminal, sedangkan stdout/stderr dikirim ke terminal saat diproduksi.
