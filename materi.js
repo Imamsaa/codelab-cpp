@@ -1004,7 +1004,7 @@ const EXTRA_CHALLENGES = {
 
 };
 
-for (const lesson of lessons {
+for (const lesson of lessons) {
   if (lesson.kind === "reading") continue;
   const firstChallenge = {
     id: lesson.id + "-1",
