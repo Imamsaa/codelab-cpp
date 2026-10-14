@@ -100,7 +100,7 @@
     @media(max-width:900px){.intro{align-items:flex-start;flex-direction:column}.privacy{max-width:100%}.workspace{grid-template-columns:1fr}.editor-panel{border-right:0;border-bottom:1px solid var(--line)}#editor{min-height:420px}.side-panel{min-height:510px}.toolbar{align-items:flex-start}.toolbar-left,.toolbar-right{max-width:100%}}
     @media(max-width:580px){.shell{padding:15px 10px}.top-right .pill{display:none}.brand h1{font-size:16px}.toolbar{flex-direction:column}.toolbar-right{width:100%}.toolbar-right .btn{flex:1}.toolbar-left{width:100%;justify-content:space-between}.field{flex:1}.field select{max-width:130px}.below{grid-template-columns:1fr}.workspace{min-height:0}.editor-panel #editor{min-height:390px}#plainEditor{min-height:390px}.output-block{min-height:280px}#output{min-height:230px}.statusbar{align-items:flex-start}.panel-meta{display:none}}
   </style>
-  <script src="./coi-serviceworker.min.js?v=20261014-2"></script>
+  <script src="./coi-serviceworker.min.js?v=20261014-offline"></script>
   <script type="importmap">
     {
       "imports": {
@@ -142,21 +142,21 @@
             Compiler WebAssembly
             <span class="muted-note" id="compilerCacheBadge">Belum disiapkan</span>
           </div>
-          <p class="compiler-download-desc">Unduh dan simpan aset compiler ke cache browser terlebih dahulu agar proses Run berikutnya tidak perlu mengunduh ulang file besar. Ukuran total sekitar 95 MB; perlu koneksi internet pada pengunduhan pertama.</p>
+          <p class="compiler-download-desc">Siapkan compiler, editor, runtime, dan file aplikasi agar CodeLab bisa dibuka kembali tanpa internet. Unduhan pertama sekitar 95 MB untuk aset compiler, ditambah dependensi editor/runtime.</p>
         </div>
         <div class="compiler-download-actions">
-          <button class="btn btn-primary" id="compilerDownloadBtn" type="button">Unduh compiler (±95 MB)</button>
+          <button class="btn btn-primary" id="compilerDownloadBtn" type="button">Siapkan CodeLab untuk Offline</button>
         </div>
       </div>
       <div class="compiler-progress-wrap">
         <div class="compiler-progress-meta">
-          <span id="compilerProgressLabel">Belum ada pengunduhan</span>
+          <span id="compilerProgressLabel">Belum disiapkan untuk offline</span>
           <span id="compilerProgressPercent">0%</span>
         </div>
         <div id="compilerProgressBar" role="progressbar" aria-label="Progress pengunduhan compiler" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
           <div id="compilerProgressFill"></div>
         </div>
-        <div id="compilerDownloadStatus" aria-live="polite">Klik tombol Unduh compiler untuk mengunduh dan menyimpan aset ke browser. Cache dikelola oleh browser dan dapat dihapus kapan saja dari pengaturan situs.</div>
+        <div id="compilerDownloadStatus" aria-live="polite">Klik Siapkan CodeLab untuk Offline. Website akan menyiapkan aset compiler, dependensi runtime/editor, dan file aplikasi; status siap hanya ditampilkan setelah pemeriksaan selesai.</div>
       </div>
     </section>
 
@@ -210,6 +210,6 @@
     </section>
     <footer><span>CodeLab C++ · Untuk pembelajaran pemrograman</span><span>Compiler oleh <a href="https://github.com/BertalanD/browsercc" target="_blank" rel="noreferrer">browsercc</a> · UI dapat kamu modifikasi sendiri</span></footer>
   </div>
-  <script type="module" src="./app.js?v=20261014-2" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
+  <script type="module" src="./app.js?v=20261014-offline" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
 </body>
 </html>
