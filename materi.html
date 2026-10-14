@@ -81,6 +81,21 @@
     .concept strong{color:#dbe5f6}
     .example[hidden],.statement[hidden],.challenge[hidden],.reading-actions[hidden]{display:none!important}
     .challenge{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(285px,.9fr);min-height:530px}
+    .challenge-picker{grid-column:1 / -1;padding:13px 14px;border-bottom:1px solid var(--line);background:#0c1423}
+    .challenge-picker[hidden]{display:none!important}
+    .challenge-picker-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}
+    .challenge-picker-head strong{font-size:10px;text-transform:uppercase;letter-spacing:.65px;color:#c9d4e8}
+    .challenge-picker-head span{font-size:10px;color:#8190aa}
+    #challengeButtons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .challenge-chip{display:flex;align-items:center;gap:9px;min-width:0;padding:9px 10px;border:1px solid #293650;border-radius:9px;background:#101a2b;color:#a9b8d0;text-align:left}
+    .challenge-chip:hover{border-color:#4d5880;background:#151f35}
+    .challenge-chip.active{border-color:#6e60c4;background:#211e3c;color:#f0edff;box-shadow:inset 0 0 0 1px #6e60c433}
+    .challenge-chip.complete .challenge-chip-number{background:#184833;color:#75e7ae}
+    .challenge-chip-number{display:grid;place-items:center;flex:0 0 26px;width:26px;height:26px;border-radius:7px;background:#222d43;color:#d0daec;font-size:10px;font-weight:850}
+    .challenge-chip.active .challenge-chip-number{background:#7262d1;color:#fff}
+    .challenge-chip-copy{display:block;min-width:0}
+    .challenge-chip-copy strong{display:block;font-size:10px;line-height:1.35;font-weight:750}
+    .challenge-chip-copy small{display:block;margin-top:4px;color:#8494b0;font-size:9px}
     .editor-side{display:flex;flex-direction:column;min-width:0;border-right:1px solid var(--line)}
     .panel-head{height:43px;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid var(--line);background:#111a2c}
     .panel-title{font-size:10px;font-weight:800;letter-spacing:.55px;text-transform:uppercase;color:#c2cee1}
@@ -119,7 +134,7 @@
     #statusDot.ok{background:var(--green)}#statusDot.error{background:var(--red)}
     @keyframes pulse{50%{opacity:.35}}
     @media(max-width:1100px){.layout{grid-template-columns:205px minmax(0,1fr)}.challenge{grid-template-columns:minmax(0,1fr)}.editor-side{border-right:0;border-bottom:1px solid var(--line)}#lessonEditor{height:380px}.judge-side{min-height:330px}}
-    @media(max-width:720px){.page{padding:14px 10px 22px}.topbar{margin-bottom:18px}.intro{align-items:stretch;flex-direction:column}.progress-card{min-width:0}.layout{grid-template-columns:1fr}.lesson-nav{position:static}.lesson-nav #lessonList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.lesson-content{padding:16px}.content-blocks{grid-template-columns:1fr}.example-grid{grid-template-columns:1fr 1fr}.challenge{min-height:0}.editor-actions{align-items:flex-start}.actions-left,.actions-right{flex-wrap:wrap}.judge-side{min-height:300px}}
+    @media(max-width:720px){.page{padding:14px 10px 22px}.topbar{margin-bottom:18px}.intro{align-items:stretch;flex-direction:column}.progress-card{min-width:0}.layout{grid-template-columns:1fr}.lesson-nav{position:static}.lesson-nav #lessonList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.lesson-content{padding:16px}.content-blocks{grid-template-columns:1fr}.example-grid{grid-template-columns:1fr 1fr}.challenge{min-height:0}.editor-actions{align-items:flex-start}.actions-left,.actions-right{flex-wrap:wrap}.judge-side{min-height:300px}.challenge-picker{padding:10px}.challenge-picker-head{align-items:flex-start;flex-direction:column;gap:4px}#challengeButtons{grid-template-columns:1fr}.challenge-chip{padding:8px 9px}}
     @media(max-width:440px){.top-actions .btn span{display:none}.lesson-nav #lessonList{grid-template-columns:1fr}.lesson-content h2{font-size:20px}.example-grid{grid-template-columns:1fr}.btn{padding:8px 9px}.actions-right{width:100%}.actions-right .btn{flex:1}}
   </style>
   <script src="./coi-serviceworker.min.js?v=20261014-six-lessons"></script>
@@ -180,7 +195,7 @@
           <div class="content-blocks" id="conceptBlocks"></div>
           <div class="example" id="lessonExample"></div>
           <div class="statement">
-            <h3>🎯 Tantangan</h3>
+            <h3>🎯 <span id="challengeHeading">Tantangan</span></h3>
             <p id="lessonTask"></p>
             <ul id="taskRequirements"></ul>
           </div>
@@ -190,7 +205,11 @@
           </div>
         </article>
 
-        <section class="card challenge" aria-label="Playground latihan">
+        <section class="card challenge" aria-label="Playground latihan" hidden>
+          <div id="challengePicker" class="challenge-picker" hidden>
+            <div class="challenge-picker-head"><strong>Rangkaian latihan materi</strong><span id="challengeCountLabel">Latihan 1 dari 3</span></div>
+            <div id="challengeButtons" aria-label="Pilih latihan"></div>
+          </div>
           <div class="editor-side">
             <div class="panel-head">
               <span class="panel-title">✦ Playground latihan</span>
@@ -228,6 +247,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./materi.js?v=20261014-six-lessons"></script>
+  <script type="module" src="./materi.js?v=20261014-multi-practice"></script>
 </body>
 </html>
