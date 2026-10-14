@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Playground C++ untuk belajar pemrograman langsung di browser. Tanpa instalasi compiler dan tanpa backend sendiri.">
+  <title>CodeLab C++ — ICT Playground</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%237c5cff'/%3E%3Cpath d='M38 30 18 50l20 20M62 30l20 20-20 20M57 22 43 78' fill='none' stroke='white' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <style>
+    :root{color-scheme:dark;--bg:#090d18;--panel:#101729;--panel2:#0c1323;--line:#25314a;--text:#e8edf8;--muted:#96a3bd;--accent:#8b7bff;--cyan:#66e3d5;--green:#42d392;--red:#ff6f91;--radius:16px}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body{background-image:radial-gradient(ellipse at 10% 0%,rgba(124,92,255,.13),transparent 32%),radial-gradient(ellipse at 92% 20%,rgba(40,205,197,.08),transparent 26%)}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    .shell{max-width:1500px;margin:0 auto;padding:24px clamp(14px,3vw,40px) 22px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
+    .brand{display:flex;gap:13px;align-items:center;min-width:0}
+    .brand-mark{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:linear-gradient(145deg,#8b7bff,#5d49cb);box-shadow:0 9px 28px #6651dc40;color:white;font-weight:850;letter-spacing:-2px;font-size:16px;flex-shrink:0}
+    .brand h1{font-size:18px;line-height:1.2;letter-spacing:-.5px;margin:0;font-weight:760}
+    .brand p{margin:5px 0 0;color:var(--muted);font-size:12px}
+    .top-right{display:flex;align-items:center;gap:9px}
+    .pill{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;background:#111b2c;border:1px solid var(--line);border-radius:999px;color:#c1cee2;font-size:12px;white-space:nowrap}
+    .dot{height:7px;width:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px #42d39280}
+    .intro{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:18px}
+    .eyebrow{font-size:11px;letter-spacing:1.7px;text-transform:uppercase;color:var(--cyan);font-weight:800;margin:0 0 8px}
+    .intro h2{font-size:clamp(24px,3vw,35px);line-height:1.12;letter-spacing:-1.2px;margin:0;font-weight:800}
+    .intro h2 span{color:#a89cff}
+    .intro .desc{max-width:630px;color:var(--muted);font-size:13px;line-height:1.65;margin:10px 0 0}
+    .privacy{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:12px;padding:10px 12px;max-width:240px;line-height:1.5;display:flex;gap:8px;align-items:flex-start}
+    .privacy svg{flex-shrink:0;color:var(--cyan);margin-top:2px}
+    .toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);border-bottom:0;border-radius:var(--radius) var(--radius) 0 0;background:rgba(17,25,44,.95)}
+    .toolbar-left,.toolbar-right{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+    .file-label{display:flex;align-items:center;gap:8px;color:#dce5f7;font-size:12px;font-weight:700}
+    .file-symbol{display:grid;place-items:center;height:27px;width:27px;border-radius:8px;background:#7c5cff22;color:#b4a9ff;font-size:11px;font-weight:850}
+    .field{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}
+    select{background:#0b1323;color:#dde7f8;border:1px solid #34405a;border-radius:9px;padding:8px 28px 8px 10px;outline:none;font-size:12px}
+    .btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;border:1px solid #33415c;border-radius:10px;padding:9px 12px;background:#182239;color:#dce5f7;font-size:12px;font-weight:720;transition:transform .15s,border-color .15s,background .15s}
+    .btn:hover{border-color:#7164c7;background:#202d49}
+    .btn:active{transform:translateY(1px)}
+    .btn:disabled{cursor:wait;opacity:.55}
+    .btn-primary{color:white;border-color:#8776ff;background:linear-gradient(135deg,#7c5cff,#6651db);box-shadow:0 7px 20px #7058ef30;padding-inline:17px}
+    .btn-primary:hover{background:linear-gradient(135deg,#927fff,#715cf0);border-color:#a79aff}
+    .btn svg{height:14px;width:14px}
+    .workspace{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);min-height:580px;border:1px solid var(--line);border-radius:0 0 var(--radius) var(--radius);overflow:hidden;background:var(--panel);box-shadow:0 18px 70px #00000028}
+    .editor-panel{display:flex;flex-direction:column;min-width:0;border-right:1px solid var(--line)}
+    .panel-head{height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 15px;background:#111a2c;border-bottom:1px solid var(--line)}
+    .panel-title{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#bdc9de;display:flex;align-items:center;gap:8px}
+    .panel-meta{font-size:10px;color:#71809b}
+    #editor{flex:1;min-height:450px;overflow:hidden;background:#0d1424}
+    .cm-editor{height:100%;font-size:13px;font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
+    .cm-editor .cm-gutters{background:#0b1220;border-right:1px solid #202b40;color:#687894}
+    .cm-editor.cm-focused{outline:none}
+    .side-panel{display:flex;flex-direction:column;min-width:0;background:#0d1423}
+    .input-block,.output-block{display:flex;flex-direction:column;min-height:0}
+    .input-block{flex:0 0 34%;min-height:180px;border-bottom:1px solid var(--line)}
+    .output-block{flex:1;min-height:300px}
+    .small-head{height:43px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 14px;border-bottom:1px solid #202b40;background:#10182a}
+    .small-head .panel-title{font-size:10px}
+    .muted-note{font-size:10px;color:#7585a0}
+    #stdin{width:100%;flex:1;resize:vertical;min-height:115px;padding:12px 14px;border:0;outline:none;background:#0d1423;color:#cbd8ef;font:12px/1.65 "SFMono-Regular",Consolas,monospace;tab-size:4}
+    #stdin::placeholder{color:#52617d}
+    #output{flex:1;margin:0;padding:15px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;color:#c8d6ed;background:#0a111e;font:12px/1.7 "SFMono-Regular",Consolas,monospace}
+    #output .muted{color:#657590}
+    .statusbar{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 14px;background:#0b1220;border-top:1px solid var(--line);font-size:10px;color:#8b9ab3}
+    .status-left{display:flex;align-items:center;gap:8px;min-width:0}
+    #statusText{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .status-indicator{width:7px;height:7px;flex-shrink:0;border-radius:50%;background:#74819a}
+    .status-indicator.busy{background:#f4c96b;box-shadow:0 0 10px #f4c96b70;animation:pulse 1.2s infinite}
+    .status-indicator.ok{background:var(--green)}.status-indicator.error{background:var(--red)}
+    @keyframes pulse{50%{opacity:.35}}
+    .below{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:15px}
+    .info-card{border:1px solid var(--line);border-radius:13px;padding:14px 15px;background:#101729a8}
+    .info-card h3{font-size:12px;margin:0 0 6px;display:flex;align-items:center;gap:8px}
+    .info-card p{font-size:11px;line-height:1.65;color:var(--muted);margin:0}
+    .info-card kbd{font:10px ui-monospace,monospace;padding:3px 5px;border:1px solid #35405a;border-radius:5px;background:#0a1120;color:#d4def1}
+    footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#697995;font-size:10px;padding:18px 2px 0}
+    footer a{color:#a89cff;text-decoration:none}footer a:hover{text-decoration:underline}
+    .load-note{margin-top:12px;border:1px solid #4d4774;background:#241f43;border-radius:11px;padding:10px 13px;color:#d6d0ff;font-size:11px;line-height:1.6;display:none}
+    .load-note.show{display:block}
+    @media(max-width:900px){.intro{align-items:flex-start;flex-direction:column}.privacy{max-width:100%}.workspace{grid-template-columns:1fr}.editor-panel{border-right:0;border-bottom:1px solid var(--line)}#editor{min-height:420px}.side-panel{min-height:510px}.toolbar{align-items:flex-start}.toolbar-left,.toolbar-right{max-width:100%}}
+    @media(max-width:580px){.shell{padding:15px 10px}.top-right .pill{display:none}.brand h1{font-size:16px}.toolbar{flex-direction:column}.toolbar-right{width:100%}.toolbar-right .btn{flex:1}.toolbar-left{width:100%;justify-content:space-between}.field{flex:1}.field select{max-width:130px}.below{grid-template-columns:1fr}.workspace{min-height:0}.editor-panel #editor{min-height:390px}.input-block{flex-basis:200px}.output-block{min-height:280px}.statusbar{align-items:flex-start}.panel-meta{display:none}}
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "@codemirror/": "https://esm.sh/*@codemirror/",
+        "@lezer/": "https://esm.sh/*@lezer/",
+        "@marijn/find-cluster-break": "https://esm.sh/@marijn/find-cluster-break",
+        "codemirror": "https://esm.sh/*codemirror",
+        "crelt": "https://esm.sh/crelt",
+        "style-mod": "https://esm.sh/style-mod",
+        "w3c-keyname": "https://esm.sh/w3c-keyname"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="brand">
+        <div class="brand-mark">C++</div>
+        <div><h1>CodeLab <span style="color:#aa9eff">C++</span></h1><p>ICT Playground · Belajar, tulis, jalankan.</p></div>
+      </div>
+      <div class="top-right"><span class="pill"><span class="dot"></span> Compiler di browser</span><span class="pill">C++17 / C++20</span></div>
+    </header>
+
+    <section class="intro">
+      <div>
+        <p class="eyebrow">Online C++ playground</p>
+        <h2>Tulis kode. <span>Uji ide.</span> Terus belajar.</h2>
+        <p class="desc">Editor C++ yang bisa menjalankan program langsung di browser. Tidak perlu memasang compiler di komputer dan tidak membutuhkan backend milikmu sendiri.</p>
+      </div>
+      <div class="privacy"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Kode dikompilasi di browser. Compiler dimuat dari CDN saat dibutuhkan; pertama kali bisa memerlukan unduhan cukup besar.</span></div>
+    </section>
+
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <div class="file-label"><span class="file-symbol">CPP</span><span>main.cpp</span></div>
+        <span style="height:24px;border-left:1px solid #2a3650"></span>
+        <label class="field" for="standard">Standar<select id="standard"><option value="c++17" selected>C++17</option><option value="c++20">C++20</option><option value="c++14">C++14</option><option value="c++11">C++11</option></select></label>
+      </div>
+      <div class="toolbar-right">
+        <button class="btn" id="uploadBtn" type="button" title="Buka file .cpp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15V3m0 0L7 8m5-5 5 5M4 15v5h16v-5"/></svg>Buka .cpp</button>
+        <input id="filePicker" type="file" accept=".cpp,.cc,.cxx,.txt,text/plain" hidden>
+        <button class="btn" id="downloadBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0 5-5m-5 5-5-5M4 17v4h16v-4"/></svg>Unduh kode</button>
+        <button class="btn btn-primary" id="runBtn" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.8c0-.8.9-1.3 1.6-.9l10 6.2a1.1 1.1 0 0 1 0 1.8l-10 6.2c-.7.4-1.6-.1-1.6-.9z"/></svg><span id="runLabel">Jalankan</span></button>
+        <button class="btn" id="stopBtn" type="button" disabled>Stop</button>
+      </div>
+    </div>
+
+    <main class="workspace">
+      <section class="editor-panel">
+        <div class="panel-head"><div class="panel-title"><span style="color:#a89cff">●</span> Editor kode</div><span class="panel-meta">Ctrl + Enter untuk menjalankan</span></div>
+        <div id="editor" aria-label="Editor kode C++"></div>
+        <div class="statusbar"><div class="status-left"><span id="statusDot" class="status-indicator"></span><span id="statusText">Siap. Tulis kode lalu tekan Jalankan.</span></div><span id="lineInfo">Baris 1</span></div>
+      </section>
+      <section class="side-panel">
+        <div class="input-block">
+          <div class="small-head"><div class="panel-title"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h10M4 18h13"/></svg> Input program (stdin)</div><span class="muted-note">Satu nilai per baris</span></div>
+          <textarea id="stdin" spellcheck="false" placeholder="Contoh input untuk cin...&#10;Imam&#10;14&#10;20"></textarea>
+        </div>
+        <div class="output-block">
+          <div class="small-head"><div class="panel-title"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4zM8 9l3 3-3 3m5 0h3"/></svg> Output / Terminal</div><button class="btn" id="clearBtn" type="button" style="padding:5px 8px;font-size:10px">Bersihkan</button></div>
+          <pre id="output" aria-live="polite"><span class="muted">Output program akan muncul di sini.\n\nTips: jika program menggunakan cin, masukkan data di panel Input terlebih dahulu.</span></pre>
+        </div>
+      </section>
+    </main>
+
+    <div id="loadNote" class="load-note">Compiler sedang disiapkan. Pada penggunaan pertama, browser perlu mengunduh toolchain WebAssembly dari CDN. Waktu pemuatan bergantung pada koneksi internet; setelahnya aset dapat tersimpan di cache browser.</div>
+
+    <section class="below">
+      <div class="info-card"><h3><span style="color:#a89cff">⌘</span> Pintasan keyboard</h3><p><kbd>Ctrl</kbd> + <kbd>Enter</kbd> jalankan program · <kbd>Tab</kbd> sisipkan indentasi · tombol <b>Unduh kode</b> untuk menyimpan file .cpp.</p></div>
+      <div class="info-card"><h3><span style="color:var(--cyan)">◈</span> Catatan lingkungan</h3><p>Program berjalan dalam sandbox WebAssembly. Akses sistem operasi, jaringan, file permanen, thread, dan beberapa fitur seperti exception C++ tidak tersedia atau terbatas.</p></div>
+    </section>
+    <footer><span>CodeLab C++ · Untuk pembelajaran pemrograman</span><span>Compiler oleh <a href="https://github.com/BertalanD/browsercc" target="_blank" rel="noreferrer">browsercc</a> · UI dapat kamu modifikasi sendiri</span></footer>
+  </div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
