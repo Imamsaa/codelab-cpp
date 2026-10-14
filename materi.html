@@ -70,6 +70,11 @@
     .statement h3{margin:0 0 6px;font-size:12px}
     .statement p{margin:0;color:#c2cbe0;font-size:11px;line-height:1.7}
     .statement ul{padding-left:18px;margin:7px 0 0;color:#acb8d0;font-size:11px;line-height:1.75}
+    .reading-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:16px;padding:13px 14px;border:1px solid #2b3b56;border-radius:10px;background:#0d1626}
+    .reading-actions p{margin:0;color:#9eacc4;font-size:10px;line-height:1.6}
+    .reading-actions a{color:#a89cff;text-decoration:underline;text-underline-offset:3px}
+    .concept strong{color:#dbe5f6}
+    .example[hidden],.statement[hidden],.challenge[hidden],.reading-actions[hidden]{display:none!important}
     .challenge{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(285px,.9fr);min-height:530px}
     .editor-side{display:flex;flex-direction:column;min-width:0;border-right:1px solid var(--line)}
     .panel-head{height:43px;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid var(--line);background:#111a2c}
@@ -112,7 +117,7 @@
     @media(max-width:720px){.page{padding:14px 10px 22px}.topbar{margin-bottom:18px}.intro{align-items:stretch;flex-direction:column}.progress-card{min-width:0}.layout{grid-template-columns:1fr}.lesson-nav{position:static}.lesson-nav #lessonList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.lesson-content{padding:16px}.content-blocks{grid-template-columns:1fr}.example-grid{grid-template-columns:1fr 1fr}.challenge{min-height:0}.editor-actions{align-items:flex-start}.actions-left,.actions-right{flex-wrap:wrap}.judge-side{min-height:300px}}
     @media(max-width:440px){.top-actions .btn span{display:none}.lesson-nav #lessonList{grid-template-columns:1fr}.lesson-content h2{font-size:20px}.example-grid{grid-template-columns:1fr}.btn{padding:8px 9px}.actions-right{width:100%}.actions-right .btn{flex:1}}
   </style>
-  <script src="./coi-serviceworker.min.js?v=20261014-materials-v2"></script>
+  <script src="./coi-serviceworker.min.js?v=20261014-intro-reading"></script>
   <script type="importmap">
     {
       "imports": {
@@ -155,7 +160,7 @@
       <aside class="lesson-nav">
         <div class="nav-head"><strong>Daftar materi</strong><span>Pilih topik untuk mulai belajar</span></div>
         <div id="lessonList"></div>
-        <div class="nav-foot">Jawaban dan progres tersimpan di browser ini. Selesaikan test case untuk menandai materi selesai.</div>
+        <div class="nav-foot">Kode dan progres tersimpan di browser ini. Baca materi pengantar atau selesaikan seluruh test case untuk menandai topik selesai.</div>
       </aside>
 
       <section class="main-column">
@@ -169,6 +174,12 @@
             <h3>🎯 Tantangan</h3>
             <p id="lessonTask"></p>
             <ul id="taskRequirements"></ul>
+          </div>
+          <div id="readingActions" class="reading-actions" hidden>
+            <p>Materi pengantar ini berfokus pada konsep, belum membutuhkan editor kode.<br>
+              Sumber referensi: <a href="https://www.w3schools.com/cpp/cpp_intro.asp" target="_blank" rel="noreferrer">W3Schools — C++ Introduction</a>.
+            </p>
+            <button class="btn btn-primary" id="markReadBtn" type="button">Tandai selesai membaca</button>
           </div>
         </article>
 
@@ -210,6 +221,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./materi.js?v=20261014-materials-v2"></script>
+  <script type="module" src="./materi.js?v=20261014-intro-reading"></script>
 </body>
 </html>
