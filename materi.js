@@ -327,7 +327,7 @@ const lessons = [
       },
       {
         "title": "Output boolean",
-        "body": "Secara default cout menampilkan bool sebagai 1 atau 0. Tambahkan <code>boolalpha</code> agar tampil sebagai <code>true</code> atau <code>false</code>."
+        "body": "Secara default cout menampilkan bool sebagai 1 atau 0. Agar tampil sebagai <code>true</code> atau <code>false</code>, gunakan manipulator <code>boolalpha</code> langsung di aliran output, misalnya <code>cout &lt;&lt; boolalpha &lt;&lt; sudahLogin;</code>. Jangan membuat variabel seperti <code>int boolalpha</code>, karena itu hanya nama variabel biasa."
       },
       {
         "title": "Hasil perbandingan",
@@ -338,13 +338,13 @@ const lessons = [
       "input": "(tidak ada input)",
       "output": "true"
     },
-    "task": "Deklarasikan bool lampuMenyala bernilai true, lalu tampilkan sebagai teks true menggunakan boolalpha.",
+    "task": "Deklarasikan bool lampuMenyala bernilai true, lalu tampilkan sebagai teks true dengan cout << boolalpha << lampuMenyala. boolalpha adalah manipulator cout, bukan variabel.",
     "requirements": [
       "Gunakan variabel bool bernama lampuMenyala.",
-      "Gunakan boolalpha saat menampilkan nilai.",
+      "Gunakan cout << boolalpha << lampuMenyala; — jangan mendeklarasikan variabel bernama boolalpha.",
       "Output harus tepat: true."
     ],
-    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan bool lampuMenyala\n    // TODO: tampilkan nilainya sebagai true/false\n    return 0;\n}",
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    bool lampuMenyala = true;\n    // TODO: tampilkan sebagai true dengan cout << boolalpha << lampuMenyala\n    return 0;\n}",
     "tests": [
       {
         "input": "",
@@ -799,17 +799,17 @@ const EXTRA_CHALLENGES = {
       "id": "bool-types-2",
       "title": "Latihan 2 · Status login",
       "difficulty": "Mudah",
-      "task": "Buat bool sudahLogin = false dan tampilkan menggunakan boolalpha.",
+      "task": "Buat bool sudahLogin = false. Tampilkan sebagai teks false dengan cout << boolalpha << sudahLogin; Jangan menulis int boolalpha = sudahLogin, karena itu akan mencetak 0 atau 1.",
       "requirements": [
         "Gunakan variabel bool bernama sudahLogin.",
-        "Gunakan boolalpha.",
+        "Gunakan cout << boolalpha << sudahLogin; jangan deklarasikan int boolalpha.",
         "Output harus tepat: false."
       ],
       "example": {
         "input": "(tidak ada input)",
         "output": "false"
       },
-      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: buat dan tampilkan sudahLogin\n    return 0;\n}",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    bool sudahLogin = false;\n    // TODO: tampilkan sebagai false dengan cout << boolalpha << sudahLogin\n    return 0;\n}",
       "tests": [
         {
           "input": "",
@@ -832,7 +832,7 @@ const EXTRA_CHALLENGES = {
         "input": "(tidak ada input)",
         "output": "true"
       },
-      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    bool punyaTiket = true;\n    bool sudahMendaftar = true;\n    // TODO: tampilkan hasil AND dengan boolalpha\n    return 0;\n}",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    bool punyaTiket = true;\n    bool sudahMendaftar = true;\n    // TODO: tulis cout << boolalpha << (punyaTiket && sudahMendaftar);\n    return 0;\n}",
       "tests": [
         {
           "input": "",
