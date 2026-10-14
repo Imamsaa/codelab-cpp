@@ -175,6 +175,29 @@ async function initializeEditor() {
   let savedCode = "";
   try { savedCode = localStorage.getItem(STORAGE_KEY) || ""; } catch { /* Storage can be disabled. */ }
 
+  // Render a normal textarea immediately so the editor is usable even while CDNs load.
+  plainEditor = document.createElement("textarea");
+  plainEditor.id = "plainEditor";
+  plainEditor.spellcheck = false;
+  plainEditor.autocapitalize = "off";
+  plainEditor.value = savedCode || starterCode;
+  plainEditor.setAttribute("aria-label", "Editor kode C++");
+  editorRoot.replaceChildren(plainEditor);
+  let editedBeforeEnhancement = false;
+  plainEditor.addEventListener("input", () => {
+    editedBeforeEnhancement = true;
+    persistSource();
+  });
+  plainEditor.addEventListener("keydown", (event) => {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      const start = plainEditor.selectionStart;
+      const end = plainEditor.selectionEnd;
+      plainEditor.setRangeText("    ", start, end, "end");
+    }
+  });
+  updateLineInfo();
+
   try {
     // Resolve every CodeMirror package through the same import map to avoid duplicate state/view modules.
     const modules = await Promise.all([
@@ -182,55 +205,56 @@ async function initializeEditor() {
       import("@codemirror/lang-cpp"),
       import("@codemirror/theme-one-dark")
     ]);
+
+    // Do not replace the textarea if the user has already started typing while the CDN loaded.
+    if (editedBeforeEnhancement) {
+      setStatus("Editor teks siap. Kode tetap bisa diketik; editor visual tidak menggangu penulisan.");
+      return;
+    }
+
     const basicSetup = modules[0].basicSetup;
     const EditorView = modules[0].EditorView;
     const cpp = modules[1].cpp;
     const oneDark = modules[2].oneDark;
+    const fallback = plainEditor;
+    const initialText = fallback.value;
+    fallback.remove();
 
-    cmEditor = new EditorView({
-      doc: savedCode || starterCode,
-      parent: editorRoot,
-      extensions: [
-        basicSetup,
-        cpp(),
-        oneDark,
-        EditorView.theme({
-          "&": { height: "100%", fontSize: "13px" },
-          ".cm-scroller": { overflow: "auto", fontFamily: '"SFMono-Regular", Consolas, "Liberation Mono", monospace' },
-          ".cm-content": { padding: "14px 0" },
-          ".cm-line": { padding: "0 12px" },
-          ".cm-gutters": { minWidth: "40px" }
-        }),
-        EditorView.updateListener.of((update) => {
-          if (update.docChanged) persistSource();
-        })
-      ]
-    });
-    setStatus("Editor siap. Tulis kode lalu tekan Jalankan.");
+    try {
+      cmEditor = new EditorView({
+        doc: initialText,
+        parent: editorRoot,
+        extensions: [
+          basicSetup,
+          cpp(),
+          oneDark,
+          EditorView.theme({
+            "&": { height: "100%", fontSize: "13px" },
+            ".cm-scroller": { overflow: "auto", fontFamily: '"SFMono-Regular", Consolas, "Liberation Mono", monospace' },
+            ".cm-content": { padding: "14px 0" },
+            ".cm-line": { padding: "0 12px" },
+            ".cm-gutters": { minWidth: "40px" }
+          }),
+          EditorView.updateListener.of((update) => {
+            if (update.docChanged) persistSource();
+          })
+        ]
+      });
+      plainEditor = null;
+      setStatus("Editor siap. Tulis kode lalu tekan Jalankan.");
+    } catch (error) {
+      cmEditor = null;
+      plainEditor = fallback;
+      editorRoot.replaceChildren(fallback);
+      throw error;
+    }
   } catch (error) {
-    // Keep the page usable even if the syntax-highlighting CDN is unavailable.
-    plainEditor = document.createElement("textarea");
-    plainEditor.id = "plainEditor";
-    plainEditor.spellcheck = false;
-    plainEditor.autocapitalize = "off";
-    plainEditor.value = savedCode || starterCode;
-    plainEditor.setAttribute("aria-label", "Editor kode C++");
-    editorRoot.replaceChildren(plainEditor);
-    plainEditor.addEventListener("input", persistSource);
-    plainEditor.addEventListener("keydown", (event) => {
-      if (event.key === "Tab") {
-        event.preventDefault();
-        const start = plainEditor.selectionStart;
-        const end = plainEditor.selectionEnd;
-        plainEditor.setRangeText("    ", start, end, "end");
-      }
-    });
-    setStatus("Editor teks cadangan aktif; syntax highlighting tidak tersedia.", "error");
-    console.warn("CodeMirror failed to initialize; using plain textarea.", error);
+    // Leave the textarea in place if the syntax-highlighting CDN is unavailable or imports conflict.
+    setStatus("Editor teks siap; syntax highlighting tidak tersedia.", "error");
+    console.warn("CodeMirror failed to initialize; plain editor remains active.", error);
   }
   updateLineInfo();
 }
-
 function runProgram() {
   if (activeWorker) resetRunState();
   const source = sourceText();
