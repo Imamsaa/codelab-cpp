@@ -26,7 +26,7 @@ const lessons = [
       { title: "return 0;", body: "Baris <code>return 0;</code> mengakhiri fungsi <code>main()</code> dan biasanya menandakan program selesai dengan sukses. Baris kosong dan indentasi membantu kode lebih mudah dibaca." }
     ],
     example: { input: "(tidak ada input)", output: "Struktur C++" },
-    task: "Lengkapi program C++ agar menampilkan tepat teks Strukur C++? Tidak—teks yang benar adalah: Struktur C++.",
+    task: "Lengkapi program C++ agar menampilkan tepat teks: Struktur C++.",
     requirements: ["Pertahankan struktur #include, main(), kurung kurawal, dan return 0.", "Statement output harus diakhiri titik koma.", "Output harus persis: Struktur C++."],
     starter: [
       "#include <iostream>", "using namespace std;", "", "int main() {",
