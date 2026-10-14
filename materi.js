@@ -1,5 +1,6 @@
 const STORAGE_KEY = "cpp-playground-lesson-progress-v1";
 const CODE_KEY_PREFIX = "cpp-playground-lesson-code-";
+const CHALLENGE_STORAGE_KEY = "cpp-playground-completed-challenges-v1";
 const lessons = [
   {
     id: "intro", kind: "reading", title: "Pengenalan C++", category: "Pengantar", level: "Pemula", duration: "5 menit",
@@ -260,8 +261,14 @@ const progressFill = document.getElementById("progressFill");
 const challengePanel = document.querySelector(".challenge");
 const readingActions = document.getElementById("readingActions");
 const markReadBtn = document.getElementById("markReadBtn");
+const challengePicker = document.getElementById("challengePicker");
+const challengeButtons = document.getElementById("challengeButtons");
+const challengeCountLabel = document.getElementById("challengeCountLabel");
+const challengeHeading = document.getElementById("challengeHeading");
 
 let currentLesson = lessons[0];
+let currentChallengeIndex = 0;
+let completedChallenges = new Set();
 let cmEditor = null;
 let fallbackCode = null;
 let activeWorker = null;
@@ -276,13 +283,40 @@ function escapeHtml(value) {
   })[char]);
 }
 
+function challengeKey(lesson = currentLesson, challenge = getCurrentChallenge()) {
+  return challenge ? lesson.id + "::" + challenge.id : lesson.id;
+}
+
+function getCurrentChallenge() {
+  return currentLesson.challenges?.[currentChallengeIndex] || null;
+}
+
+function isLessonComplete(lesson) {
+  if (lesson.kind === "reading") return completedLessons.has(lesson.id);
+  const challenges = lesson.challenges || [];
+  return challenges.length > 0 && challenges.every((challenge) => completedChallenges.has(challengeKey(lesson, challenge)));
+}
+
+function completedChallengeCount(lesson) {
+  return (lesson.challenges || []).filter((challenge) => completedChallenges.has(challengeKey(lesson, challenge))).length;
+}
+
 function loadSavedState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     if (Array.isArray(saved)) completedLessons = new Set(saved);
+    const savedChallenges = JSON.parse(localStorage.getItem(CHALLENGE_STORAGE_KEY) || "[]");
+    if (Array.isArray(savedChallenges)) completedChallenges = new Set(savedChallenges);
+
     for (const lesson of lessons) {
-      const value = localStorage.getItem(CODE_KEY_PREFIX + lesson.id);
-      if (value !== null) savedCodes[lesson.id] = value;
+      const legacyValue = localStorage.getItem(CODE_KEY_PREFIX + lesson.id);
+      if (legacyValue !== null) savedCodes[lesson.id] = legacyValue;
+      for (const challenge of lesson.challenges || []) {
+        const key = challengeKey(lesson, challenge);
+        const value = localStorage.getItem(CODE_KEY_PREFIX + key);
+        if (value !== null) savedCodes[key] = value;
+        else if (challenge === lesson.challenges[0] && legacyValue !== null) savedCodes[key] = legacyValue;
+      }
     }
   } catch (error) {
     console.warn("Tidak dapat membaca progres lokal:", error);
@@ -294,9 +328,11 @@ function getCode() {
 }
 
 function saveCode() {
+  const challenge = getCurrentChallenge();
   const code = getCode();
-  savedCodes[currentLesson.id] = code;
-  try { localStorage.setItem(CODE_KEY_PREFIX + currentLesson.id, code); } catch { /* Storage is optional. */ }
+  const key = challengeKey(currentLesson, challenge);
+  savedCodes[key] = code;
+  try { localStorage.setItem(CODE_KEY_PREFIX + key, code); } catch { /* Storage is optional. */ }
   updateLineInfo();
 }
 
@@ -306,7 +342,9 @@ function setCode(code) {
   } else if (fallbackCode) {
     fallbackCode.value = code;
     updateLineInfo();
-    try { localStorage.setItem(CODE_KEY_PREFIX + currentLesson.id, code); } catch { /* Storage is optional. */ }
+    const key = challengeKey(currentLesson, getCurrentChallenge());
+    savedCodes[key] = code;
+    try { localStorage.setItem(CODE_KEY_PREFIX + key, code); } catch { /* Storage is optional. */ }
   }
 }
 
@@ -327,8 +365,8 @@ function setBusy(busy) {
 }
 
 function updateProgress() {
-  const count = lessons.filter((lesson) => completedLessons.has(lesson.id)).length;
-  progressCount.textContent = count + "/" + lessons.length + " selesai";
+  const count = lessons.filter(isLessonComplete).length;
+  progressCount.textContent = count + "/" + lessons.length + " topik selesai";
   progressFill.style.width = (count / lessons.length * 100) + "%";
   renderLessonList();
 }
@@ -336,10 +374,15 @@ function updateProgress() {
 function renderLessonList() {
   lessonList.innerHTML = lessons.map((lesson, index) => {
     const active = lesson.id === currentLesson.id;
-    const complete = completedLessons.has(lesson.id);
+    const complete = isLessonComplete(lesson);
+    const practiceCount = (lesson.challenges || []).length;
+    const doneCount = completedChallengeCount(lesson);
+    const subtitle = lesson.kind === "reading"
+      ? lesson.category + " · " + lesson.duration
+      : lesson.category + " · " + doneCount + "/" + practiceCount + " latihan";
     return '<button type="button" class="lesson-nav-btn' + (active ? " active" : "") + '" data-lesson-id="' + lesson.id + '" aria-current="' + (active ? "page" : "false") + '">' +
       '<span class="lesson-number">' + (complete ? "✓" : String(index + 1).padStart(2, "0")) + '</span>' +
-      '<span class="lesson-nav-copy"><strong>' + escapeHtml(lesson.title) + '</strong><small>' + escapeHtml(lesson.category) + ' · ' + escapeHtml(lesson.duration) + '</small></span>' +
+      '<span class="lesson-nav-copy"><strong>' + escapeHtml(lesson.title) + '</strong><small>' + escapeHtml(subtitle) + '</small></span>' +
       (complete ? '<span class="lesson-check" aria-label="Selesai">✓</span>' : "") + '</button>';
   }).join("");
 }
