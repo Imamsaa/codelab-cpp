@@ -389,6 +389,7 @@ function renderLessonList() {
 
 function renderLesson(lesson) {
   const isReading = lesson.kind === "reading";
+  currentChallengeIndex = 0;
   lessonCategory.textContent = lesson.category;
   lessonLevel.textContent = lesson.level;
   lessonDuration.textContent = lesson.duration;
@@ -399,35 +400,93 @@ function renderLesson(lesson) {
     lessonSourceLink.href = lesson.sourceUrl;
     lessonSourceLink.textContent = lesson.sourceLabel || "Buka referensi";
   }
+
   conceptBlocks.innerHTML = lesson.concepts.map((concept) =>
     '<section class="concept"><h3>' + escapeHtml(concept.title) + '</h3><p>' + concept.body + '</p></section>'
   ).join("");
 
-  lessonExample.hidden = isReading || !lesson.example;
-  if (!isReading && lesson.example) {
-    lessonExample.innerHTML = '<h3>Contoh input dan output</h3><div class="example-grid">' +
-      '<div><span class="example-label">Input</span><pre>' + escapeHtml(lesson.example.input) + '</pre></div>' +
-      '<div><span class="example-label">Output</span><pre>' + escapeHtml(lesson.example.output) + '</pre></div></div>';
-  }
-
-  document.querySelector(".statement").hidden = isReading || !lesson.task;
-  if (!isReading && lesson.task) {
-    lessonTask.textContent = lesson.task;
-    taskRequirements.innerHTML = (lesson.requirements || []).map((requirement) => "<li>" + escapeHtml(requirement) + "</li>").join("");
-  }
-
+  challengePicker.hidden = isReading;
   challengePanel.hidden = isReading;
   readingActions.hidden = !isReading;
+  lessonExample.hidden = true;
+  document.querySelector(".statement").hidden = true;
+
   markReadBtn.textContent = completedLessons.has(lesson.id) ? "✓ Materi sudah dipelajari" : "Tandai selesai membaca";
   markReadBtn.disabled = completedLessons.has(lesson.id);
 
-  caseCount.textContent = isReading ? "—" : "— / " + lesson.tests.length;
-  judgeState.textContent = isReading
-    ? (completedLessons.has(lesson.id) ? "Sudah dibaca" : "Materi baca")
-    : (completedLessons.has(lesson.id) ? "Selesai sebelumnya" : "Belum diuji");
+  if (isReading) {
+    challengeButtons.innerHTML = "";
+    challengeCountLabel.textContent = "Materi baca";
+    caseCount.textContent = "—";
+    judgeState.textContent = completedLessons.has(lesson.id) ? "Sudah dibaca" : "Materi baca";
+    compileDiagnostics.classList.remove("show");
+    compileDiagnostics.textContent = "";
+    resultsList.innerHTML = '<div class="empty-results">Materi ini tidak memerlukan editor latihan. Baca penjelasan, lalu tandai selesai.</div>';
+    return;
+  }
+
+  renderChallenge();
+}
+
+function renderChallengeButtonsOnly() {
+  const buttons = challengeButtons.querySelectorAll("[data-challenge-index]");
+  buttons.forEach((button) => {
+    const index = Number(button.dataset.challengeIndex);
+    const challenge = currentLesson.challenges[index];
+    const done = completedChallenges.has(challengeKey(currentLesson, challenge));
+    button.classList.toggle("complete", done);
+    const number = button.querySelector(".challenge-chip-number");
+    if (number) number.textContent = done ? "✓" : String(index + 1).padStart(2, "0");
+  });
+}
+
+function renderChallenge() {
+  const challenges = currentLesson.challenges || [];
+  const challenge = getCurrentChallenge();
+  if (!challenge) return;
+
+  challengeCountLabel.textContent = "Latihan " + (currentChallengeIndex + 1) + " dari " + challenges.length;
+  challengeButtons.innerHTML = challenges.map((item, index) => {
+    const key = challengeKey(currentLesson, item);
+    const isActive = index === currentChallengeIndex;
+    const isComplete = completedChallenges.has(key);
+    return '<button class="challenge-chip' + (isActive ? " active" : "") + (isComplete ? " complete" : "") + '" type="button" data-challenge-index="' + index + '" aria-pressed="' + isActive + '">' +
+      '<span class="challenge-chip-number">' + (isComplete ? "✓" : String(index + 1).padStart(2, "0")) + '</span>' +
+      '<span class="challenge-chip-copy"><strong>' + escapeHtml(item.title.replace(/^Latihan \d+ · /, "")) + '</strong><small>' + escapeHtml(item.difficulty || "Latihan") + '</small></span>' +
+      '</button>';
+  }).join("");
+
+  challengeHeading.textContent = challenge.title;
+  document.querySelector(".statement").hidden = !challenge.task;
+  lessonTask.textContent = challenge.task || "";
+  taskRequirements.innerHTML = (challenge.requirements || []).map((requirement) => "<li>" + escapeHtml(requirement) + "</li>").join("");
+
+  const example = challenge.example || currentLesson.example;
+  lessonExample.hidden = !example;
+  if (example) {
+    lessonExample.innerHTML = '<h3>Contoh input dan output</h3><div class="example-grid">' +
+      '<div><span class="example-label">Input</span><pre>' + escapeHtml(example.input) + '</pre></div>' +
+      '<div><span class="example-label">Output</span><pre>' + escapeHtml(example.output) + '</pre></div></div>';
+  }
+
+  const key = challengeKey(currentLesson, challenge);
+  caseCount.textContent = "— / " + challenge.tests.length;
+  judgeState.textContent = completedChallenges.has(key) ? "Latihan selesai" : "Belum diuji";
   compileDiagnostics.classList.remove("show");
   compileDiagnostics.textContent = "";
-  resultsList.innerHTML = '<div class="empty-results">Hasil tes akan muncul di sini.<br>Tekan <b>Periksa Jawaban</b> setelah kode siap.</div>';
+  resultsList.innerHTML = '<div class="empty-results">Kerjakan latihan ini, lalu tekan <b>Periksa Jawaban</b>. Setiap latihan memiliki progres dan kode tersimpan sendiri.</div>';
+  setCode(savedCodes[key] ?? challenge.starter);
+}
+
+function selectChallenge(indexValue) {
+  const index = Number(indexValue);
+  if (!Number.isInteger(index) || index < 0 || index >= (currentLesson.challenges || []).length || index === currentChallengeIndex) return;
+  if (activeWorker) stopChallenge("Pemeriksaan dihentikan karena latihan diganti.");
+  saveCode();
+  currentChallengeIndex = index;
+  renderChallenge();
+  setStatus("Latihan " + (currentChallengeIndex + 1) + " siap dikerjakan.", "idle");
+  if (cmEditor) cmEditor.focus();
 }
 
 function markReadingComplete() {
@@ -449,9 +508,8 @@ function selectLesson(lessonId) {
   currentLesson = lesson;
   renderLesson(currentLesson);
   renderLessonList();
-  if (currentLesson.kind !== "reading") setCode(savedCodes[currentLesson.id] ?? currentLesson.starter);
   fallbackEdited = false;
-  setStatus(currentLesson.kind === "reading" ? "Materi pengantar siap dibaca." : "Materi siap. Baca tantangan lalu tulis kode.", "idle");
+  setStatus(currentLesson.kind === "reading" ? "Materi pengantar siap dibaca." : "Pilih latihan dan tulis solusi terbaikmu.", "idle");
   if (cmEditor && currentLesson.kind !== "reading") {
     cmEditor.requestMeasure();
     cmEditor.focus();
@@ -459,9 +517,11 @@ function selectLesson(lessonId) {
 }
 
 function showResults(tests) {
+  const challenge = getCurrentChallenge();
+  const key = challengeKey(currentLesson, challenge);
   const passedCount = tests.filter((test) => test.passed).length;
   caseCount.textContent = passedCount + " / " + tests.length;
-  judgeState.textContent = passedCount === tests.length ? "Semua lolos" : "Perlu diperbaiki";
+  judgeState.textContent = passedCount === tests.length ? "Latihan lolos" : "Perlu diperbaiki";
   resultsList.innerHTML = tests.map((test) => {
     const resultClass = test.passed ? "passed" : "failed";
     const status = test.passed ? "✓ Lolos" : "✕ Belum lolos";
@@ -474,12 +534,23 @@ function showResults(tests) {
     return '<div class="result-item ' + resultClass + '">' + top + '<div class="result-detail">' + escapeHtml(detail) + '</div></div>';
   }).join("");
 
-  if (passedCount === tests.length) {
-    completedLessons.add(currentLesson.id);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...completedLessons])); } catch { /* Storage is optional. */ }
+  if (passedCount === tests.length && tests.length > 0) {
+    completedChallenges.add(key);
+    try { localStorage.setItem(CHALLENGE_STORAGE_KEY, JSON.stringify([...completedChallenges])); } catch { /* Storage is optional. */ }
     updateProgress();
-    setStatus("Mantap! Semua test case berhasil dilewati.", "ok");
+    const done = completedChallengeCount(currentLesson);
+    const total = currentLesson.challenges.length;
+    if (isLessonComplete(currentLesson)) {
+      setStatus("Keren! Semua " + total + " latihan pada materi ini sudah selesai.", "ok");
+    } else {
+      setStatus("Latihan ini berhasil! Progres materi: " + done + "/" + total + ". Lanjut ke latihan berikutnya.", "ok");
+    }
+    renderChallengeButtonsOnly();
   } else {
+    completedChallenges.delete(key);
+    try { localStorage.setItem(CHALLENGE_STORAGE_KEY, JSON.stringify([...completedChallenges])); } catch { /* Storage is optional. */ }
+    updateProgress();
+    renderChallengeButtonsOnly();
     setStatus(passedCount + " dari " + tests.length + " test case lolos. Periksa kembali logika program.", "error");
   }
 }
@@ -516,7 +587,7 @@ function runChallenge() {
   setBusy(true);
   setStatus("Menyiapkan compiler…", "busy");
   judgeState.textContent = "Menjalankan";
-  caseCount.textContent = "0 / " + currentLesson.tests.length;
+  caseCount.textContent = "0 / " + getCurrentChallenge().tests.length;
   compileDiagnostics.classList.remove("show");
   compileDiagnostics.textContent = "";
   resultsList.innerHTML = '<div class="empty-results">Kode sedang dikompilasi dan diuji pada beberapa input…</div>';
@@ -560,7 +631,7 @@ function runChallenge() {
     if (data.type === "result") {
       finishChallenge();
       judgeState.textContent = "Kompilasi gagal";
-      caseCount.textContent = "0 / " + currentLesson.tests.length;
+      caseCount.textContent = "0 / " + getCurrentChallenge().tests.length;
       compileDiagnostics.textContent = data.compileOutput || data.error || "Kompilasi gagal tanpa pesan tambahan.";
       compileDiagnostics.classList.add("show");
       resultsList.innerHTML = '<div class="result-item failed"><div class="result-top"><span>Compiler</span><span class="failed-text">✕ Gagal</span></div><div class="result-detail">Perbaiki error kompilasi, lalu periksa jawaban kembali.</div></div>';
@@ -579,7 +650,7 @@ function runChallenge() {
   activeWorker.postMessage({
     source: source,
     standard: standardSelect.value,
-    testCases: currentLesson.tests
+    testCases: getCurrentChallenge().tests
   });
 }
 
@@ -690,17 +761,22 @@ lessonList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-lesson-id]");
   if (button) selectLesson(button.dataset.lessonId);
 });
+challengeButtons.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-challenge-index]");
+  if (button) selectChallenge(button.dataset.challengeIndex);
+});
 checkAnswerBtn.addEventListener("click", runChallenge);
 markReadBtn.addEventListener("click", markReadingComplete);
 stopChallengeBtn.addEventListener("click", () => stopChallenge("Pemeriksaan dihentikan oleh pengguna."));
 resetCodeBtn.addEventListener("click", () => {
-  setCode(currentLesson.starter);
+  const challenge = getCurrentChallenge();
+  setCode(challenge.starter);
   saveCode();
   compileDiagnostics.classList.remove("show");
-  resultsList.innerHTML = '<div class="empty-results">Kode direset. Tulis solusi, lalu periksa jawaban.</div>';
-  caseCount.textContent = "— / " + currentLesson.tests.length;
-  judgeState.textContent = "Belum diuji";
-  setStatus("Kode dikembalikan ke template awal.", "idle");
+  resultsList.innerHTML = '<div class="empty-results">Kode latihan direset. Tulis solusi, lalu periksa jawaban.</div>';
+  caseCount.textContent = "— / " + challenge.tests.length;
+  judgeState.textContent = completedChallenges.has(challengeKey(currentLesson, challenge)) ? "Latihan selesai" : "Belum diuji";
+  setStatus("Kode latihan dikembalikan ke template awal.", "idle");
 });
 window.addEventListener("keydown", (event) => {
   if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
