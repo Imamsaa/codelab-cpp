@@ -137,7 +137,7 @@
     @media(max-width:720px){.page{padding:14px 10px 22px}.topbar{margin-bottom:18px}.intro{align-items:stretch;flex-direction:column}.progress-card{min-width:0}.layout{grid-template-columns:1fr}.lesson-nav{position:static}.lesson-nav #lessonList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.lesson-content{padding:16px}.content-blocks{grid-template-columns:1fr}.example-grid{grid-template-columns:1fr 1fr}.challenge{min-height:0}.editor-actions{align-items:flex-start}.actions-left,.actions-right{flex-wrap:wrap}.judge-side{min-height:300px}.challenge-picker{padding:10px}.challenge-picker-head{align-items:flex-start;flex-direction:column;gap:4px}#challengeButtons{grid-template-columns:1fr}.challenge-chip{padding:8px 9px}}
     @media(max-width:440px){.top-actions .btn span{display:none}.lesson-nav #lessonList{grid-template-columns:1fr}.lesson-content h2{font-size:20px}.example-grid{grid-template-columns:1fr}.btn{padding:8px 9px}.actions-right{width:100%}.actions-right .btn{flex:1}}
   </style>
-  <script src="./coi-serviceworker.min.js?v=20261014-six-lessons"></script>
+  <script src="./coi-serviceworker.min.js?v=20261014-multi-practice"></script>
   <script type="importmap">
     {
       "imports": {
@@ -168,10 +168,10 @@
       <div>
         <p class="eyebrow">BELAJAR BERTAHAP · LATIHAN OTOMATIS</p>
         <h1>Materi & <span>Latihan C++</span></h1>
-        <p class="desc">Pelajari konsep, lihat contoh, lalu kerjakan tantangan di editor. Jawaban diperiksa dengan beberapa test case agar kamu bisa langsung mengetahui apakah program sudah benar.</p>
+        <p class="desc">Pelajari konsep, lihat contoh, lalu selesaikan tiga latihan bertahap di setiap materi praktik. Kode dan progres tiap latihan disimpan terpisah.</p>
       </div>
       <div class="progress-card">
-        <div class="progress-row"><span>Progres belajar</span><strong id="progressCount">0/6 selesai</strong></div>
+        <div class="progress-row"><span>Progres belajar</span><strong id="progressCount">0/6 topik selesai</strong></div>
         <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
       </div>
     </section>
@@ -180,7 +180,7 @@
       <aside class="lesson-nav">
         <div class="nav-head"><strong>Daftar materi</strong><span>Materi pengantar C++</span></div>
         <div id="lessonList"></div>
-        <div class="nav-foot">Kode dan progres tersimpan di browser ini. Baca materi pengantar atau selesaikan seluruh test case untuk menandai topik selesai.</div>
+        <div class="nav-foot">Kode dan progres tersimpan di browser ini. Materi praktik memiliki tiga latihan bertahap; selesaikan semuanya untuk menandai topik selesai.</div>
       </aside>
 
       <section class="main-column">
