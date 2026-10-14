@@ -104,6 +104,13 @@
     #lessonEditor .cm-editor{height:100%;font-size:12px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
     #lessonEditor .cm-scroller{overflow:auto}
     #fallbackCode{width:100%;height:100%;min-height:300px;resize:vertical;padding:14px;border:0;outline:0;background:#0d1424;color:#dce5f7;font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:4}
+    .program-input-panel{padding:11px 12px;background:#0e1728;border-top:1px solid #202b40}
+    .program-input-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+    .program-input-head label{font-size:10px;font-weight:800;color:#c4d0e4}
+    .program-input-head span{font-size:9px;color:#8291aa}
+    #programInput{display:block;width:100%;min-height:58px;resize:vertical;padding:9px 10px;border:1px solid #2e3c56;border-radius:8px;outline:0;background:#080e19;color:#dce5f7;font:11px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}
+    #programInput:focus{border-color:#7568d5;box-shadow:0 0 0 2px #7568d522}
+    .program-input-hint{margin:6px 0 0;color:#8190aa;font-size:9px;line-height:1.5}
     .editor-actions{display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap;padding:10px 12px;background:#0c1323;border-top:1px solid #202b40}
     .actions-left,.actions-right{display:flex;align-items:center;gap:7px}
     select{padding:7px 24px 7px 9px;border:1px solid #34405a;border-radius:8px;background:#0b1323;color:#dde7f8;font-size:11px}
@@ -115,6 +122,9 @@
     .task-summary{padding:11px 12px;border:1px solid #283650;border-radius:9px;background:#0a111e}
     .task-summary strong{font-size:11px;display:block;margin-bottom:5px}
     .task-summary p{margin:0;color:#9eacc4;font-size:10px;line-height:1.6}
+    .program-output-card{padding:11px 12px;border:1px solid #283650;border-radius:9px;background:#080e19}
+    .program-output-card strong{display:block;margin-bottom:7px;font-size:10px;color:#b9c6dd}
+    #programOutput{margin:0;min-height:45px;max-height:180px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;color:#d4e1f5;font:10px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}
     .case-summary{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:10px;color:#9eacc4}
     .case-summary strong{font-size:17px;color:#e7edf8}
     #resultsList{display:flex;flex-direction:column;gap:7px}
@@ -137,7 +147,7 @@
     @media(max-width:720px){.page{padding:14px 10px 22px}.topbar{margin-bottom:18px}.intro{align-items:stretch;flex-direction:column}.progress-card{min-width:0}.layout{grid-template-columns:1fr}.lesson-nav{position:static}.lesson-nav #lessonList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.lesson-content{padding:16px}.content-blocks{grid-template-columns:1fr}.example-grid{grid-template-columns:1fr 1fr}.challenge{min-height:0}.editor-actions{align-items:flex-start}.actions-left,.actions-right{flex-wrap:wrap}.judge-side{min-height:300px}.challenge-picker{padding:10px}.challenge-picker-head{align-items:flex-start;flex-direction:column;gap:4px}#challengeButtons{grid-template-columns:1fr}.challenge-chip{padding:8px 9px}}
     @media(max-width:440px){.top-actions .btn span{display:none}.lesson-nav #lessonList{grid-template-columns:1fr}.lesson-content h2{font-size:20px}.example-grid{grid-template-columns:1fr}.btn{padding:8px 9px}.actions-right{width:100%}.actions-right .btn{flex:1}}
   </style>
-  <script src="./coi-serviceworker.min.js?v=20261014-expanded-topics"></script>
+  <script src="./coi-serviceworker.min.js?v=20261014-run-before-check"></script>
   <script type="importmap">
     {
       "imports": {
@@ -213,9 +223,14 @@
           <div class="editor-side">
             <div class="panel-head">
               <span class="panel-title">✦ Playground latihan</span>
-              <span class="panel-meta">Tab indent · Ctrl + Enter periksa</span>
+              <span class="panel-meta">Tab indent · Ctrl + Enter jalankan</span>
             </div>
             <div id="lessonEditor" aria-label="Editor kode C++"></div>
+            <div class="program-input-panel">
+              <div class="program-input-head"><label for="programInput">Input program (stdin / cin)</label><span>Masukkan sebelum menjalankan</span></div>
+              <textarea id="programInput" rows="2" spellcheck="false" placeholder="Contoh: Alya 13"></textarea>
+              <p class="program-input-hint">Data di sini dikirim ke cin saat program dijalankan. Pisahkan beberapa nilai dengan spasi atau baris baru.</p>
+            </div>
             <div class="editor-actions">
               <div class="actions-left">
                 <label class="panel-meta" for="lessonStandard">Standar</label>
@@ -225,7 +240,8 @@
                 <button class="btn" id="resetCodeBtn" type="button">Reset kode</button>
               </div>
               <div class="actions-right">
-                <button class="btn btn-primary" id="checkAnswerBtn" type="button">▶ Periksa Jawaban</button>
+                <button class="btn btn-primary" id="runProgramBtn" type="button">▶ Jalankan Program</button>
+                <button class="btn" id="checkAnswerBtn" type="button" disabled>✓ Periksa Jawaban</button>
                 <button class="btn" id="stopChallengeBtn" type="button" disabled>Stop</button>
               </div>
             </div>
@@ -237,7 +253,8 @@
           <aside class="judge-side">
             <div class="judge-head"><span class="judge-title">Hasil pemeriksaan</span><span class="panel-meta" id="judgeState">Belum diuji</span></div>
             <div class="judge-body">
-              <div class="task-summary"><strong>Aturan penilaian</strong><p>Kode dikompilasi sekali, lalu dijalankan pada beberapa input. Output dibandingkan otomatis dengan jawaban yang diharapkan.</p></div>
+              <div class="task-summary"><strong>Alur latihan</strong><p>Jalankan kode dan coba input terlebih dahulu. Setelah program selesai dan output muncul, tombol Periksa Jawaban akan aktif untuk menguji jawaban secara otomatis.</p></div>
+              <div class="program-output-card"><strong>Output program</strong><pre id="programOutput">Jalankan program untuk melihat outputnya.</pre></div>
               <div class="case-summary"><span>Test case lolos</span><strong id="caseCount">— / —</strong></div>
               <div id="compileDiagnostics" role="status"></div>
               <div id="resultsList"><div class="empty-results">Hasil tes akan muncul di sini.<br>Tekan <b>Periksa Jawaban</b> setelah kode siap.</div></div>
@@ -247,6 +264,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./materi.js?v=20261014-expanded-topics"></script>
+  <script type="module" src="./materi.js?v=20261014-run-before-check"></script>
 </body>
 </html>
