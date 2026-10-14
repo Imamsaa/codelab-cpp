@@ -616,6 +616,75 @@ function armProgramWatchdog() {
   }, 90000);
 }
 
+function isLessonComplete(lesson) {
+  if (lesson.kind === "reading") return completedLessons.has(lesson.id);
+  const challenges = lesson.challenges || [];
+  return challenges.length > 0 && challenges.every((challenge) => completedChallenges.has(challengeKey(lesson, challenge)));
+}
+
+function completedChallengeCount(lesson) {
+  return (lesson.challenges || []).filter((challenge) => completedChallenges.has(challengeKey(lesson, challenge))).length;
+}
+
+function loadSavedState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    if (Array.isArray(saved)) completedLessons = new Set(saved);
+    const savedChallenges = JSON.parse(localStorage.getItem(CHALLENGE_STORAGE_KEY) || "[]");
+    if (Array.isArray(savedChallenges)) completedChallenges = new Set(savedChallenges);
+
+    for (const lesson of lessons) {
+      const legacyValue = localStorage.getItem(CODE_KEY_PREFIX + lesson.id);
+      if (legacyValue !== null) savedCodes[lesson.id] = legacyValue;
+      for (const challenge of lesson.challenges || []) {
+        const key = challengeKey(lesson, challenge);
+        const value = localStorage.getItem(CODE_KEY_PREFIX + key);
+        if (value !== null) savedCodes[key] = value;
+        else if (challenge === lesson.challenges[0] && legacyValue !== null) savedCodes[key] = legacyValue;
+        const savedInput = localStorage.getItem(INPUT_KEY_PREFIX + key);
+        if (savedInput !== null) savedInputs[key] = savedInput;
+      }
+    }
+  } catch (error) {
+    console.warn("Tidak dapat membaca progres lokal:", error);
+  }
+}
+
+function getCode() {
+  return cmEditor ? cmEditor.state.doc.toString() : (fallbackCode ? fallbackCode.value : "");
+}
+
+function saveCode() {
+  const challenge = getCurrentChallenge();
+  const code = getCode();
+  const key = challengeKey(currentLesson, challenge);
+  savedCodes[key] = code;
+  try { localStorage.setItem(CODE_KEY_PREFIX + key, code); } catch { /* Storage is optional. */ }
+  updateLineInfo();
+}
+
+function setCode(code) {
+  if (cmEditor) {
+    cmEditor.dispatch({ changes: { from: 0, to: cmEditor.state.doc.length, insert: code } });
+  } else if (fallbackCode) {
+    fallbackCode.value = code;
+    updateLineInfo();
+    const key = challengeKey(currentLesson, getCurrentChallenge());
+    savedCodes[key] = code;
+    try { localStorage.setItem(CODE_KEY_PREFIX + key, code); } catch { /* Storage is optional. */ }
+  }
+}
+
+function updateLineInfo() {
+  const lines = cmEditor ? cmEditor.state.doc.lines : (fallbackCode ? fallbackCode.value.split("\n").length : 1);
+  lineInfo.textContent = "Baris " + lines;
+}
+
+function setStatus(message, kind = "idle") {
+  statusText.textContent = message;
+  statusDot.className = kind === "busy" ? "busy" : kind === "ok" ? "ok" : kind === "error" ? "error" : "";
+}
+
 function setBusy(busy) {
   runProgramBtn.disabled = busy;
   checkAnswerBtn.disabled = busy || !hasMatchingRun();
