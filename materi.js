@@ -218,7 +218,277 @@ const lessons = [
       { input: "Nisa 12", expected: "Nama: Nisa, umur: 12", visible: true }
     ]
   }
-
+,
+  {
+    "id": "data-types",
+    "title": "Tipe Data dalam C++",
+    "category": "Tipe Data",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_data_types.asp",
+    "sourceLabel": "W3Schools — C++ Data Types",
+    "summary": "Tipe data menentukan jenis nilai yang disimpan variabel. Pilih tipe yang sesuai: bilangan bulat, desimal, satu karakter, benar/salah, atau teks.",
+    "concepts": [
+      {
+        "title": "Bilangan bulat",
+        "body": "Gunakan <code>int</code> untuk umur, jumlah barang, atau skor yang berupa bilangan bulat."
+      },
+      {
+        "title": "Bilangan desimal",
+        "body": "Gunakan <code>float</code> atau <code>double</code> untuk nilai pecahan, misalnya tinggi badan atau suhu. <code>double</code> umumnya menyediakan presisi lebih tinggi."
+      },
+      {
+        "title": "Karakter dan logika",
+        "body": "<code>char</code> menyimpan satu karakter seperti <code>'A'</code>, sedangkan <code>bool</code> menyimpan <code>true</code> atau <code>false</code>."
+      },
+      {
+        "title": "Teks",
+        "body": "Gunakan <code>string</code> untuk teks. Sertakan <code>#include &lt;string&gt;</code> saat memakai string."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "13 3.5 A true Alya"
+    },
+    "task": "Deklarasikan variabel bertipe int, double, char, bool, dan string. Gunakan nilai 13, 3.5, 'A', true, dan \"Alya\". Tampilkan semuanya dengan satu spasi.",
+    "requirements": [
+      "Gunakan tipe data yang sesuai.",
+      "Gunakan boolalpha agar bool tampil sebagai true.",
+      "Output harus tepat: 13 3.5 A true Alya."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan int, double, char, bool, dan string\n    // TODO: tampilkan semua nilai sesuai urutan\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "13 3.5 A true Alya",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "numeric-types",
+    "title": "Tipe Data Numerik",
+    "category": "Tipe Data",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_data_types_numeric.asp",
+    "sourceLabel": "W3Schools — Numeric Data Types",
+    "summary": "Tipe data numerik menyimpan bilangan. C++ menyediakan pilihan seperti int untuk bilangan bulat dan float atau double untuk bilangan desimal.",
+    "concepts": [
+      {
+        "title": "int",
+        "body": "Gunakan <code>int</code> untuk nilai bulat positif atau negatif, misalnya <code>int skor = 95;</code>."
+      },
+      {
+        "title": "float dan double",
+        "body": "Keduanya menyimpan nilai pecahan. Contoh: <code>float tinggi = 1.65f;</code> dan <code>double berat = 52.75;</code>. Huruf <code>f</code> menandai literal float."
+      },
+      {
+        "title": "Operasi matematika",
+        "body": "Nilai numerik bisa dijumlahkan, dikurangi, dikalikan, atau dibagi. Dua nilai int yang dibagi menghasilkan pembagian bilangan bulat."
+      },
+      {
+        "title": "Tampilan desimal",
+        "body": "Library <code>&lt;iomanip&gt;</code> menyediakan <code>fixed</code> dan <code>setprecision()</code> untuk mengatur tampilan angka."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "120 36.5"
+    },
+    "task": "Buat variabel int jarak bernilai 120 dan double suhu bernilai 36.5. Tampilkan kedua nilai dengan satu spasi.",
+    "requirements": [
+      "Gunakan int untuk jarak dan double untuk suhu.",
+      "Tampilkan nilai melalui variabel.",
+      "Output harus tepat: 120 36.5."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: buat variabel jarak dan suhu\n    // TODO: tampilkan keduanya\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "120 36.5",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "bool-types",
+    "title": "Tipe Data Boolean",
+    "category": "Tipe Data",
+    "level": "Pemula",
+    "duration": "8 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_data_types_bool.asp",
+    "sourceLabel": "W3Schools — Boolean Data Types",
+    "summary": "Tipe data bool memiliki dua nilai, true dan false. Boolean digunakan untuk menyatakan keadaan atau hasil kondisi.",
+    "concepts": [
+      {
+        "title": "Nilai true dan false",
+        "body": "Contoh deklarasi: <code>bool lampuMenyala = true;</code> dan <code>bool sudahLogin = false;</code>."
+      },
+      {
+        "title": "Output boolean",
+        "body": "Secara default cout menampilkan bool sebagai 1 atau 0. Tambahkan <code>boolalpha</code> agar tampil sebagai <code>true</code> atau <code>false</code>."
+      },
+      {
+        "title": "Hasil perbandingan",
+        "body": "Ekspresi seperti <code>umur &gt;= 13</code> menghasilkan nilai boolean yang dapat digunakan untuk percabangan."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "true"
+    },
+    "task": "Deklarasikan bool lampuMenyala bernilai true, lalu tampilkan sebagai teks true menggunakan boolalpha.",
+    "requirements": [
+      "Gunakan variabel bool bernama lampuMenyala.",
+      "Gunakan boolalpha saat menampilkan nilai.",
+      "Output harus tepat: true."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan bool lampuMenyala\n    // TODO: tampilkan nilainya sebagai true/false\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "true",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "char-types",
+    "title": "Tipe Data Character (char)",
+    "category": "Tipe Data",
+    "level": "Pemula",
+    "duration": "8 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_data_types_char.asp",
+    "sourceLabel": "W3Schools — Character Data Types",
+    "summary": "Tipe data char menyimpan satu karakter, seperti huruf, angka sebagai karakter, atau simbol. Nilai karakter ditulis di antara tanda petik satu.",
+    "concepts": [
+      {
+        "title": "Deklarasi char",
+        "body": "Contoh: <code>char nilai = 'A';</code>. Nilai char memakai tanda petik satu, bukan tanda petik dua."
+      },
+      {
+        "title": "Karakter bukan angka",
+        "body": "<code>char kode = '7';</code> menyimpan karakter 7, berbeda dengan <code>int jumlah = 7;</code> yang menyimpan bilangan untuk perhitungan."
+      },
+      {
+        "title": "Membandingkan karakter",
+        "body": "Karakter dapat dibandingkan, misalnya <code>jawaban == 'B'</code>. Hasil perbandingan tersebut berupa nilai bool."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "A"
+    },
+    "task": "Deklarasikan variabel char bernama nilaiHuruf dengan nilai 'A', kemudian tampilkan karakter tersebut.",
+    "requirements": [
+      "Gunakan tipe data char.",
+      "Gunakan tanda petik satu untuk nilai karakter.",
+      "Output harus tepat: A."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan char nilaiHuruf\n    // TODO: tampilkan karakternya\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "A",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "string-types",
+    "title": "Tipe Data String",
+    "category": "Tipe Data",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_data_types_string.asp",
+    "sourceLabel": "W3Schools — String Data Types",
+    "summary": "String digunakan untuk menyimpan teks satu atau banyak karakter. Dalam C++, std::string tersedia melalui library string dan dapat digabungkan dengan teks lain.",
+    "concepts": [
+      {
+        "title": "Membuat string",
+        "body": "Sertakan <code>#include &lt;string&gt;</code>, lalu deklarasikan misalnya <code>string nama = \"Alya\";</code>."
+      },
+      {
+        "title": "Menggabungkan teks",
+        "body": "Operator <code>&lt;&lt;</code> pada cout dapat menampilkan teks dan variabel berurutan. Operator <code>+</code> juga dapat menggabungkan string."
+      },
+      {
+        "title": "Membaca string",
+        "body": "<code>cin &gt;&gt; nama;</code> membaca satu kata. Untuk membaca satu baris lengkap yang mungkin berisi spasi, gunakan <code>getline(cin, nama);</code>."
+      }
+    ],
+    "example": {
+      "input": "Alya",
+      "output": "Halo, Alya!"
+    },
+    "task": "Baca satu kata nama menggunakan cin, lalu tampilkan salam dengan format Halo, [nama]!",
+    "requirements": [
+      "Gunakan variabel string bernama nama.",
+      "Baca nama dari input menggunakan cin.",
+      "Output mengikuti nama yang diberikan, misalnya Halo, Alya!."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string nama;\n    // TODO: baca nama dan tampilkan salam\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "Alya",
+        "expected": "Halo, Alya!",
+        "visible": true
+      },
+      {
+        "input": "Bima",
+        "expected": "Halo, Bima!",
+        "visible": true
+      },
+      {
+        "input": "Nisa",
+        "expected": "Halo, Nisa!",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "auto-types",
+    "title": "Deklarasi Variabel dengan auto",
+    "category": "Tipe Data",
+    "level": "Pemula",
+    "duration": "8 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_auto.asp",
+    "sourceLabel": "W3Schools — C++ auto Keyword",
+    "summary": "Kata kunci auto meminta compiler menentukan tipe variabel berdasarkan nilai awalnya. Tipe tetap ditentukan saat kompilasi; auto bukan berarti variabel bebas berganti tipe.",
+    "concepts": [
+      {
+        "title": "Tipe dari nilai awal",
+        "body": "Contoh <code>auto umur = 13;</code> membuat umur bertipe int, sedangkan <code>auto harga = 12.5;</code> membuat harga bertipe double."
+      },
+      {
+        "title": "Nilai awal diperlukan",
+        "body": "Compiler perlu nilai awal untuk menentukan tipe. Gunakan <code>auto skor = 95;</code>, bukan hanya <code>auto skor;</code>."
+      },
+      {
+        "title": "Kapan menggunakan auto?",
+        "body": "Auto berguna ketika tipe mudah disimpulkan dari nilai awal atau ketika nama tipe sebenarnya panjang. Tetap pahami tipe yang disimpulkan compiler."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "13 12.5"
+    },
+    "task": "Gunakan auto untuk membuat variabel umur bernilai 13 dan harga bernilai 12.5. Tampilkan kedua nilainya dipisahkan satu spasi.",
+    "requirements": [
+      "Gunakan auto untuk kedua variabel.",
+      "Berikan nilai awal pada setiap deklarasi.",
+      "Output harus tepat: 13 12.5."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan umur dan harga menggunakan auto\n    // TODO: tampilkan kedua nilai\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "13 12.5",
+        "visible": true
+      }
+    ]
+  }
 ];
 
 
@@ -427,11 +697,314 @@ const EXTRA_CHALLENGES = {
         { input: "-3 10", expected: "7", visible: true }
       ]
     }
+  ],
+  "data-types": [
+    {
+      "id": "data-types-2",
+      "title": "Latihan 2 · Data siswa",
+      "difficulty": "Mudah",
+      "task": "Buat int umur = 14, double tinggi = 1.6, char kelas = '8', bool aktif = true, dan string nama = \"Bima\". Tampilkan berurutan dengan satu spasi.",
+      "requirements": [
+        "Pilih tipe data yang sesuai.",
+        "Gunakan boolalpha agar bool tampil sebagai true.",
+        "Output harus tepat: 14 1.6 8 true Bima."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "14 1.6 8 true Bima"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan lima variabel sesuai instruksi\n    // TODO: tampilkan semua nilai dengan satu spasi\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "14 1.6 8 true Bima",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "data-types-3",
+      "title": "Latihan 3 · Ringkasan data",
+      "difficulty": "Tantangan",
+      "task": "Buat int skor = 90, double rataRata = 87.5, char predikat = 'A', bool lulus = true, dan string nama = \"Nisa\". Tampilkan: Nisa | 90 | 87.5 | A | true.",
+      "requirements": [
+        "Gunakan kelima tipe data yang tepat.",
+        "Gunakan boolalpha untuk lulus.",
+        "Tampilkan nilai sesuai urutan dan format."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Nisa | 90 | 87.5 | A | true"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan variabel ringkasan data\n    // TODO: tampilkan semua nilai sesuai format\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Nisa | 90 | 87.5 | A | true",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "numeric-types": [
+    {
+      "id": "numeric-types-2",
+      "title": "Latihan 2 · Bilangan desimal",
+      "difficulty": "Mudah",
+      "task": "Deklarasikan float tinggi = 1.65f dan double berat = 52.75. Tampilkan keduanya dengan satu spasi.",
+      "requirements": [
+        "Gunakan float untuk tinggi dan double untuk berat.",
+        "Tampilkan nilai melalui variabel.",
+        "Output harus tepat: 1.65 52.75."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "1.65 52.75"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan tinggi dan berat\n    // TODO: tampilkan keduanya\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "1.65 52.75",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "numeric-types-3",
+      "title": "Latihan 3 · Pembagian desimal",
+      "difficulty": "Tantangan",
+      "task": "Deklarasikan int pembilang = 7 dan int penyebut = 2. Simpan hasil pembagian desimal pada double hasil, lalu tampilkan 3.50.",
+      "requirements": [
+        "Gunakan dua variabel int sesuai instruksi.",
+        "Pastikan pembagian dilakukan sebagai desimal, bukan pembagian integer.",
+        "Gunakan fixed dan setprecision(2)."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "3.50"
+      },
+      "starter": "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    int pembilang = 7;\n    int penyebut = 2;\n    // TODO: hitung hasil pembagian desimal\n    // TODO: tampilkan dua angka di belakang koma\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "3.50",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "bool-types": [
+    {
+      "id": "bool-types-2",
+      "title": "Latihan 2 · Status login",
+      "difficulty": "Mudah",
+      "task": "Buat bool sudahLogin = false dan tampilkan menggunakan boolalpha.",
+      "requirements": [
+        "Gunakan variabel bool bernama sudahLogin.",
+        "Gunakan boolalpha.",
+        "Output harus tepat: false."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "false"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: buat dan tampilkan sudahLogin\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "false",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "bool-types-3",
+      "title": "Latihan 3 · Syarat masuk",
+      "difficulty": "Tantangan",
+      "task": "Buat bool punyaTiket = true dan sudahMendaftar = true. Tampilkan hasil punyaTiket && sudahMendaftar menggunakan boolalpha.",
+      "requirements": [
+        "Gunakan dua variabel bool.",
+        "Gabungkan dengan operator &&.",
+        "Output harus tepat: true."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "true"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    bool punyaTiket = true;\n    bool sudahMendaftar = true;\n    // TODO: tampilkan hasil AND dengan boolalpha\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "true",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "char-types": [
+    {
+      "id": "char-types-2",
+      "title": "Latihan 2 · Kode karakter",
+      "difficulty": "Mudah",
+      "task": "Deklarasikan char kode = '7' dan tampilkan karakternya, bukan hasil perhitungan numerik.",
+      "requirements": [
+        "Gunakan char untuk kode.",
+        "Nilai karakter memakai tanda petik satu.",
+        "Output harus tepat: 7."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "7"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan dan tampilkan char kode\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "7",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "char-types-3",
+      "title": "Latihan 3 · Cek jawaban huruf",
+      "difficulty": "Tantangan",
+      "task": "Deklarasikan char jawaban = 'B'. Bandingkan dengan 'B' dan tampilkan hasilnya menggunakan boolalpha.",
+      "requirements": [
+        "Gunakan variabel char bernama jawaban.",
+        "Bandingkan dengan karakter 'B'.",
+        "Gunakan boolalpha agar output true atau false."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "true"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    char jawaban = 'B';\n    // TODO: bandingkan jawaban dengan 'B' dan tampilkan hasilnya\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "true",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "string-types": [
+    {
+      "id": "string-types-2",
+      "title": "Latihan 2 · Salam dengan input",
+      "difficulty": "Mudah",
+      "task": "Baca satu kata nama dengan cin, lalu tampilkan Halo, [nama] tanpa tanda kurung siku dan tanda seru.",
+      "requirements": [
+        "Gunakan string dan cin.",
+        "Nama berasal dari input.",
+        "Output misalnya Halo, Alya."
+      ],
+      "example": {
+        "input": "Alya",
+        "output": "Halo, Alya"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string nama;\n    // TODO: baca nama dan tampilkan salam tanpa tanda seru\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "Alya",
+          "expected": "Halo, Alya",
+          "visible": true
+        },
+        {
+          "input": "Bima",
+          "expected": "Halo, Bima",
+          "visible": true
+        },
+        {
+          "input": "Nisa",
+          "expected": "Halo, Nisa",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "string-types-3",
+      "title": "Latihan 3 · Nama lengkap",
+      "difficulty": "Tantangan",
+      "task": "Gunakan getline(cin, nama) untuk membaca nama lengkap termasuk spasi. Tampilkan Selamat datang, [nama]!",
+      "requirements": [
+        "Gunakan string dan getline(cin, nama).",
+        "Jangan menggunakan cin >> nama karena nama dapat berisi spasi.",
+        "Output harus menyertakan seluruh input."
+      ],
+      "example": {
+        "input": "Alya Putri",
+        "output": "Selamat datang, Alya Putri!"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string nama;\n    // TODO: baca seluruh baris dan tampilkan salam\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "Alya Putri",
+          "expected": "Selamat datang, Alya Putri!",
+          "visible": true
+        },
+        {
+          "input": "Bima Saputra",
+          "expected": "Selamat datang, Bima Saputra!",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "auto-types": [
+    {
+      "id": "auto-types-2",
+      "title": "Latihan 2 · Total harga",
+      "difficulty": "Mudah",
+      "task": "Gunakan auto untuk harga = 12500 dan jumlah = 2. Hitung total lalu tampilkan Total: 25000.",
+      "requirements": [
+        "Gunakan auto pada kedua deklarasi.",
+        "Kalikan harga dengan jumlah.",
+        "Tampilkan sesuai format."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Total: 25000"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan harga dan jumlah dengan auto\n    // TODO: hitung dan tampilkan total\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Total: 25000",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "auto-types-3",
+      "title": "Latihan 3 · Rata-rata nilai",
+      "difficulty": "Tantangan",
+      "task": "Gunakan auto untuk nilai1 = 80 dan nilai2 = 91. Hitung rata-rata sebagai desimal dan tampilkan satu angka di belakang koma.",
+      "requirements": [
+        "Gunakan auto untuk nilai1 dan nilai2.",
+        "Hitung rata-rata dengan pembagi 2.0.",
+        "Gunakan fixed dan setprecision(1). Output harus 85.5."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "85.5"
+      },
+      "starter": "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan nilai1 dan nilai2 menggunakan auto\n    // TODO: hitung dan tampilkan rata-rata satu desimal\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "85.5",
+          "visible": true
+        }
+      ]
+    }
   ]
 
 };
 
-for (const lesson of lessons) {
+for (const lesson of lessons {
   if (lesson.kind === "reading") continue;
   const firstChallenge = {
     id: lesson.id + "-1",
