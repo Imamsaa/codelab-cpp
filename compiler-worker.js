@@ -129,6 +129,7 @@ self.onmessage = async (event) => {
 
         testResults.push({
           index,
+          visible: testCase.visible !== false,
           input: testCase.input || "",
           expected,
           actual,
