@@ -24,6 +24,18 @@ Antarmuka menggunakan branding netral agar fokus utama tetap pada editor kode.
 
 Tombol ini menggunakan Cache Storage untuk menyimpan aset compiler, modul editor/runtime dari CDN, dan file aplikasi lokal. Browser dapat menghapus data situs secara otomatis saat ruang penyimpanan terbatas; bila itu terjadi, sambungkan internet lalu siapkan ulang mode offline.
 
+## Materi dan latihan otomatis
+
+Buka **Materi** di header playground atau langsung ke:
+
+**https://imamsaa.github.io/codelab-cpp/materi.html**
+
+Halaman materi menyediakan penjelasan, contoh input/output, dan playground untuk setiap topik. Tombol **Periksa Jawaban** mengompilasi source C++ sekali lalu menjalankannya pada beberapa test case. Test case contoh menampilkan input dan output yang dibandingkan; test tersembunyi hanya menampilkan status lolos/gagal.
+
+Topik awal: output dengan `cout`, input dan penjumlahan, percabangan `if-else`, perulangan dengan akumulator, dan mencari nilai terbesar. Kode latihan serta progres penyelesaian disimpan di browser pengguna.
+
+Penilaian ini berjalan di sisi browser dan cocok untuk latihan pembelajaran. Karena situs sepenuhnya statis, jangan gunakan test case tersembunyi untuk penilaian berisiko tinggi: kode dan data test pada JavaScript yang dikirim ke browser tidak dapat dirahasiakan dari pengguna yang memeriksa source.
+
 ## Cara menggunakan
 
 - Tulis kode di editor. Editor teks langsung ditampilkan agar tetap bisa digunakan saat library syntax highlighting sedang dimuat; jika CodeMirror gagal dimuat, editor teks cadangan tetap tersedia.
