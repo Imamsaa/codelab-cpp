@@ -25,6 +25,9 @@ Tombol ini menggunakan Cache Storage untuk menyimpan aset compiler, modul editor
 ## Cara menggunakan
 
 - Tulis kode di editor. Editor teks langsung ditampilkan agar tetap bisa digunakan saat library syntax highlighting sedang dimuat; jika CodeMirror gagal dimuat, editor teks cadangan tetap tersedia.
+- **Tab / Shift + Tab** menambah atau mengurangi indentasi pada editor. Pada editor utama, indentasi dikelola oleh CodeMirror; editor teks cadangan juga mendukung Tab.
+- **Autocomplete** memberi saran keyword, tipe data, fungsi umum, library, dan snippet C++ seperti kerangka `main`, `if`, `for`, `while`, `cout`, dan `cin`. Gunakan `Ctrl + Space` untuk membuka saran secara manual.
+- Klik **Format** atau tekan **Shift + Alt + F** untuk merapikan kode C++ dengan `clang-format` WebAssembly (format Google dengan indentasi 4 spasi). Formatter dimuat saat pertama kali digunakan dan ikut disiapkan ketika menyiapkan mode offline.
 - Pilih standar C++17, C++20, C++14, atau C++11.
 - Klik **Jalankan** atau tekan **Ctrl + Enter**.
 - Jika program membaca `cin`, terminal menerima input saat program berjalan. Ketik satu baris, lalu tekan **Enter** atau **Kirim**. Kamu bisa mengirim lebih dari satu baris selama program meminta input.
@@ -34,6 +37,7 @@ Tombol ini menggunakan Cache Storage untuk menyimpan aset compiler, modul editor
 ## Cara kerja dan batasan
 
 - Compiler Clang/LLD WebAssembly dimuat saat runtime dari CDN publik. Tombol **Siapkan CodeLab untuk Offline** mengunduh dan menyimpan `index.js`, `clang.js`, `lld.js`, `clang.wasm`, `lld.wasm`, dan `sysroot.tar`, lalu memuat modul editor/runtime agar tersimpan dalam cache. Ukuran aset compiler besar sekitar 95 MB sebelum kompresi/cache menurut dokumentasi browsercc.
+- Persiapan offline juga memuat modul `@wasm-fmt/clang-format` dan file WASM formatter untuk mendukung tombol Format ketika internet mati. Formatter menambah unduhan awal di luar ukuran compiler C++ sekitar 95 MB.
 - Progress bar memperkirakan progres berdasarkan ukuran aset compiler dan memiliki tahap terpisah untuk memuat dependensi serta memverifikasi mode offline. Status **CodeLab siap digunakan offline** baru ditampilkan jika aset compiler, file aplikasi, editor, runtime WASI, dan Service Worker terdeteksi.
 - Aset eksternal disimpan di Cache Storage oleh Service Worker. Uji offline sebenarnya dengan mematikan koneksi dan memuat ulang situs setelah status siap. Browser dapat membersihkan cache situs; mode offline tidak dapat dijamin jika data tersebut dihapus.
 - \`coi-serviceworker.min.js\` membantu mengaktifkan \`SharedArrayBuffer\` pada static hosting yang tidak menyediakan header COOP/COEP langsung. Browser harus mengizinkan Service Worker. Saat pertama kali membuka website, halaman dapat memuat ulang sekali untuk mengaktifkan mode tersebut.
