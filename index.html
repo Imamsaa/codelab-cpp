@@ -124,7 +124,7 @@
     @media(max-width:900px){body.focus-mode .workspace{grid-template-columns:1fr;overflow:auto}body.focus-mode .editor-panel{height:58vh;min-height:360px}body.focus-mode .side-panel{height:42vh;min-height:320px}body.focus-mode #editor,body.focus-mode #plainEditor{min-height:0}}
     @media(max-width:580px){body.focus-mode .toolbar{flex-direction:row;align-items:center;padding:7px 8px}body.focus-mode .toolbar-left{width:auto;justify-content:flex-start}body.focus-mode .toolbar-right{width:auto;flex:1}body.focus-mode .toolbar-right .btn{flex:1;padding:7px 6px;font-size:10px}body.focus-mode .file-label span:last-child{display:none}body.focus-mode .workspace{display:flex;flex-direction:column}body.focus-mode .editor-panel{height:58vh;min-height:320px;flex:none}body.focus-mode .side-panel{height:42vh;min-height:300px;flex:none}body.focus-mode .panel-meta{display:none}}
   </style>
-  <script src="./coi-serviceworker.min.js?v=20261014-neutral"></script>
+  <script src="./coi-serviceworker.min.js?v=20261014-default-cpp20"></script>
   <script type="importmap">
     {
       "imports": {
@@ -190,7 +190,7 @@
       <div class="toolbar-left">
         <div class="file-label"><span class="file-symbol">CPP</span><span>main.cpp</span></div>
         <span style="height:24px;border-left:1px solid #2a3650"></span>
-        <label class="field" for="standard">Standar<select id="standard"><option value="c++17" selected>C++17</option><option value="c++20">C++20</option><option value="c++14">C++14</option><option value="c++11">C++11</option></select></label>
+        <label class="field" for="standard">Standar<select id="standard"><option value="c++20" selected>C++20</option><option value="c++17">C++17</option><option value="c++14">C++14</option><option value="c++11">C++11</option></select></label>
       </div>
       <div class="toolbar-right">
         <button class="btn" id="uploadBtn" type="button" title="Buka file .cpp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15V3m0 0L7 8m5-5 5 5M4 15v5h16v-5"/></svg>Buka .cpp</button>
@@ -249,6 +249,6 @@
     </section>
     <footer><span>C++ Playground · Online coding workspace</span><span>Compiler oleh <a href="https://github.com/BertalanD/browsercc" target="_blank" rel="noreferrer">browsercc</a> · Untuk pembelajaran pemrograman</span></footer>
   </div>
-  <script type="module" src="./app.js?v=20261014-neutral" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
+  <script type="module" src="./app.js?v=20261014-default-cpp20" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
 </body>
 </html>
