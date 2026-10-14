@@ -1,3 +1,10 @@
 CodeLab C++ — ICT Playground
 
-This project uses third-party libraries through public CDNs. The compiler implementation is provided by browsercc (MIT License), and compiler toolchain assets are served from jsDelivr. Browser-side WASI APIs are provided by @bjorn3/browser_wasi_shim. CodeMirror is used as the source editor. Refer to README.md and upstream package repositories for notices and license terms.
+This project uses third-party libraries through public CDNs:
+- browsercc (MIT) provides Clang/LLD compiled to WebAssembly.
+- @bjorn3/browser_wasi_shim is dual-licensed under MIT and Apache-2.0.
+- CodeMirror is MIT-licensed.
+- coi-serviceworker (MIT) is included to enable cross-origin isolation on static hosting where supported.
+- esm.sh and jsDelivr serve third-party JavaScript and compiler assets.
+
+See the upstream repositories for complete license texts and notices.
