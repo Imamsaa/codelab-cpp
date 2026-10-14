@@ -124,7 +124,7 @@
     @media(max-width:900px){body.focus-mode .workspace{grid-template-columns:1fr;overflow:auto}body.focus-mode .editor-panel{height:58vh;min-height:360px}body.focus-mode .side-panel{height:42vh;min-height:320px}body.focus-mode #editor,body.focus-mode #plainEditor{min-height:0}}
     @media(max-width:580px){body.focus-mode .toolbar{flex-direction:row;align-items:center;padding:7px 8px}body.focus-mode .toolbar-left{width:auto;justify-content:flex-start}body.focus-mode .toolbar-right{width:auto;flex:1}body.focus-mode .toolbar-right .btn{flex:1;padding:7px 6px;font-size:10px}body.focus-mode .file-label span:last-child{display:none}body.focus-mode .workspace{display:flex;flex-direction:column}body.focus-mode .editor-panel{height:58vh;min-height:320px;flex:none}body.focus-mode .side-panel{height:42vh;min-height:300px;flex:none}body.focus-mode .panel-meta{display:none}}
   </style>
-  <script src="./coi-serviceworker.min.js?v=20261014-focus"></script>
+  <script src="./coi-serviceworker.min.js?v=20261014-editor-tools"></script>
   <script type="importmap">
     {
       "imports": {
@@ -204,7 +204,11 @@
         <div class="panel-head">
           <div class="panel-title"><span style="color:#a89cff">●</span> Editor kode</div>
           <div style="display:flex;align-items:center;gap:10px">
-            <span class="panel-meta">Ctrl + Enter untuk menjalankan</span>
+            <span class="panel-meta">Tab indent · Ctrl+Space saran kode</span>
+            <button class="btn focus-toggle" id="formatCodeBtn" type="button" title="Rapikan kode C++ (Shift + Alt + F)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M7 4v6M17 4v6M5 13h14M7 17h10M9 21h6"/></svg>
+              <span id="formatCodeLabel">Format</span>
+            </button>
             <button class="btn focus-toggle" id="focusModeBtn" type="button" aria-pressed="false" title="Fokus coding layar penuh">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
               <span id="focusModeLabel">Fokus</span>
@@ -243,6 +247,6 @@
     </section>
     <footer><span>CodeLab C++ · Untuk pembelajaran pemrograman</span><span>Compiler oleh <a href="https://github.com/BertalanD/browsercc" target="_blank" rel="noreferrer">browsercc</a> · UI dapat kamu modifikasi sendiri</span></footer>
   </div>
-  <script type="module" src="./app.js?v=20261014-focus" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
+  <script type="module" src="./app.js?v=20261014-editor-tools" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
 </body>
 </html>
