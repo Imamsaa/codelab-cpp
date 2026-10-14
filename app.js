@@ -44,6 +44,7 @@ const compilerProgressLabel = document.getElementById("compilerProgressLabel");
 const compilerProgressPercent = document.getElementById("compilerProgressPercent");
 const compilerDownloadStatus = document.getElementById("compilerDownloadStatus");
 const compilerCacheBadge = document.getElementById("compilerCacheBadge");
+const compilerDownloadSection = document.getElementById("compilerDownloadSection");
 
 const COMPILER_CACHE_NAME = "codelab-compiler-assets-v1";
 const RUNTIME_CACHE_NAME = "codelab-runtime-assets-v1";
@@ -321,6 +322,7 @@ async function refreshCompilerCacheState() {
 
     const assetPercent = Math.round((compiler.cachedBytes / EXPECTED_COMPILER_BYTES) * OFFLINE_PROGRESS_WEIGHT);
     if (readiness.ready) {
+      compilerDownloadSection.classList.add("ready");
       compilerCacheBadge.textContent = "Siap offline";
       compilerDownloadBtn.disabled = true;
       compilerDownloadBtn.textContent = "CodeLab siap offline ✓";
@@ -328,6 +330,7 @@ async function refreshCompilerCacheState() {
       return;
     }
 
+    compilerDownloadSection.classList.remove("ready");
     compilerDownloadBtn.disabled = compilerDownloadInProgress;
     compilerDownloadBtn.textContent = compiler.count
       ? "Lanjutkan persiapan offline"
@@ -403,6 +406,7 @@ async function prepareCodeLabOffline() {
   }
 
   compilerDownloadInProgress = true;
+  compilerDownloadSection.classList.remove("ready");
   compilerDownloadBtn.disabled = true;
   compilerDownloadBtn.textContent = "Menyiapkan offline…";
   compilerCacheBadge.textContent = "Sedang menyiapkan";
@@ -486,6 +490,7 @@ async function prepareCodeLabOffline() {
     );
   } catch (error) {
     downloadError = error?.message || String(error);
+    compilerDownloadSection.classList.remove("ready");
     compilerCacheBadge.textContent = "Belum siap offline";
     compilerProgressFill.classList.remove("indeterminate");
     compilerDownloadBtn.textContent = "Coba lagi / lanjutkan";
