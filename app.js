@@ -37,6 +37,9 @@ const fallbackStdin = document.getElementById("fallbackStdin");
 const loadNote = document.getElementById("loadNote");
 const lineInfo = document.getElementById("lineInfo");
 const editorRoot = document.getElementById("editor");
+const formatCodeBtn = document.getElementById("formatCodeBtn");
+const formatCodeLabel = document.getElementById("formatCodeLabel");
+let clangFormatPromise = null;
 const focusModeBtn = document.getElementById("focusModeBtn");
 const focusModeLabel = document.getElementById("focusModeLabel");
 const appShell = document.querySelector(".shell");
@@ -70,6 +73,121 @@ const COMPILER_ASSETS = [
 ];
 const EXPECTED_COMPILER_BYTES = COMPILER_ASSETS.reduce((sum, asset) => sum + asset.size, 0);
 let compilerDownloadInProgress = false;
+
+const cppCompletionItems = [
+  { label: "cout", type: "variable", info: "Menampilkan output ke terminal", apply: "cout" },
+  { label: "cin", type: "variable", info: "Membaca input dari terminal", apply: "cin" },
+  { label: "endl", type: "constant", info: "Baris baru dan flush output", apply: "endl" },
+  { label: "getline", type: "function", info: "Membaca satu baris input", apply: "getline(cin, nama);" },
+  { label: "string", type: "type", info: "Tipe data teks", apply: "string" },
+  { label: "int", type: "type", info: "Bilangan bulat", apply: "int" },
+  { label: "double", type: "type", info: "Bilangan pecahan presisi ganda", apply: "double" },
+  { label: "float", type: "type", info: "Bilangan pecahan", apply: "float" },
+  { label: "char", type: "type", info: "Satu karakter", apply: "char" },
+  { label: "bool", type: "type", info: "Nilai true atau false", apply: "bool" },
+  { label: "void", type: "type", info: "Fungsi tanpa nilai balik", apply: "void" },
+  { label: "auto", type: "keyword", apply: "auto" },
+  { label: "const", type: "keyword", apply: "const" },
+  { label: "if", type: "keyword", info: "Percabangan if", apply: "if" },
+  { label: "else", type: "keyword", apply: "else" },
+  { label: "switch", type: "keyword", apply: "switch" },
+  { label: "case", type: "keyword", apply: "case" },
+  { label: "for", type: "keyword", info: "Perulangan for", apply: "for" },
+  { label: "while", type: "keyword", info: "Perulangan while", apply: "while" },
+  { label: "do", type: "keyword", info: "Perulangan do-while", apply: "do" },
+  { label: "break", type: "keyword", apply: "break" },
+  { label: "continue", type: "keyword", apply: "continue" },
+  { label: "return", type: "keyword", apply: "return" },
+  { label: "true", type: "constant", apply: "true" },
+  { label: "false", type: "constant", apply: "false" },
+  { label: "nullptr", type: "constant", apply: "nullptr" },
+  { label: "std", type: "namespace", apply: "std" },
+  { label: "vector", type: "type", info: "Container dinamis", apply: "vector" },
+  { label: "array", type: "type", info: "Array berukuran tetap", apply: "array" },
+  { label: "sort", type: "function", info: "Mengurutkan rentang", apply: "sort" },
+  { label: "max", type: "function", apply: "max" },
+  { label: "min", type: "function", apply: "min" },
+  { label: "push_back", type: "method", apply: "push_back" },
+  { label: "size", type: "method", apply: "size" },
+  { label: "length", type: "method", apply: "length" },
+  { label: "#include <iostream>", type: "keyword", info: "Library input/output", apply: "#include <iostream>" },
+  { label: "#include <string>", type: "keyword", info: "Library std::string", apply: "#include <string>" },
+  { label: "#include <vector>", type: "keyword", info: "Library vector", apply: "#include <vector>" },
+  { label: "using namespace std;", type: "keyword", info: "Mengakses nama std tanpa awalan std::", apply: "using namespace std;" }
+];
+
+function cppCompletionSource(snippetCompletion) {
+  const snippets = [
+    snippetCompletion("int main() {\\n    $0\\n    return 0;\\n}", {
+      label: "main",
+      detail: "Kerangka program C++",
+      type: "snippet"
+    }),
+    snippetCompletion("if ($1) {\\n    $0\\n}", {
+      label: "if block",
+      detail: "Kerangka percabangan if",
+      type: "snippet"
+    }),
+    snippetCompletion("if ($1) {\\n    $2\\n} else {\\n    $0\\n}", {
+      label: "if else",
+      detail: "Kerangka percabangan if-else",
+      type: "snippet"
+    }),
+    snippetCompletion("for (int i = 0; i < $1; ++i) {\\n    $0\\n}", {
+      label: "for loop",
+      detail: "Kerangka perulangan for",
+      type: "snippet"
+    }),
+    snippetCompletion("while ($1) {\\n    $0\\n}", {
+      label: "while loop",
+      detail: "Kerangka perulangan while",
+      type: "snippet"
+    }),
+    snippetCompletion("cout << $0 << endl;", {
+      label: "cout line",
+      detail: "Menampilkan teks lalu baris baru",
+      type: "snippet"
+    }),
+    snippetCompletion("cin >> $0;", {
+      label: "cin input",
+      detail: "Membaca input",
+      type: "snippet"
+    })
+  ];
+  const items = [...snippets, ...cppCompletionItems];
+  return (context) => {
+    const word = context.matchBefore(/[\\w:#]+/);
+    if (!word && !context.explicit) return null;
+    if (word && word.from === word.to && !context.explicit) return null;
+    const from = word ? word.from : context.pos;
+    const query = word ? word.text.toLowerCase() : "";
+    const options = items
+      .filter((item) => !query || item.label.toLowerCase().includes(query))
+      .slice(0, 30);
+    return options.length ? { from, options, validFor: /^[\\w:#]*$/ } : null;
+  };
+}
+
+function handlePlainEditorTab(event) {
+  if (!plainEditor || event.key !== "Tab") return;
+  event.preventDefault();
+  const start = plainEditor.selectionStart;
+  const end = plainEditor.selectionEnd;
+  const value = plainEditor.value;
+  if (event.shiftKey) {
+    const lineStart = value.lastIndexOf("\\n", Math.max(0, start - 1)) + 1;
+    if (value.slice(lineStart, lineStart + 4) === "    ") {
+      plainEditor.setRangeText("", lineStart, lineStart + 4, "preserve");
+    } else if (value[lineStart] === "\\t") {
+      plainEditor.setRangeText("", lineStart, lineStart + 1, "preserve");
+    }
+  } else {
+    plainEditor.setRangeText("    ", start, end, "end");
+  }
+  plainEditor.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+
 
 let cmEditor = null;
 let plainEditor = null;
@@ -264,7 +382,11 @@ async function getOfflineReadiness() {
     { name: "CodeMirror", test: (url) => /codemirror/i.test(url) && !/lang-cpp|theme-one-dark/i.test(url) },
     { name: "bahasa C++ untuk editor", test: (url) => /lang-cpp/i.test(url) },
     { name: "tema editor", test: (url) => /theme-one-dark/i.test(url) },
-    { name: "runtime WASI", test: (url) => /browser_wasi_shim/i.test(url) }
+    { name: "autocomplete", test: (url) => /codemirror.*autocomplete|@codemirror\/autocomplete/i.test(url) },
+    { name: "perintah indentasi", test: (url) => /codemirror.*commands|@codemirror\/commands/i.test(url) },
+    { name: "runtime WASI", test: (url) => /browser_wasi_shim/i.test(url) },
+    { name: "formatter C++", test: (url) => /clang-format-web\.js/i.test(url) },
+    { name: "mesin formatter C++ (WASM)", test: (url) => /clang-format\.wasm/i.test(url) }
   ];
   const modules = requiredModules.filter((module) => !runtimeUrls.some(module.test)).map((module) => module.name);
   const controlled = Boolean(navigator.serviceWorker && navigator.serviceWorker.controller);
@@ -316,6 +438,10 @@ async function warmupOfflineDependencies() {
 
   setCompilerProgress(91, "Menyiapkan modul compiler…", "Memastikan modul JavaScript Clang/LLD juga tersedia offline.");
   await import("https://cdn.jsdelivr.net/npm/browsercc@0.1.1/dist/index.js");
+
+  setCompilerProgress(93, "Menyiapkan formatter C++…", "Memuat clang-format WebAssembly agar tombol Format juga dapat digunakan offline.");
+  const clangFormatter = await import("https://cdn.jsdelivr.net/npm/@wasm-fmt/clang-format@23.1.1/clang-format-web.js");
+  await clangFormatter.default();
 }
 
 async function refreshCompilerCacheState() {
@@ -549,14 +675,7 @@ async function initializeEditor() {
     editedBeforeEnhancement = true;
     persistSource();
   });
-  plainEditor.addEventListener("keydown", (event) => {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      const start = plainEditor.selectionStart;
-      const end = plainEditor.selectionEnd;
-      plainEditor.setRangeText("    ", start, end, "end");
-    }
-  });
+  plainEditor.addEventListener("keydown", handlePlainEditorTab);
   updateLineInfo();
 
   // Wait for the Service Worker to control module requests before loading CDN dependencies.
@@ -568,7 +687,9 @@ async function initializeEditor() {
     const modules = await Promise.all([
       import("codemirror"),
       import("@codemirror/lang-cpp"),
-      import("@codemirror/theme-one-dark")
+      import("@codemirror/theme-one-dark"),
+      import("@codemirror/autocomplete"),
+      import("@codemirror/commands")
     ]);
 
     // Do not replace the textarea if the user has already started typing while the CDN loaded.
@@ -582,6 +703,8 @@ async function initializeEditor() {
     const EditorView = modules[0].EditorView;
     const cpp = modules[1].cpp;
     const oneDark = modules[2].oneDark;
+    const { autocompletion, snippetCompletion } = modules[3];
+    const { indentMore, indentLess } = modules[4];
     const fallback = plainEditor;
     const initialText = fallback.value;
     fallback.remove();
@@ -594,6 +717,21 @@ async function initializeEditor() {
           basicSetup,
           cpp(),
           oneDark,
+          autocompletion({
+            activateOnTyping: true,
+            maxRenderedOptions: 16,
+            icons: true,
+            override: [cppCompletionSource(snippetCompletion)]
+          }),
+          EditorView.domEventHandlers({
+            keydown(event, view) {
+              if (event.key !== "Tab") return false;
+              event.preventDefault();
+              if (event.shiftKey) indentLess(view);
+              else indentMore(view);
+              return true;
+            }
+          }),
           EditorView.theme({
             "&": { height: "100%", fontSize: "13px" },
             ".cm-scroller": { overflow: "auto", fontFamily: '"SFMono-Regular", Consolas, "Liberation Mono", monospace' },
@@ -745,6 +883,7 @@ endInputBtn.addEventListener("click", () => {
   setStatus("Input ditutup (EOF dikirim).", "busy");
 });
 
+formatCodeBtn.addEventListener("click", formatCppCode);
 runBtn.addEventListener("click", runProgram);
 stopBtn.addEventListener("click", () => {
   if (!activeWorker) return;
@@ -786,6 +925,10 @@ window.addEventListener("keydown", (event) => {
     event.preventDefault();
     runProgram();
   }
+  if (event.shiftKey && event.altKey && event.key.toLowerCase() === "f") {
+    event.preventDefault();
+    formatCppCode();
+  }
 });
 
 if (!interactiveSupported) {
@@ -793,6 +936,60 @@ if (!interactiveSupported) {
   fallbackNotice.classList.add("show");
   fallbackStdin.hidden = false;
   setStatus("Terminal siap. Mode stdin cadangan aktif; isi input sebelum Run.", "idle");
+}
+
+async function getClangFormatter() {
+  if (!clangFormatPromise) {
+    clangFormatPromise = (async () => {
+      const module = await import("https://cdn.jsdelivr.net/npm/@wasm-fmt/clang-format@23.1.1/clang-format-web.js");
+      await module.default();
+      return module.format;
+    })().catch((error) => {
+      clangFormatPromise = null;
+      throw error;
+    });
+  }
+  return clangFormatPromise;
+}
+
+async function formatCppCode() {
+  if (formatCodeBtn.disabled) return;
+  const source = sourceText();
+  if (!source.trim()) {
+    setStatus("Editor masih kosong.", "error");
+    return;
+  }
+  const previousLabel = formatCodeLabel.textContent;
+  formatCodeBtn.disabled = true;
+  formatCodeLabel.textContent = "Memuat…";
+  setStatus("Menyiapkan clang-format untuk merapikan kode C++…", "busy");
+  try {
+    const format = await getClangFormatter();
+    formatCodeLabel.textContent = "Format…";
+    const config = JSON.stringify({
+      BasedOnStyle: "Google",
+      IndentWidth: 4,
+      TabWidth: 4,
+      UseTab: "Never",
+      ColumnLimit: 100,
+      SortIncludes: false,
+      AllowShortFunctionsOnASingleLine: "Empty",
+      AllowShortIfStatementsOnASingleLine: "Never",
+      BreakBeforeBraces: "Attach"
+    });
+    const formatted = format(source, "main.cpp", config);
+    if (typeof formatted !== "string" || !formatted.trim()) {
+      throw new Error("Formatter tidak menghasilkan kode yang valid.");
+    }
+    setSource(formatted);
+    setStatus("Kode berhasil dirapikan dengan clang-format.", "ok");
+  } catch (error) {
+    setStatus("Gagal memformat kode: " + (error?.message || error), "error");
+    console.error("clang-format failed:", error);
+  } finally {
+    formatCodeBtn.disabled = false;
+    formatCodeLabel.textContent = previousLabel === "Memuat…" || previousLabel === "Format…" ? "Format" : previousLabel;
+  }
 }
 
 function updateFocusMode(enabled) {
