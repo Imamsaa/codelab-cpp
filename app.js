@@ -411,7 +411,7 @@ async function prepareCodeLabOffline() {
   }
 
   compilerDownloadInProgress = true;
-  compilerDownloadSection.classList.remove("ready");
+  compilerDownloadSection?.classList.remove("ready");
   compilerDownloadBtn.disabled = true;
   compilerDownloadBtn.textContent = "Menyiapkan offline…";
   compilerCacheBadge.textContent = "Sedang menyiapkan";
@@ -451,14 +451,14 @@ async function prepareCodeLabOffline() {
 
     for (let index = 0; index < missing.length; index++) {
       const asset = missing[index];
-      compilerProgressFill.classList.add("indeterminate");
+      compilerProgressFill?.classList.add("indeterminate");
       compilerProgressLabel.textContent = "Menghubungi CDN untuk " + asset.name + "…";
       compilerDownloadStatus.textContent = "File " + (index + 1) + " dari " + missing.length + ". URL: " + asset.url;
 
       const actualBytes = await downloadAssetToCache(cache, asset, (loaded) => {
         const fileFraction = Math.min(loaded / asset.size, 0.995);
         const progress = ((completedExpected + asset.size * fileFraction) / EXPECTED_COMPILER_BYTES) * OFFLINE_PROGRESS_WEIGHT;
-        compilerProgressFill.classList.remove("indeterminate");
+        compilerProgressFill?.classList.remove("indeterminate");
         setCompilerProgress(
           progress,
           "Mengunduh " + asset.name + " · " + formatBytes(loaded),
@@ -468,7 +468,7 @@ async function prepareCodeLabOffline() {
       transferredThisSession += actualBytes;
       completedExpected += asset.size;
       existing.add(asset.url);
-      compilerProgressFill.classList.remove("indeterminate");
+      compilerProgressFill?.classList.remove("indeterminate");
       setCompilerProgress(
         (completedExpected / EXPECTED_COMPILER_BYTES) * OFFLINE_PROGRESS_WEIGHT,
         "Aset compiler " + (index + 1) + " dari " + missing.length + " selesai",
@@ -476,7 +476,7 @@ async function prepareCodeLabOffline() {
       );
     }
 
-    compilerProgressFill.classList.remove("indeterminate");
+    compilerProgressFill?.classList.remove("indeterminate");
     setCompilerProgress(83, "Compiler tersimpan; menyiapkan dependensi…", "Sekarang memuat editor, runtime WASI, dan modul browsercc agar permintaan CDN bisa disimpan untuk penggunaan offline.");
     await warmupOfflineDependencies();
 
@@ -495,9 +495,9 @@ async function prepareCodeLabOffline() {
     );
   } catch (error) {
     downloadError = error?.message || String(error);
-    compilerDownloadSection.classList.remove("ready");
+    compilerDownloadSection?.classList.remove("ready");
     compilerCacheBadge.textContent = "Belum siap offline";
-    compilerProgressFill.classList.remove("indeterminate");
+    compilerProgressFill?.classList.remove("indeterminate");
     compilerDownloadBtn.textContent = "Coba lagi / lanjutkan";
     const detail = /Failed to fetch|NetworkError|Load failed/i.test(downloadError)
       ? "Browser gagal membaca respons CDN. Periksa koneksi internet atau pemblokir konten."
