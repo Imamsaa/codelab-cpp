@@ -53,16 +53,19 @@
     .cm-editor .cm-gutters{background:#0b1220;border-right:1px solid #202b40;color:#687894}
     .cm-editor.cm-focused{outline:none}
     .side-panel{display:flex;flex-direction:column;min-width:0;background:#0d1423}
-    .input-block,.output-block{display:flex;flex-direction:column;min-height:0}
-    .input-block{flex:0 0 34%;min-height:180px;border-bottom:1px solid var(--line)}
-    .output-block{flex:1;min-height:300px}
-    .small-head{height:43px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 14px;border-bottom:1px solid #202b40;background:#10182a}
+    .output-block{display:flex;flex-direction:column;flex:1;min-height:0}
+    .small-head{height:43px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 14px;border-bottom:1px solid #202b40;background:#10182a;flex-shrink:0}
     .small-head .panel-title{font-size:10px}
     .muted-note{font-size:10px;color:#7585a0}
-    #stdin{width:100%;flex:1;resize:vertical;min-height:115px;padding:12px 14px;border:0;outline:none;background:#0d1423;color:#cbd8ef;font:12px/1.65 "SFMono-Regular",Consolas,monospace;tab-size:4}
-    #stdin::placeholder{color:#52617d}
-    #output{flex:1;margin:0;padding:15px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;color:#c8d6ed;background:#0a111e;font:12px/1.7 "SFMono-Regular",Consolas,monospace}
-    #output .muted{color:#657590}
+    .terminal-screen{display:flex;flex-direction:column;flex:1;min-height:0;background:#0a111e}
+    #output{flex:1;min-height:260px;margin:0;padding:15px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;color:#c8d6ed;background:#0a111e;font:12px/1.7 "SFMono-Regular",Consolas,monospace}
+    .terminal-input-row{display:flex;align-items:center;gap:8px;padding:9px 12px;border-top:1px solid #202b40;background:#0c1323}
+    .terminal-prompt{font:13px "SFMono-Regular",Consolas,monospace;color:var(--cyan)}
+    #terminalInput{min-width:0;flex:1;border:0;outline:0;background:transparent;color:#e8edf8;font:12px/1.6 "SFMono-Regular",Consolas,monospace}
+    #terminalInput::placeholder{color:#596985}
+    #terminalInput:disabled{opacity:.45}
+    .fallback-stdin{width:100%;min-height:85px;resize:vertical;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#0b1220;color:#dce5f7;font:12px/1.6 "SFMono-Regular",Consolas,monospace}
+    .fallback-stdin[hidden]{display:none}
     .statusbar{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 14px;background:#0b1220;border-top:1px solid var(--line);font-size:10px;color:#8b9ab3}
     .status-left{display:flex;align-items:center;gap:8px;min-width:0}
     #statusText{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -80,8 +83,9 @@
     .load-note{margin-top:12px;border:1px solid #4d4774;background:#241f43;border-radius:11px;padding:10px 13px;color:#d6d0ff;font-size:11px;line-height:1.6;display:none}
     .load-note.show{display:block}
     @media(max-width:900px){.intro{align-items:flex-start;flex-direction:column}.privacy{max-width:100%}.workspace{grid-template-columns:1fr}.editor-panel{border-right:0;border-bottom:1px solid var(--line)}#editor{min-height:420px}.side-panel{min-height:510px}.toolbar{align-items:flex-start}.toolbar-left,.toolbar-right{max-width:100%}}
-    @media(max-width:580px){.shell{padding:15px 10px}.top-right .pill{display:none}.brand h1{font-size:16px}.toolbar{flex-direction:column}.toolbar-right{width:100%}.toolbar-right .btn{flex:1}.toolbar-left{width:100%;justify-content:space-between}.field{flex:1}.field select{max-width:130px}.below{grid-template-columns:1fr}.workspace{min-height:0}.editor-panel #editor{min-height:390px}.input-block{flex-basis:200px}.output-block{min-height:280px}.statusbar{align-items:flex-start}.panel-meta{display:none}}
+    @media(max-width:580px){.shell{padding:15px 10px}.top-right .pill{display:none}.brand h1{font-size:16px}.toolbar{flex-direction:column}.toolbar-right{width:100%}.toolbar-right .btn{flex:1}.toolbar-left{width:100%;justify-content:space-between}.field{flex:1}.field select{max-width:130px}.below{grid-template-columns:1fr}.workspace{min-height:0}.editor-panel #editor{min-height:390px}.output-block{min-height:280px}#output{min-height:230px}.statusbar{align-items:flex-start}.panel-meta{display:none}}
   </style>
+  <script src="./coi-serviceworker.min.js"></script>
   <script type="importmap">
     {
       "imports": {
@@ -137,13 +141,22 @@
         <div class="statusbar"><div class="status-left"><span id="statusDot" class="status-indicator"></span><span id="statusText">Siap. Tulis kode lalu tekan Jalankan.</span></div><span id="lineInfo">Baris 1</span></div>
       </section>
       <section class="side-panel">
-        <div class="input-block">
-          <div class="small-head"><div class="panel-title"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h10M4 18h13"/></svg> Input program (stdin)</div><span class="muted-note">Satu nilai per baris</span></div>
-          <textarea id="stdin" spellcheck="false" placeholder="Contoh input untuk cin...&#10;Imam&#10;14&#10;20"></textarea>
-        </div>
         <div class="output-block">
-          <div class="small-head"><div class="panel-title"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4zM8 9l3 3-3 3m5 0h3"/></svg> Output / Terminal</div><button class="btn" id="clearBtn" type="button" style="padding:5px 8px;font-size:10px">Bersihkan</button></div>
-          <pre id="output" aria-live="polite"><span class="muted">Output program akan muncul di sini.\n\nTips: jika program menggunakan cin, masukkan data di panel Input terlebih dahulu.</span></pre>
+          <div class="small-head">
+            <div class="panel-title"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4zM8 9l3 3-3 3m5 0h3"/></svg> Terminal · stdin / stdout</div>
+            <div style="display:flex;align-items:center;gap:8px"><span id="terminalMode" class="muted-note">Interaktif</span><button class="btn" id="clearBtn" type="button" style="padding:5px 8px;font-size:10px">Bersihkan</button></div>
+          </div>
+          <div class="terminal-screen">
+            <pre id="output" aria-live="polite">Terminal siap. Tekan Jalankan untuk memulai program C++.</pre>
+            <form id="terminalForm" class="terminal-input-row">
+              <span class="terminal-prompt">&gt;</span>
+              <input id="terminalInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" disabled placeholder="Input program akan diterima saat program berjalan…">
+              <button class="btn" id="sendInputBtn" type="submit" style="padding:6px 9px;font-size:10px" disabled>Kirim</button>
+              <button class="btn" id="endInputBtn" type="button" style="padding:6px 9px;font-size:10px" disabled title="Tutup stdin">EOF</button>
+            </form>
+          </div>
+          <div id="fallbackNotice" class="load-note">Mode terminal interaktif tidak tersedia di browser ini. Isi input di bawah sebelum menekan Jalankan.</div>
+          <textarea id="fallbackStdin" class="fallback-stdin" hidden spellcheck="false" placeholder="Input stdin sebelum Run, satu nilai per baris"></textarea>
         </div>
       </section>
     </main>
@@ -156,6 +169,6 @@
     </section>
     <footer><span>CodeLab C++ · Untuk pembelajaran pemrograman</span><span>Compiler oleh <a href="https://github.com/BertalanD/browsercc" target="_blank" rel="noreferrer">browsercc</a> · UI dapat kamu modifikasi sendiri</span></footer>
   </div>
-  <script type="module" src="./app.js"></script>
+  <script type="module" src="./app.js" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
 </body>
 </html>
