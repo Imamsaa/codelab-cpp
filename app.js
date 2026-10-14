@@ -59,10 +59,13 @@ const compilerCacheBadge = document.getElementById("compilerCacheBadge");
 const compilerDownloadSection = document.getElementById("compilerDownloadSection") || document.querySelector(".compiler-download");
 
 const COMPILER_CACHE_NAME = "codelab-compiler-assets-v1";
-const RUNTIME_CACHE_NAME = "codelab-runtime-assets-v1";
-const APP_CACHE_NAME = "codelab-offline-shell-v1";
+const RUNTIME_CACHE_NAME = "codelab-runtime-assets-v5";
+const APP_CACHE_NAME = "codelab-offline-shell-v5";
 const APP_SHELL_FILES = ["index.html", "app.js", "compiler-worker.js", "coi-serviceworker.min.js"];
 const OFFLINE_PROGRESS_WEIGHT = 82;
+const FORMATTER_BASE_URL = "https://cdn.jsdelivr.net/npm/@wasm-fmt/clang-format@23.1.0/";
+const FORMATTER_JS_URL = FORMATTER_BASE_URL + "clang-format-web.js";
+const FORMATTER_WASM_URL = FORMATTER_BASE_URL + "clang-format.wasm";
 const COMPILER_ASSETS = [
   { name: "index.js", url: "https://cdn.jsdelivr.net/npm/browsercc@0.1.1/dist/index.js", size: 5_000, type: "text/javascript" },
   { name: "clang.js", url: "https://cdn.jsdelivr.net/npm/browsercc@0.1.1/dist/clang.js", size: 70_000, type: "text/javascript" },
@@ -384,11 +387,11 @@ async function getOfflineReadiness() {
     { name: "tema editor", test: (url) => /theme-one-dark/i.test(url) },
     { name: "autocomplete", test: (url) => /codemirror.*autocomplete|@codemirror\/autocomplete/i.test(url) },
     { name: "perintah indentasi", test: (url) => /codemirror.*commands|@codemirror\/commands/i.test(url) },
-    { name: "runtime WASI", test: (url) => /browser_wasi_shim/i.test(url) },
-    { name: "formatter C++", test: (url) => /clang-format-web\.js/i.test(url) },
-    { name: "mesin formatter C++ (WASM)", test: (url) => /clang-format\.wasm/i.test(url) }
+    { name: "runtime WASI", test: (url) => /browser_wasi_shim/i.test(url) }
   ];
   const modules = requiredModules.filter((module) => !runtimeUrls.some(module.test)).map((module) => module.name);
+  if (!(await runtimeCache.match(FORMATTER_JS_URL))) modules.push("formatter C++");
+  if (!(await runtimeCache.match(FORMATTER_WASM_URL))) modules.push("mesin formatter C++ (WASM)");
   const controlled = Boolean(navigator.serviceWorker && navigator.serviceWorker.controller);
   const reasons = [];
   if (compiler.count !== COMPILER_ASSETS.length) reasons.push("Compiler tersimpan " + compiler.count + "/" + COMPILER_ASSETS.length + " aset.");
@@ -425,6 +428,23 @@ async function waitForServiceWorkerControl() {
   });
 }
 
+async function cacheRuntimeAsset(url, label) {
+  const cache = await caches.open(RUNTIME_CACHE_NAME);
+  const existing = await cache.match(url);
+  if (existing && existing.ok) return;
+
+  setCompilerProgress(
+    93,
+    "Mengunduh " + label + "…",
+    "Menyimpan aset formatter secara langsung ke Cache Storage: " + url
+  );
+  const response = await fetch(url, { mode: "cors" });
+  if (!response.ok) {
+    throw new Error(label + " gagal diunduh (HTTP " + response.status + ").");
+  }
+  await cache.put(url, response.clone());
+}
+
 async function warmupOfflineDependencies() {
   setCompilerProgress(84, "Menyimpan editor…", "Memuat CodeMirror, mode C++, dan tema editor. Browser menyimpan modul yang diperlukan ke cache offline.");
   await Promise.all([
@@ -439,8 +459,13 @@ async function warmupOfflineDependencies() {
   setCompilerProgress(91, "Menyiapkan modul compiler…", "Memastikan modul JavaScript Clang/LLD juga tersedia offline.");
   await import("https://cdn.jsdelivr.net/npm/browsercc@0.1.1/dist/index.js");
 
-  setCompilerProgress(93, "Menyiapkan formatter C++…", "Memuat clang-format WebAssembly agar tombol Format juga dapat digunakan offline.");
-  const clangFormatter = await import("https://cdn.jsdelivr.net/npm/@wasm-fmt/clang-format@23.1.0/clang-format-web.js");
+  // Save the formatter's wrapper and WASM by exact URL. Relying only on the
+  // Service Worker's module-fetch interception did not make readiness checks reliable.
+  setCompilerProgress(92, "Menyiapkan formatter C++…", "Menyimpan JavaScript clang-format dan binary WebAssembly secara eksplisit.");
+  await cacheRuntimeAsset(FORMATTER_JS_URL, "formatter C++");
+  await cacheRuntimeAsset(FORMATTER_WASM_URL, "mesin formatter C++ (WASM)");
+
+  const clangFormatter = await import(FORMATTER_JS_URL);
   await clangFormatter.default();
 }
 
@@ -941,7 +966,7 @@ if (!interactiveSupported) {
 async function getClangFormatter() {
   if (!clangFormatPromise) {
     clangFormatPromise = (async () => {
-      const module = await import("https://cdn.jsdelivr.net/npm/@wasm-fmt/clang-format@23.1.0/clang-format-web.js");
+      const module = await import(FORMATTER_JS_URL);
       await module.default();
       return module.format;
     })().catch((error) => {
