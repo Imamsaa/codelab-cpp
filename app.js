@@ -118,27 +118,27 @@ const cppCompletionItems = [
 
 function cppCompletionSource(snippetCompletion) {
   const snippets = [
-    snippetCompletion("int main() {\\n    $0\\n    return 0;\\n}", {
+    snippetCompletion("int main() {\n    $0\n    return 0;\n}", {
       label: "main",
       detail: "Kerangka program C++",
       type: "snippet"
     }),
-    snippetCompletion("if ($1) {\\n    $0\\n}", {
+    snippetCompletion("if ($1) {\n    $0\n}", {
       label: "if block",
       detail: "Kerangka percabangan if",
       type: "snippet"
     }),
-    snippetCompletion("if ($1) {\\n    $2\\n} else {\\n    $0\\n}", {
+    snippetCompletion("if ($1) {\n    $2\n} else {\n    $0\n}", {
       label: "if else",
       detail: "Kerangka percabangan if-else",
       type: "snippet"
     }),
-    snippetCompletion("for (int i = 0; i < $1; ++i) {\\n    $0\\n}", {
+    snippetCompletion("for (int i = 0; i < $1; ++i) {\n    $0\n}", {
       label: "for loop",
       detail: "Kerangka perulangan for",
       type: "snippet"
     }),
-    snippetCompletion("while ($1) {\\n    $0\\n}", {
+    snippetCompletion("while ($1) {\n    $0\n}", {
       label: "while loop",
       detail: "Kerangka perulangan while",
       type: "snippet"
@@ -156,7 +156,7 @@ function cppCompletionSource(snippetCompletion) {
   ];
   const items = [...snippets, ...cppCompletionItems];
   return (context) => {
-    const word = context.matchBefore(/[\\w:#]+/);
+    const word = context.matchBefore(/[\w:#]+/);
     if (!word && !context.explicit) return null;
     if (word && word.from === word.to && !context.explicit) return null;
     const from = word ? word.from : context.pos;
@@ -164,7 +164,7 @@ function cppCompletionSource(snippetCompletion) {
     const options = items
       .filter((item) => !query || item.label.toLowerCase().includes(query))
       .slice(0, 30);
-    return options.length ? { from, options, validFor: /^[\\w:#]*$/ } : null;
+    return options.length ? { from, options, validFor: /^[\w:#]*$/ } : null;
   };
 }
 
@@ -175,10 +175,10 @@ function handlePlainEditorTab(event) {
   const end = plainEditor.selectionEnd;
   const value = plainEditor.value;
   if (event.shiftKey) {
-    const lineStart = value.lastIndexOf("\\n", Math.max(0, start - 1)) + 1;
+    const lineStart = value.lastIndexOf("\n", Math.max(0, start - 1)) + 1;
     if (value.slice(lineStart, lineStart + 4) === "    ") {
       plainEditor.setRangeText("", lineStart, lineStart + 4, "preserve");
-    } else if (value[lineStart] === "\\t") {
+    } else if (value[lineStart] === "\t") {
       plainEditor.setRangeText("", lineStart, lineStart + 1, "preserve");
     }
   } else {
