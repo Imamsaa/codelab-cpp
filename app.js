@@ -243,8 +243,9 @@ async function refreshCompilerCacheState() {
       : state.count
         ? state.count + "/" + COMPILER_ASSETS.length + " aset tersimpan"
         : "Belum disiapkan";
+    compilerDownloadBtn.disabled = state.count === COMPILER_ASSETS.length || compilerDownloadInProgress;
     compilerDownloadBtn.textContent = state.count === COMPILER_ASSETS.length
-      ? "Unduh ulang compiler"
+      ? "Compiler tersimpan ✓"
       : state.count
         ? "Lanjutkan unduhan compiler"
         : "Unduh compiler (±95 MB)";
@@ -370,7 +371,7 @@ async function downloadCompilerAssets() {
 
     setCompilerProgress(100, "Compiler berhasil diunduh", "Semua " + COMPILER_ASSETS.length + " aset tersimpan di cache browser (" + formatBytes(transferredThisSession) + " diterima pada sesi ini). Kamu dapat mulai menjalankan C++.");
     compilerCacheBadge.textContent = "Tersimpan di browser";
-    compilerDownloadBtn.textContent = "Unduh ulang compiler";
+    compilerDownloadBtn.textContent = "Compiler tersimpan ✓";
   } catch (error) {
     compilerCacheBadge.textContent = "Unduhan belum selesai";
     setCompilerProgress(
