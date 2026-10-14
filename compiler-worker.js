@@ -82,8 +82,7 @@ self.onmessage = async (event) => {
       const normalizeOutput = (value) => String(value ?? "")
         .replace(/\r\n/g, "\n")
         .trim()
-        .replace(/[ \t]+/g, " ")
-        .replace(/\n+/g, "\n");
+        .replace(/[ \t]+/g, " ");
       const testResults = [];
 
       for (let index = 0; index < testCases.length; index++) {
