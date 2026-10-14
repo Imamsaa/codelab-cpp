@@ -440,7 +440,7 @@ async function warmupOfflineDependencies() {
   await import("https://cdn.jsdelivr.net/npm/browsercc@0.1.1/dist/index.js");
 
   setCompilerProgress(93, "Menyiapkan formatter C++…", "Memuat clang-format WebAssembly agar tombol Format juga dapat digunakan offline.");
-  const clangFormatter = await import("https://cdn.jsdelivr.net/npm/@wasm-fmt/clang-format@23.1.1/clang-format-web.js");
+  const clangFormatter = await import("https://cdn.jsdelivr.net/npm/@wasm-fmt/clang-format@23.1.0/clang-format-web.js");
   await clangFormatter.default();
 }
 
@@ -941,7 +941,7 @@ if (!interactiveSupported) {
 async function getClangFormatter() {
   if (!clangFormatPromise) {
     clangFormatPromise = (async () => {
-      const module = await import("https://cdn.jsdelivr.net/npm/@wasm-fmt/clang-format@23.1.1/clang-format-web.js");
+      const module = await import("https://cdn.jsdelivr.net/npm/@wasm-fmt/clang-format@23.1.0/clang-format-web.js");
       await module.default();
       return module.format;
     })().catch((error) => {
