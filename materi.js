@@ -3,6 +3,7 @@ const CODE_KEY_PREFIX = "cpp-playground-lesson-code-";
 const lessons = [
   {
     id: "intro", kind: "reading", title: "Pengenalan C++", category: "Pengantar", level: "Pemula", duration: "5 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_intro.asp", sourceLabel: "W3Schools — C++ Introduction",
     summary: "Sebelum menulis program, kenali dahulu apa itu C++, alasan bahasa ini banyak digunakan, dan hal yang membedakannya dari bahasa C. Materi ini berfokus pada pemahaman konsep, belum pada penulisan kode.",
     concepts: [
       { title: "Apa itu C++?", body: "C++ adalah bahasa pemrograman lintas platform yang dapat digunakan untuk membangun aplikasi berkinerja tinggi. Bahasa ini dikembangkan oleh <strong>Bjarne Stroustrup</strong> sebagai pengembangan dari bahasa C. C++ memberi programmer kendali yang cukup besar terhadap sumber daya sistem dan memori." },
@@ -14,6 +15,110 @@ const lessons = [
     ],
     tests: []
   },
+  {
+    id: "syntax", title: "Sintaks Dasar C++", category: "Dasar C++", level: "Pemula", duration: "10 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_syntax.asp", sourceLabel: "W3Schools — C++ Syntax",
+    summary: "Setiap program C++ memiliki struktur. Beberapa bagian yang sering ditemukan adalah library, fungsi main(), kurung kurawal, statement, dan return 0.",
+    concepts: [
+      { title: "#include <iostream>", body: "Baris ini menyertakan library untuk input dan output, misalnya <code>cout</code>. Library menyediakan fungsi atau objek yang dapat digunakan program." },
+      { title: "Fungsi main()", body: "<code>int main()</code> adalah titik awal program. Instruksi di dalam kurung kurawal <code>{ }</code> akan dijalankan ketika program dimulai." },
+      { title: "Statement dan titik koma", body: "Sebagian besar statement C++ diakhiri titik koma <code>;</code>. Kata kunci C++ juga peka huruf besar-kecil, sehingga <code>cout</code> berbeda dari <code>Cout</code>." },
+      { title: "return 0;", body: "Baris <code>return 0;</code> mengakhiri fungsi <code>main()</code> dan biasanya menandakan program selesai dengan sukses. Baris kosong dan indentasi membantu kode lebih mudah dibaca." }
+    ],
+    example: { input: "(tidak ada input)", output: "Struktur C++" },
+    task: "Lengkapi program C++ agar menampilkan tepat teks Strukur C++? Tidak—teks yang benar adalah: Struktur C++.",
+    requirements: ["Pertahankan struktur #include, main(), kurung kurawal, dan return 0.", "Statement output harus diakhiri titik koma.", "Output harus persis: Struktur C++."],
+    starter: [
+      "#include <iostream>", "using namespace std;", "", "int main() {",
+      "    // TODO: tampilkan teks Struktur C++",
+      "    return 0;", "}"
+    ].join("\n"),
+    tests: [{ input: "", expected: "Struktur C++", visible: true }]
+  },
+  {
+    id: "statements", title: "Statement dalam C++", category: "Dasar C++", level: "Pemula", duration: "8 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_statements.asp", sourceLabel: "W3Schools — C++ Statements",
+    summary: "Statement adalah instruksi yang dijalankan program. Program biasanya menjalankan statement secara berurutan dari atas ke bawah, kecuali ada struktur yang mengubah alur program.",
+    concepts: [
+      { title: "Satu instruksi disebut statement", body: "Contohnya <code>cout &lt;&lt; \"Halo\";</code> adalah instruksi untuk menampilkan teks. Setiap statement sederhana tersebut diakhiri dengan titik koma <code>;</code>." },
+      { title: "Urutan eksekusi", body: "Jika beberapa statement ditulis berurutan, statement pertama dijalankan terlebih dahulu, lalu dilanjutkan statement berikutnya." },
+      { title: "Kesalahan titik koma", body: "Lupa menuliskan <code>;</code> dapat menyebabkan error kompilasi. Perhatikan akhir setiap instruksi, bukan hanya isi instruksinya." },
+      { title: "Whitespace dan kerapian", body: "Spasi, baris baru, dan indentasi umumnya membantu keterbacaan kode. Compiler mengabaikan banyak whitespace, tetapi tidak berarti tanda baca sintaks dapat dihilangkan." }
+    ],
+    example: { input: "(tidak ada input)", output: "Mulai-Belajar-Selesai" },
+    task: "Gunakan tiga statement cout yang berjalan secara berurutan untuk menghasilkan teks Mulai-Belajar-Selesai.",
+    requirements: ["Gunakan tiga statement cout terpisah.", "Akhiri setiap statement dengan titik koma.", "Jangan menambahkan spasi atau baris baru pada output."],
+    starter: [
+      "#include <iostream>", "using namespace std;", "", "int main() {",
+      "    cout << \"Mulai\";",
+      "    // TODO: tampilkan tanda hubung dan kata Belajar",
+      "    // TODO: tampilkan tanda hubung dan kata Selesai",
+      "    return 0;", "}"
+    ].join("\n"),
+    tests: [{ input: "", expected: "Mulai-Belajar-Selesai", visible: true }]
+  },
+  {
+    id: "output", title: "Menampilkan Teks dengan cout", category: "Output", level: "Pemula", duration: "8 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_output.asp", sourceLabel: "W3Schools — C++ Output",
+    summary: "cout digunakan untuk menampilkan teks atau nilai ke terminal. Teks literal ditulis di antara tanda petik dua dan operator << mengirimkannya ke output.",
+    concepts: [
+      { title: "Teks menggunakan tanda petik", body: "Teks harus diapit tanda petik dua, misalnya <code>\"Halo dunia\"</code>. Tanpa tanda petik, compiler akan menganggap kata tersebut sebagai nama identifier." },
+      { title: "Operator <<", body: "Operator <code>&lt;&lt;</code> mengalirkan nilai menuju <code>cout</code>. Kamu bisa menggunakan beberapa operator <code>&lt;&lt;</code> dalam satu statement." },
+      { title: "Beberapa cout", body: "Kamu dapat menulis beberapa statement <code>cout</code>. Namun, <code>cout</code> tidak otomatis membuat baris baru. Output berikutnya akan langsung menyambung kecuali kamu menambahkan pemisah." }
+    ],
+    example: { input: "(tidak ada input)", output: "Halo, siswa!" },
+    task: "Lengkapi dua statement cout untuk menghasilkan teks Halo, siswa! tanpa menambahkan baris baru.",
+    requirements: ["Cetak teks menggunakan tanda petik dua.", "Gunakan dua statement cout.", "Pastikan tanda koma, spasi, dan tanda seru tepat."],
+    starter: [
+      "#include <iostream>", "using namespace std;", "", "int main() {",
+      "    cout << \"Halo, \";",
+      "    // TODO: tampilkan siswa!",
+      "    return 0;", "}"
+    ].join("\n"),
+    tests: [{ input: "", expected: "Halo, siswa!", visible: true }]
+  },
+  {
+    id: "output-numbers", title: "Menampilkan Angka", category: "Output", level: "Pemula", duration: "8 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_output_numbers.asp", sourceLabel: "W3Schools — C++ Output Numbers",
+    summary: "cout tidak hanya menampilkan teks, tetapi juga angka dan hasil perhitungan. Perhatikan perbedaan angka sebagai nilai dan angka yang ditulis sebagai teks.",
+    concepts: [
+      { title: "Angka tanpa tanda petik", body: "Tulis <code>cout &lt;&lt; 100;</code> untuk menampilkan nilai angka 100. Jika ditulis <code>cout &lt;&lt; \"100\";</code>, yang dikirim adalah teks berisi karakter 1, 0, 0." },
+      { title: "Perhitungan langsung", body: "C++ dapat menghitung ekspresi sebelum hasilnya ditampilkan. Contohnya, <code>cout &lt;&lt; 3 + 4;</code> menampilkan <code>7</code>, bukan teks <code>3 + 4</code>." },
+      { title: "Operator matematika", body: "Kamu dapat memakai <code>+</code> untuk penjumlahan, <code>-</code> untuk pengurangan, <code>*</code> untuk perkalian, dan <code>/</code> untuk pembagian. Hasil pembagian bilangan bulat dapat membuang bagian pecahan." }
+    ],
+    example: { input: "(tidak ada input)", output: "10 20" },
+    task: "Tampilkan hasil 6 + 4, satu spasi, lalu hasil 5 * 4. Jangan cetak rumusnya sebagai teks.",
+    requirements: ["Gunakan cout untuk menampilkan hasil perhitungan.", "Hasil pertama adalah 10 dan hasil kedua 20.", "Output harus persis: 10 20."],
+    starter: [
+      "#include <iostream>", "using namespace std;", "", "int main() {",
+      "    // TODO: tampilkan hasil 6 + 4",
+      "    cout << \" \";",
+      "    // TODO: tampilkan hasil 5 * 4",
+      "    return 0;", "}"
+    ].join("\n"),
+    tests: [{ input: "", expected: "10 20", visible: true }]
+  },
+  {
+    id: "new-lines", title: "Membuat Baris Baru", category: "Output", level: "Pemula", duration: "8 menit",
+    sourceUrl: "https://www.w3schools.com/cpp/cpp_new_lines.asp", sourceLabel: "W3Schools — C++ New Lines",
+    summary: "Secara default, beberapa output cout bisa menyambung pada baris yang sama. Gunakan karakter escape \\n atau manipulator endl untuk memulai baris baru.",
+    concepts: [
+      { title: "Karakter escape \\n", body: "<code>\\n</code> memindahkan posisi output ke awal baris berikutnya. Dua karakter <code>\\n\\n</code> akan membuat satu baris kosong di antara teks." },
+      { title: "Manipulator endl", body: "<code>endl</code> juga membuat baris baru. Berbeda dengan <code>\\n</code>, <code>endl</code> juga meminta buffer output untuk di-flush. Untuk kebutuhan baris baru biasa, <code>\\n</code> sering sudah cukup." },
+      { title: "Memilih cara yang sesuai", body: "Kamu bisa menggunakan <code>cout &lt;&lt; \"Baris satu\\nBaris dua\";</code> atau menulis dua statement cout dengan <code>endl</code>. Keduanya menghasilkan dua baris." },
+      { title: "Escape sequence lain", body: "<code>\\t</code> menambahkan tab horizontal, <code>\\\\</code> menampilkan garis miring terbalik, dan <code>\\\"</code> menampilkan tanda petik dua di dalam teks." }
+    ],
+    example: { input: "(tidak ada input)", output: "Halo!\nSaya belajar C++." },
+    task: "Tampilkan Halo! pada baris pertama dan Saya belajar C++. pada baris kedua.",
+    requirements: ["Gunakan \\n atau endl untuk membuat baris baru.", "Jangan menampilkan karakter \\n secara literal.", "Pastikan kedua kalimat berada di baris terpisah."],
+    starter: [
+      "#include <iostream>", "using namespace std;", "", "int main() {",
+      "    cout << \"Halo!\";",
+      "    // TODO: pindah ke baris baru, lalu tampilkan Saya belajar C++.",
+      "    return 0;", "}"
+    ].join("\n"),
+    tests: [{ input: "", expected: "Halo!\nSaya belajar C++.", visible: true }]
+  }
 ];
 
 const lessonList = document.getElementById("lessonList");
@@ -23,6 +128,8 @@ const lessonLevel = document.getElementById("lessonLevel");
 const lessonDuration = document.getElementById("lessonDuration");
 const lessonSummary = document.getElementById("lessonSummary");
 const conceptBlocks = document.getElementById("conceptBlocks");
+const lessonSource = document.getElementById("lessonSource");
+const lessonSourceLink = document.getElementById("lessonSourceLink");
 const lessonExample = document.getElementById("lessonExample");
 const lessonTask = document.getElementById("lessonTask");
 const taskRequirements = document.getElementById("taskRequirements");
@@ -134,6 +241,11 @@ function renderLesson(lesson) {
   lessonDuration.textContent = lesson.duration;
   lessonTitle.textContent = lesson.title;
   lessonSummary.textContent = lesson.summary;
+  lessonSource.hidden = !lesson.sourceUrl;
+  if (lesson.sourceUrl) {
+    lessonSourceLink.href = lesson.sourceUrl;
+    lessonSourceLink.textContent = lesson.sourceLabel || "Buka referensi";
+  }
   conceptBlocks.innerHTML = lesson.concepts.map((concept) =>
     '<section class="concept"><h3>' + escapeHtml(concept.title) + '</h3><p>' + concept.body + '</p></section>'
   ).join("");
