@@ -660,7 +660,7 @@ async function initializeEditor() {
   fallbackCode.spellcheck = false;
   fallbackCode.autocapitalize = "off";
   fallbackCode.setAttribute("aria-label", "Editor kode untuk latihan C++");
-  fallbackCode.value = savedCodes[currentLesson.id] ?? currentLesson.starter ?? "";
+  fallbackCode.value = savedCodes[challengeKey(currentLesson, getCurrentChallenge())] ?? currentLesson.starter ?? "";
   lessonEditorHost.replaceChildren(fallbackCode);
   fallbackCode.addEventListener("input", () => {
     fallbackEdited = true;
