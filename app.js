@@ -664,7 +664,7 @@ async function prepareCodeLabOffline() {
       "Persiapan offline belum selesai",
       downloadError + " " + detail
     );
-    console.error("ICT C++ Playground offline preparation failed:", error);
+    console.error("C++ Playground offline preparation failed:", error);
   } finally {
     compilerDownloadInProgress = false;
     compilerDownloadBtn.disabled = false;
