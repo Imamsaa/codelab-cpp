@@ -12,21 +12,30 @@ Di **Settings → Pages**, pilih **Deploy from a branch**, branch \`main\`, fold
 
 File \`index.html\`, \`app.js\`, \`compiler-worker.js\`, dan \`coi-serviceworker.min.js\` harus berada di root repository. Website statis ini tidak membutuhkan \`npm install\`, build step, API key, database, atau backend.
 
+## Menyiapkan mode offline
+
+1. Buka CodeLab melalui GitHub Pages saat internet masih tersedia.
+2. Tunggu halaman selesai memuat editor. Pastikan Service Worker sudah mengendalikan halaman.
+3. Klik **Siapkan CodeLab untuk Offline**. Proses mengunduh aset compiler (sekitar 95 MB) dan memuat dependensi editor/runtime yang digunakan aplikasi.
+4. Tunggu hingga status berubah menjadi **CodeLab siap digunakan offline**. Persiapan belum dianggap selesai bila ada berkas atau dependensi yang gagal disimpan.
+5. Matikan internet lalu muat ulang alamat CodeLab untuk menguji mode offline.
+
+Tombol ini menggunakan Cache Storage untuk menyimpan aset compiler, modul editor/runtime dari CDN, dan file aplikasi lokal. Browser dapat menghapus data situs secara otomatis saat ruang penyimpanan terbatas; bila itu terjadi, sambungkan internet lalu siapkan ulang mode offline.
+
 ## Cara menggunakan
 
 - Tulis kode di editor. Editor teks langsung ditampilkan agar tetap bisa digunakan saat library syntax highlighting sedang dimuat; jika CodeMirror gagal dimuat, editor teks cadangan tetap tersedia.
 - Pilih standar C++17, C++20, C++14, atau C++11.
 - Klik **Jalankan** atau tekan **Ctrl + Enter**.
-- Klik **Unduh compiler (±95 MB)** untuk menyiapkan file besar compiler sebelum coding. Progress bar menunjukkan estimasi progres dan status setiap file. Aset disimpan di Cache Storage browser; jika pengunduhan terputus, tombol akan menawarkan untuk melanjutkan dan file yang sudah tersimpan akan dilewati.
-- Jika program membaca \`cin\`, terminal menerima input saat program berjalan. Ketik satu baris, lalu tekan **Enter** atau **Kirim**. Kamu bisa mengirim lebih dari satu baris selama program meminta input.
+- Jika program membaca `cin`, terminal menerima input saat program berjalan. Ketik satu baris, lalu tekan **Enter** atau **Kirim**. Kamu bisa mengirim lebih dari satu baris selama program meminta input.
 - Tombol **EOF** menutup input standar; tombol **Stop** menghentikan proses kompilasi atau eksekusi.
 - Gunakan **Buka .cpp** dan **Unduh kode** untuk membuka atau menyimpan file.
-- Jika browser tidak mengaktifkan cross-origin isolation, website beralih ke mode stdin cadangan: isi kotak input sebelum menekan Jalankan.
-
+- Jika browser tidak mengaktifkan cross-origin isolation, website beralih ke mode stdin cadangan: isi input sebelum menekan Jalankan.
 ## Cara kerja dan batasan
 
-- Compiler Clang/LLD WebAssembly dimuat saat runtime dari CDN publik. Tombol **Unduh compiler** dapat mengunduh dan menyimpan `index.js`, `clang.js`, `lld.js`, `clang.wasm`, `lld.wasm`, dan `sysroot.tar` ke Cache Storage browser. Ukuran total aset besar sekitar 95 MB sebelum kompresi/cache menurut dokumentasi browsercc.
-- Progress bar memperkirakan persentase berdasarkan ukuran aset upstream, karena CDN dapat mengirimkan respons terkompresi. Aset yang sudah tersimpan akan dilewati saat pengunduhan dilanjutkan.
+- Compiler Clang/LLD WebAssembly dimuat saat runtime dari CDN publik. Tombol **Siapkan CodeLab untuk Offline** mengunduh dan menyimpan `index.js`, `clang.js`, `lld.js`, `clang.wasm`, `lld.wasm`, dan `sysroot.tar`, lalu memuat modul editor/runtime agar tersimpan dalam cache. Ukuran aset compiler besar sekitar 95 MB sebelum kompresi/cache menurut dokumentasi browsercc.
+- Progress bar memperkirakan progres berdasarkan ukuran aset compiler dan memiliki tahap terpisah untuk memuat dependensi serta memverifikasi mode offline. Status **CodeLab siap digunakan offline** baru ditampilkan jika aset compiler, file aplikasi, editor, runtime WASI, dan Service Worker terdeteksi.
+- Aset eksternal disimpan di Cache Storage oleh Service Worker. Uji offline sebenarnya dengan mematikan koneksi dan memuat ulang situs setelah status siap. Browser dapat membersihkan cache situs; mode offline tidak dapat dijamin jika data tersebut dihapus.
 - \`coi-serviceworker.min.js\` membantu mengaktifkan \`SharedArrayBuffer\` pada static hosting yang tidak menyediakan header COOP/COEP langsung. Browser harus mengizinkan Service Worker. Saat pertama kali membuka website, halaman dapat memuat ulang sekali untuk mengaktifkan mode tersebut.
 - Pada mode interaktif, antrean input dibagikan antara halaman dan Worker. Program dapat berhenti menunggu \`cin\` sementara pengguna mengetik di terminal, sedangkan stdout/stderr dikirim ke terminal saat diproduksi.
 - Kode C++ dijalankan dalam sandbox WebAssembly di browser. Kode program tidak dikirim ke backend milik pemilik website, tetapi compiler dan dependensi diunduh dari CDN pihak ketiga.
