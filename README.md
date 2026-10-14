@@ -32,7 +32,7 @@ Buka **Materi** di header playground atau langsung ke:
 
 Halaman materi menyediakan penjelasan dalam bahasa Indonesia, contoh input/output, dan playground untuk topik praktik. Materi pertama, **Pengenalan C++**, adalah materi baca saja tanpa editor tantangan. Setiap topik praktik memiliki **tiga latihan bertahap** (dasar, mudah, tantangan); masing-masing latihan mempunyai kode awal, test case, tombol **Periksa Jawaban**, serta penyimpanan kode dan progres yang terpisah.
 
-Halaman materi saat ini berisi enam topik: Pengenalan C++ (baca saja), Sintaks Dasar C++, Statement dalam C++, Menampilkan Teks dengan cout, Menampilkan Angka, dan Membuat Baris Baru. Lima topik praktik memiliki total 15 latihan. Satu topik ditandai selesai jika semua tiga latihannya berhasil; progres dan kode setiap latihan disimpan terpisah di browser.
+Halaman materi saat ini berisi 12 topik: Pengenalan C++ (baca saja), Sintaks Dasar C++, Statement dalam C++, Menampilkan Teks dengan cout, Menampilkan Angka, Membuat Baris Baru, Komentar dalam C++, Variabel dalam C++, Membuat Beberapa Variabel, Nama Variabel (Identifiers), Konstanta dalam C++, dan Input Pengguna dengan cin. Sebelas topik praktik memiliki total 33 latihan bertahap. Topik input menggunakan beberapa test case dengan data masukan berbeda. Satu topik ditandai selesai jika semua tiga latihannya berhasil; progres dan kode setiap latihan disimpan terpisah di browser.
 
 Penilaian ini berjalan di sisi browser dan cocok untuk latihan pembelajaran. Karena situs sepenuhnya statis, jangan gunakan test case tersembunyi untuk penilaian berisiko tinggi: kode dan data test pada JavaScript yang dikirim ke browser tidak dapat dirahasiakan dari pengguna yang memeriksa source.
 
