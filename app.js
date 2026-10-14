@@ -556,6 +556,7 @@ async function initializeEditor() {
     // Do not replace the textarea if the user has already started typing while the CDN loaded.
     if (editedBeforeEnhancement) {
       setStatus("Editor teks siap. Kode tetap bisa diketik; editor visual tidak menggangu penulisan.");
+      if (!compilerDownloadInProgress) await refreshCompilerCacheState();
       return;
     }
 
@@ -601,6 +602,7 @@ async function initializeEditor() {
     console.warn("CodeMirror failed to initialize; plain editor remains active.", error);
   }
   updateLineInfo();
+  if (!compilerDownloadInProgress) await refreshCompilerCacheState();
 }
 function runProgram() {
   if (activeWorker) resetRunState();
