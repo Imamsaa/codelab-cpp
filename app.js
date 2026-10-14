@@ -59,9 +59,9 @@ const compilerCacheBadge = document.getElementById("compilerCacheBadge");
 const compilerDownloadSection = document.getElementById("compilerDownloadSection") || document.querySelector(".compiler-download");
 
 const COMPILER_CACHE_NAME = "codelab-compiler-assets-v1";
-const RUNTIME_CACHE_NAME = "codelab-runtime-assets-v5";
-const APP_CACHE_NAME = "codelab-offline-shell-v5";
-const APP_SHELL_FILES = ["index.html", "app.js", "compiler-worker.js", "coi-serviceworker.min.js"];
+const RUNTIME_CACHE_NAME = "codelab-runtime-assets-v6";
+const APP_CACHE_NAME = "codelab-offline-shell-v6";
+const APP_SHELL_FILES = ["index.html", "app.js", "compiler-worker.js", "coi-serviceworker.min.js", "assets/ict-al-firdaus-logo.svg"];
 const OFFLINE_PROGRESS_WEIGHT = 82;
 const FORMATTER_BASE_URL = "https://cdn.jsdelivr.net/npm/@wasm-fmt/clang-format@23.1.0/";
 const FORMATTER_JS_URL = FORMATTER_BASE_URL + "clang-format-web.js";
@@ -485,8 +485,8 @@ async function refreshCompilerCacheState() {
       compilerDownloadSection?.classList.add("ready");
       compilerCacheBadge.textContent = "Siap offline";
       compilerDownloadBtn.disabled = true;
-      compilerDownloadBtn.textContent = "CodeLab siap offline ✓";
-      setCompilerProgress(100, "CodeLab siap digunakan offline", "Compiler, editor, runtime, dan file aplikasi sudah tersedia di cache browser. Matikan internet untuk menguji mode offline.");
+      compilerDownloadBtn.textContent = "Siap offline ✓";
+      setCompilerProgress(100, "Siap digunakan offline", "Compiler, editor, runtime, dan file aplikasi sudah tersedia di cache browser. Matikan internet untuk menguji mode offline.");
       return;
     }
 
@@ -494,13 +494,13 @@ async function refreshCompilerCacheState() {
     compilerDownloadBtn.disabled = compilerDownloadInProgress;
     compilerDownloadBtn.textContent = compiler.count
       ? "Lanjutkan persiapan offline"
-      : "Siapkan CodeLab untuk Offline";
+      : "Siapkan untuk Offline";
     if (compiler.count === COMPILER_ASSETS.length) {
       compilerCacheBadge.textContent = "Compiler tersimpan";
       setCompilerProgress(
         Math.max(assetPercent, 82),
         "Compiler sudah tersimpan; dependensi offline belum lengkap",
-        readiness.reasons.join(" ") || "Klik Siapkan CodeLab untuk Offline untuk menyiapkan komponen lain."
+        readiness.reasons.join(" ") || "Klik Siapkan untuk Offline untuk menyiapkan komponen lain."
       );
     } else {
       compilerCacheBadge.textContent = compiler.count
@@ -511,7 +511,7 @@ async function refreshCompilerCacheState() {
         compiler.count ? "Compiler tersimpan sebagian" : "Belum disiapkan untuk offline",
         compiler.count
           ? formatBytes(compiler.cachedBytes) + " dari sekitar " + formatBytes(EXPECTED_COMPILER_BYTES) + " aset compiler tersimpan. " + readiness.reasons.join(" ")
-          : "Klik Siapkan CodeLab untuk Offline. Compiler, editor, runtime, dan file aplikasi akan disimpan ke cache browser."
+          : "Klik Siapkan untuk Offline. Compiler, editor, runtime, dan file aplikasi akan disimpan ke cache browser."
       );
     }
   } catch (error) {
@@ -642,10 +642,10 @@ async function prepareCodeLabOffline() {
     }
 
     compilerCacheBadge.textContent = "Siap offline";
-    compilerDownloadBtn.textContent = "CodeLab siap offline ✓";
+    compilerDownloadBtn.textContent = "Siap offline ✓";
     setCompilerProgress(
       100,
-      "CodeLab siap digunakan offline",
+      "Siap digunakan offline",
       "Semua aset utama tersedia di cache browser. Aset compiler yang diunduh pada sesi ini: " + formatBytes(transferredThisSession) + ". Uji dengan mematikan koneksi internet lalu memuat ulang halaman."
     );
   } catch (error) {
@@ -664,7 +664,7 @@ async function prepareCodeLabOffline() {
       "Persiapan offline belum selesai",
       downloadError + " " + detail
     );
-    console.error("CodeLab offline preparation failed:", error);
+    console.error("ICT C++ Playground offline preparation failed:", error);
   } finally {
     compilerDownloadInProgress = false;
     compilerDownloadBtn.disabled = false;
