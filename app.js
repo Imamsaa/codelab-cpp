@@ -545,6 +545,10 @@ async function initializeEditor() {
   });
   updateLineInfo();
 
+  // Wait for the Service Worker to control module requests before loading CDN dependencies.
+  // This ensures the dependencies fetched during editor startup are actually written to offline cache.
+  await waitForServiceWorkerControl();
+
   try {
     // Resolve every CodeMirror package through the same import map to avoid duplicate state/view modules.
     const modules = await Promise.all([
