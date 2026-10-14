@@ -1,43 +1,42 @@
 # CodeLab C++ — ICT Playground
 
-Playground C++ statis untuk belajar pemrograman. Kode C++ dikompilasi di browser menjadi WebAssembly menggunakan proyek open-source [browsercc](https://github.com/BertalanD/browsercc); tidak perlu backend/API compiler milik sendiri.
+Playground C++ statis untuk belajar pemrograman langsung di browser. Kode C++ dikompilasi menjadi WebAssembly menggunakan proyek open-source [browsercc](https://github.com/BertalanD/browsercc), tanpa backend compiler milik sendiri.
 
-## Live website dengan GitHub Pages
+## Deploy di GitHub Pages
 
-Setelah GitHub Pages diaktifkan, alamat website repository ini adalah:
+Website ini ditujukan untuk GitHub Pages:
 
 **https://imamsaa.github.io/codelab-cpp/**
 
-Untuk mengaktifkan atau memastikan deployment:
-1. Buka **Settings → Pages** di repository ini.
-2. Pada **Build and deployment**, pilih **Deploy from a branch**.
-3. Pilih branch `main` dan folder `/(root)`, lalu tekan **Save**.
-4. Buka tab **Actions** atau bagian Pages sampai status deployment berhasil, kemudian coba link website di atas.
+Di **Settings → Pages**, pilih **Deploy from a branch**, branch \`main\`, folder \`/(root)\`, lalu tekan **Save**. Pastikan deployment selesai di tab **Actions** sebelum menguji website.
 
-File `index.html`, `app.js`, dan `compiler-worker.js` harus berada di root repository.
+File \`index.html\`, \`app.js\`, \`compiler-worker.js\`, dan \`coi-serviceworker.min.js\` harus berada di root repository. Website statis ini tidak membutuhkan \`npm install\`, build step, API key, database, atau backend.
 
 ## Cara menggunakan
 
-- Tulis C++ di editor, atau pilih **Buka .cpp** untuk membuka file lokal.
-- Pilih standar C++17/C++20/C++14/C++11.
-- Jika program menggunakan `cin`, isi panel **Input program (stdin)** sebelum menekan **Jalankan**. Input diberikan dari awal program; input interaktif yang menunggu ketikan di tengah eksekusi belum didukung.
-- Tekan **Ctrl + Enter** untuk menjalankan.
-- Klik **Unduh kode** untuk menyimpan kode sebagai `main.cpp`.
-- Tombol **Stop** dapat digunakan untuk menghentikan worker yang sedang berjalan.
+- Tulis kode di editor. Editor teks langsung ditampilkan agar tetap bisa digunakan saat library syntax highlighting sedang dimuat; jika CodeMirror gagal dimuat, editor teks cadangan tetap tersedia.
+- Pilih standar C++17, C++20, C++14, atau C++11.
+- Klik **Jalankan** atau tekan **Ctrl + Enter**.
+- Jika program membaca \`cin\`, terminal menerima input saat program berjalan. Ketik satu baris, lalu tekan **Enter** atau **Kirim**. Kamu bisa mengirim lebih dari satu baris selama program meminta input.
+- Tombol **EOF** menutup input standar; tombol **Stop** menghentikan proses kompilasi atau eksekusi.
+- Gunakan **Buka .cpp** dan **Unduh kode** untuk membuka atau menyimpan file.
+- Jika browser tidak mengaktifkan cross-origin isolation, website beralih ke mode stdin cadangan: isi kotak input sebelum menekan Jalankan.
 
-## Catatan penting
+## Cara kerja dan batasan
 
-- Website ini hanya menggunakan hosting statis. Compiler/toolchain dimuat saat runtime dari CDN publik. Penggunaan pertama dapat mengunduh aset cukup besar (paket browsercc menyebutkan compiler, linker, dan sysroot sekitar 95 MB sebelum kompresi/cache).
-- Koneksi internet diperlukan ketika aset compiler dan library CDN belum tersedia di cache browser.
-- Kode pengguna dikirim dari halaman ke Web Worker di browser, bukan ke backend milik pemilik website. Akan tetapi, kode compiler dan library dimuat dari CDN pihak ketiga.
-- Ini bukan lingkungan Linux/Windows native. Akses jaringan, sistem file permanen, thread, dan beberapa fitur dibatasi. Konfigurasi compiler memakai `-fno-exceptions`; kode yang memerlukan exception C++ tidak didukung dengan konfigurasi ini.
-- Jika compiler tidak berhasil dimuat, periksa Console browser dan akses ke `cdn.jsdelivr.net` serta `esm.sh`.
+- Compiler Clang/LLD WebAssembly dimuat saat runtime dari CDN publik. Penggunaan pertama dapat mengunduh aset besar (compiler, linker, dan sysroot berukuran sekitar 95 MB sebelum kompresi/cache menurut dokumentasi browsercc).
+- \`coi-serviceworker.min.js\` membantu mengaktifkan \`SharedArrayBuffer\` pada static hosting yang tidak menyediakan header COOP/COEP langsung. Browser harus mengizinkan Service Worker. Saat pertama kali membuka website, halaman dapat memuat ulang sekali untuk mengaktifkan mode tersebut.
+- Pada mode interaktif, antrean input dibagikan antara halaman dan Worker. Program dapat berhenti menunggu \`cin\` sementara pengguna mengetik di terminal, sedangkan stdout/stderr dikirim ke terminal saat diproduksi.
+- Kode C++ dijalankan dalam sandbox WebAssembly di browser. Kode program tidak dikirim ke backend milik pemilik website, tetapi compiler dan dependensi diunduh dari CDN pihak ketiga.
+- Ini bukan lingkungan Linux/Windows native. Akses jaringan dan sistem file permanen dibatasi. Konfigurasi compiler memakai \`-fno-exceptions\`, sehingga kode yang membutuhkan exception C++ tidak didukung. Threading juga tidak didukung oleh konfigurasi browsercc ini.
+- Program yang berjalan tanpa henti dibatasi oleh watchdog pada halaman. Menekan **Stop** akan menghentikan Worker.
 
 ## Dependensi dan atribusi
 
-- [browsercc](https://github.com/BertalanD/browsercc) — compiler Clang/LLD yang dikompilasi ke WebAssembly.
-- [browser_wasi_shim](https://github.com/andrewrk/browser_wasi_shim) / [@bjorn3/browser_wasi_shim](https://www.npmjs.com/package/@bjorn3/browser_wasi_shim) — runtime WASI di browser.
-- [CodeMirror](https://codemirror.net/) — editor kode.
+- [browsercc](https://github.com/BertalanD/browsercc) — compiler Clang/LLD WebAssembly, MIT.
+- [browser_wasi_shim](https://github.com/bjorn3/browser_wasi_shim) — WASI runtime untuk browser, dual MIT/Apache-2.0.
+- [CodeMirror](https://codemirror.net/) — editor kode, MIT.
+- [coi-serviceworker](https://github.com/gzuidhof/coi-serviceworker) — workaround COOP/COEP untuk static hosting, MIT.
 - [esm.sh](https://esm.sh/) dan [jsDelivr](https://www.jsdelivr.com/) — CDN dependensi.
 
-Silakan modifikasi UI dan materi contoh sesuai kebutuhan kelas ICT. Pastikan tetap mengikuti lisensi masing-masing dependensi.
+Silakan modifikasi UI dan materi contoh sesuai kebutuhan kelas ICT. Ikuti lisensi masing-masing dependensi.
