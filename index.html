@@ -48,6 +48,18 @@
     .panel-head{height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 15px;background:#111a2c;border-bottom:1px solid var(--line)}
     .panel-title{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#bdc9de;display:flex;align-items:center;gap:8px}
     .panel-meta{font-size:10px;color:#71809b}
+    .focus-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;padding:6px 9px;font-size:10px;font-weight:650;background:#151e30;border-color:#2a3852;color:#aebbd1;box-shadow:none}
+    .focus-toggle:hover{background:#1b2740;border-color:#465777;color:#e3eaff}
+    .focus-toggle svg{width:13px;height:13px}
+    body.focus-mode{overflow:hidden;background:var(--bg)}
+    body.focus-mode .shell{position:fixed;inset:0;z-index:99999;width:100vw;height:100vh;height:100dvh;max-width:none;min-height:0;margin:0;padding:0;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+    body.focus-mode .shell>header,body.focus-mode .intro,body.focus-mode .compiler-download,body.focus-mode .below,body.focus-mode footer{display:none!important}
+    body.focus-mode .toolbar{flex:0 0 auto;margin:0;border-radius:0;padding:8px 12px;border-top:0}
+    body.focus-mode .workspace{flex:1;min-height:0;height:auto;margin:0;border-left:0;border-right:0;border-bottom:0;border-radius:0;box-shadow:none}
+    body.focus-mode .editor-panel,body.focus-mode .side-panel{min-height:0;height:100%}
+    body.focus-mode #editor,body.focus-mode #plainEditor{min-height:0;height:auto}
+    body.focus-mode #output{min-height:0}
+    body.focus-mode .statusbar{flex-shrink:0}
     #editor{flex:1;min-height:450px;overflow:hidden;background:#0d1424}
     .cm-editor{height:100%;font-size:13px;font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
     #plainEditor{width:100%;height:100%;min-height:450px;resize:none;border:0;outline:0;padding:14px 12px;background:#0d1424;color:#dce5f7;font:13px/1.65 "SFMono-Regular",Consolas,"Liberation Mono",monospace;tab-size:4}
@@ -109,8 +121,10 @@
     @media(max-width:700px){.compiler-download-head{align-items:flex-start;flex-direction:column}.compiler-download-actions{width:100%}.compiler-download-actions .btn{flex:1}.compiler-download-title{font-size:11px}}
     @media(max-width:900px){.intro{align-items:flex-start;flex-direction:column}.privacy{max-width:100%}.workspace{grid-template-columns:1fr}.editor-panel{border-right:0;border-bottom:1px solid var(--line)}#editor{min-height:420px}.side-panel{min-height:510px}.toolbar{align-items:flex-start}.toolbar-left,.toolbar-right{max-width:100%}}
     @media(max-width:580px){.shell{padding:15px 10px}.top-right .pill{display:none}.brand h1{font-size:16px}.toolbar{flex-direction:column}.toolbar-right{width:100%}.toolbar-right .btn{flex:1}.toolbar-left{width:100%;justify-content:space-between}.field{flex:1}.field select{max-width:130px}.below{grid-template-columns:1fr}.workspace{min-height:0}.editor-panel #editor{min-height:390px}#plainEditor{min-height:390px}.output-block{min-height:280px}#output{min-height:230px}.statusbar{align-items:flex-start}.panel-meta{display:none}}
+    @media(max-width:900px){body.focus-mode .workspace{grid-template-columns:1fr;overflow:auto}body.focus-mode .editor-panel{height:58vh;min-height:360px}body.focus-mode .side-panel{height:42vh;min-height:320px}body.focus-mode #editor,body.focus-mode #plainEditor{min-height:0}}
+    @media(max-width:580px){body.focus-mode .toolbar{flex-direction:row;align-items:center;padding:7px 8px}body.focus-mode .toolbar-left{width:auto;justify-content:flex-start}body.focus-mode .toolbar-right{width:auto;flex:1}body.focus-mode .toolbar-right .btn{flex:1;padding:7px 6px;font-size:10px}body.focus-mode .file-label span:last-child{display:none}body.focus-mode .workspace{display:flex;flex-direction:column}body.focus-mode .editor-panel{height:58vh;min-height:320px;flex:none}body.focus-mode .side-panel{height:42vh;min-height:300px;flex:none}body.focus-mode .panel-meta{display:none}}
   </style>
-  <script src="./coi-serviceworker.min.js?v=20261014-fix-null2"></script>
+  <script src="./coi-serviceworker.min.js?v=20261014-focus"></script>
   <script type="importmap">
     {
       "imports": {
@@ -187,7 +201,16 @@
 
     <main class="workspace">
       <section class="editor-panel">
-        <div class="panel-head"><div class="panel-title"><span style="color:#a89cff">●</span> Editor kode</div><span class="panel-meta">Ctrl + Enter untuk menjalankan</span></div>
+        <div class="panel-head">
+          <div class="panel-title"><span style="color:#a89cff">●</span> Editor kode</div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="panel-meta">Ctrl + Enter untuk menjalankan</span>
+            <button class="btn focus-toggle" id="focusModeBtn" type="button" aria-pressed="false" title="Fokus coding layar penuh">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+              <span id="focusModeLabel">Fokus</span>
+            </button>
+          </div>
+        </div>
         <div id="editor" aria-label="Editor kode C++"></div>
         <div class="statusbar"><div class="status-left"><span id="statusDot" class="status-indicator"></span><span id="statusText">Siap. Tulis kode lalu tekan Jalankan.</span></div><span id="lineInfo">Baris 1</span></div>
       </section>
@@ -220,6 +243,6 @@
     </section>
     <footer><span>CodeLab C++ · Untuk pembelajaran pemrograman</span><span>Compiler oleh <a href="https://github.com/BertalanD/browsercc" target="_blank" rel="noreferrer">browsercc</a> · UI dapat kamu modifikasi sendiri</span></footer>
   </div>
-  <script type="module" src="./app.js?v=20261014-fix-null2" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
+  <script type="module" src="./app.js?v=20261014-focus" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
 </body>
 </html>
