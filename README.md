@@ -30,9 +30,9 @@ Buka **Materi** di header playground atau langsung ke:
 
 **https://imamsaa.github.io/codelab-cpp/materi.html**
 
-Halaman materi menyediakan penjelasan, contoh input/output, dan playground untuk setiap topik. Tombol **Periksa Jawaban** mengompilasi source C++ sekali lalu menjalankannya pada beberapa test case. Test case contoh menampilkan input dan output yang dibandingkan; test tersembunyi hanya menampilkan status lolos/gagal.
+Halaman materi menyediakan penjelasan dalam bahasa Indonesia, contoh input/output, dan playground untuk topik praktik. Materi pertama, **Pengenalan C++**, adalah materi baca saja tanpa editor tantangan karena topik pengantar tidak memerlukan praktik kode. Tombol **Periksa Jawaban** mengompilasi source C++ sekali lalu menjalankannya pada beberapa test case. Test case contoh menampilkan input dan output yang dibandingkan; test tersembunyi hanya menampilkan status lolos/gagal.
 
-Topik awal: output dengan `cout`, input dan penjumlahan, percabangan `if-else`, perulangan dengan akumulator, dan mencari nilai terbesar. Kode latihan serta progres penyelesaian disimpan di browser pengguna.
+Topik awal: pengenalan C++ (materi baca tanpa editor latihan), output dengan `cout`, input dan penjumlahan, percabangan `if-else`, perulangan dengan akumulator, dan mencari nilai terbesar. Kode latihan serta progres penyelesaian disimpan di browser pengguna.
 
 Penilaian ini berjalan di sisi browser dan cocok untuk latihan pembelajaran. Karena situs sepenuhnya statis, jangan gunakan test case tersembunyi untuk penilaian berisiko tinggi: kode dan data test pada JavaScript yang dikirim ke browser tidak dapat dirahasiakan dari pengguna yang memeriksa source.
 
