@@ -121,6 +121,116 @@ const lessons = [
   }
 ];
 
+
+const EXTRA_CHALLENGES = {
+  syntax: [
+    {
+      id: "syntax-2", title: "Latihan 2 · Struktur dan dua baris", difficulty: "Mudah",
+      task: "Buat program yang menampilkan dua baris: Saya belajar C++. lalu Program pertama saya.",
+      requirements: ["Gunakan struktur program C++ lengkap.", "Tampilkan teks di dua baris terpisah.", "Jangan menambah teks lain."],
+      example: { input: "(tidak ada input)", output: "Saya belajar C++.\nProgram pertama saya." },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: tampilkan dua baris sesuai instruksi", "    return 0;", "}"].join("\n"),
+      tests: [{input:"",expected:"Saya belajar C++.\nProgram pertama saya.",visible:true}]
+    },
+    {
+      id: "syntax-3", title: "Latihan 3 · Pesan dan tahun", difficulty: "Tantangan",
+      task: "Buat program lengkap yang menampilkan dua baris: C++20 dan Siap belajar!",
+      requirements: ["Gunakan #include <iostream> dan int main().", "Setiap statement diakhiri titik koma.", "Output harus tepat dua baris."],
+      example: { input: "(tidak ada input)", output: "C++20\nSiap belajar!" },
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: tampilkan C++20 dan Siap belajar! dalam dua baris", "    return 0;", "}"].join("\n"),
+      tests: [{input:"",expected:"C++20\nSiap belajar!",visible:true}]
+    }
+  ],
+  statements: [
+    {
+      id: "statements-2", title: "Latihan 2 · Urutan instruksi", difficulty: "Mudah",
+      task: "Tampilkan tiga kata sesuai urutan: MULAI, PROSES, SELESAI. Pisahkan dengan tanda | tanpa spasi.",
+      requirements: ["Gunakan tiga statement cout terpisah.", "Pastikan urutan output benar.", "Output tepat: MULAI|PROSES|SELESAI."],
+      example: {input:"(tidak ada input)",output:"MULAI|PROSES|SELESAI"},
+      starter: ["#include <iostream>", "using namespace std;", "", "int main() {", "    // TODO: susun tiga statement cout sesuai urutan", "    return 0;", "}"].join("\n"),
+      tests:[{input:"",expected:"MULAI|PROSES|SELESAI",visible:true}]
+    },
+    {
+      id: "statements-3", title: "Latihan 3 · Variabel dan statement", difficulty: "Tantangan",
+      task: "Buat variabel int skor bernilai 85, lalu tampilkan Skor: 85 menggunakan statement yang tepat.",
+      requirements: ["Deklarasikan variabel int bernama skor dengan nilai 85.", "Gunakan cout untuk menampilkan label dan nilai variabel.", "Akhiri semua statement dengan titik koma."],
+      example:{input:"(tidak ada input)",output:"Skor: 85"},
+      starter:["#include <iostream>","using namespace std;","","int main() {","    // TODO: buat variabel skor dan tampilkan nilainya","    return 0;","}"].join("\n"),
+      tests:[{input:"",expected:"Skor: 85",visible:true}]
+    }
+  ],
+  output: [
+    {
+      id: "output-2", title: "Latihan 2 · Gabungkan beberapa teks", difficulty: "Mudah",
+      task: "Gunakan cout untuk menampilkan: Nama: Alya, Kelas: 7. Kamu boleh memakai satu atau beberapa operator <<.",
+      requirements: ["Perhatikan spasi dan tanda baca.", "Output tidak boleh memiliki baris tambahan."],
+      example:{input:"(tidak ada input)",output:"Nama: Alya, Kelas: 7"},
+      starter:["#include <iostream>","using namespace std;","","int main() {","    // TODO: tampilkan nama dan kelas","    return 0;","}"].join("\n"),
+      tests:[{input:"",expected:"Nama: Alya, Kelas: 7",visible:true}]
+    },
+    {
+      id: "output-3", title: "Latihan 3 · Kartu informasi", difficulty: "Tantangan",
+      task: "Tampilkan kartu informasi dua baris: Nama: Bima pada baris pertama, Hobi: Coding pada baris kedua.",
+      requirements:["Gunakan cout untuk menyusun teks.","Pastikan kedua label dan nilainya tepat.","Output berisi dua baris."],
+      example:{input:"(tidak ada input)",output:"Nama: Bima\nHobi: Coding"},
+      starter:["#include <iostream>","using namespace std;","","int main() {","    // TODO: tampilkan kartu informasi dalam dua baris","    return 0;","}"].join("\n"),
+      tests:[{input:"",expected:"Nama: Bima\nHobi: Coding",visible:true}]
+    }
+  ],
+  "output-numbers": [
+    {
+      id: "numbers-2", title: "Latihan 2 · Empat operasi", difficulty: "Mudah",
+      task: "Tampilkan hasil 12 + 8, hasil 12 - 8, lalu hasil 3 * 4. Pisahkan ketiganya dengan satu spasi.",
+      requirements:["Tampilkan hasil perhitungan, bukan rumus sebagai teks.","Urutan output: penjumlahan, pengurangan, perkalian.","Output tepat: 20 4 12."],
+      example:{input:"(tidak ada input)",output:"20 4 12"},
+      starter:["#include <iostream>","using namespace std;","","int main() {","    // TODO: hitung dan tampilkan tiga operasi","    return 0;","}"].join("\n"),
+      tests:[{input:"",expected:"20 4 12",visible:true}]
+    },
+    {
+      id: "numbers-3", title: "Latihan 3 · Hitung total belanja", difficulty: "Tantangan",
+      task: "Satu buku berharga 7000 dan satu pensil berharga 3000. Tampilkan total harga dalam bentuk angka saja.",
+      requirements:["Gunakan operasi matematika untuk menghitung total.","Jangan tulis simbol mata uang atau kalimat tambahan.","Output yang benar adalah 10000."],
+      example:{input:"(tidak ada input)",output:"10000"},
+      starter:["#include <iostream>","using namespace std;","","int main() {","    int buku = 7000;","    int pensil = 3000;","    // TODO: tampilkan total harga","    return 0;","}"].join("\n"),
+      tests:[{input:"",expected:"10000",visible:true}]
+    }
+  ],
+  "new-lines": [
+    {
+      id: "newlines-2", title: "Latihan 2 · Tiga baris", difficulty: "Mudah",
+      task: "Tampilkan tiga baris: C++, itu mudah dipelajari, dan Terus berlatih!",
+      requirements:["Setiap teks berada pada barisnya masing-masing.","Gunakan \\n atau endl.","Jangan menambah baris kosong."],
+      example:{input:"(tidak ada input)",output:"C++\nitu mudah dipelajari\nTerus berlatih!"},
+      starter:["#include <iostream>","using namespace std;","","int main() {","    // TODO: tampilkan tiga baris","    return 0;","}"].join("\n"),
+      tests:[{input:"",expected:"C++\nitu mudah dipelajari\nTerus berlatih!",visible:true}]
+    },
+    {
+      id: "newlines-3", title: "Latihan 3 · Beri satu baris kosong", difficulty: "Tantangan",
+      task: "Tampilkan Baris pertama, satu baris kosong, lalu Baris kedua.",
+      requirements:["Output terdiri dari dua kalimat dan satu baris kosong di antaranya.","Gunakan \\n atau endl.","Output harus tepat tanpa spasi tambahan."],
+      example:{input:"(tidak ada input)",output:"Baris pertama\n\nBaris kedua"},
+      starter:["#include <iostream>","using namespace std;","","int main() {","    // TODO: tampilkan dua kalimat dengan satu baris kosong","    return 0;","}"].join("\n"),
+      tests:[{input:"",expected:"Baris pertama\n\nBaris kedua",visible:true}]
+    }
+  ]
+};
+
+for (const lesson of lessons) {
+  if (lesson.kind === "reading") continue;
+  const firstChallenge = {
+    id: lesson.id + "-1",
+    title: "Latihan 1 · " + lesson.title,
+    difficulty: "Dasar",
+    task: lesson.task,
+    requirements: lesson.requirements,
+    starter: lesson.starter,
+    tests: lesson.tests,
+    example: lesson.example
+  };
+  lesson.challenges = [firstChallenge, ...(EXTRA_CHALLENGES[lesson.id] || [])];
+}
+
+
 const lessonList = document.getElementById("lessonList");
 const lessonTitle = document.getElementById("lessonTitle");
 const lessonCategory = document.getElementById("lessonCategory");
