@@ -16,10 +16,10 @@
     button{cursor:pointer}
     .shell{max-width:1500px;margin:0 auto;padding:24px clamp(14px,3vw,40px) 22px}
     header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
-    .brand{display:flex;gap:12px;align-items:center;min-width:0}
-    .brand-logo{display:block;width:clamp(230px,25vw,310px);height:auto;max-height:78px;object-fit:contain;background:#fff;border:1px solid #e9eff7;border-radius:9px;padding:2px;flex-shrink:0}
-    .brand-context{font-size:11px;line-height:1.55;color:#aab8ce;letter-spacing:.15px}
-    .brand-context strong{display:block;color:#e1e9f6;font-size:12px;font-weight:750}
+    .brand{display:flex;align-items:center;min-width:0}
+    .brand-context{font-size:10px;line-height:1.5;color:#8e9db7;letter-spacing:.45px;text-transform:uppercase}
+    .brand-context strong{display:block;color:#eaf1fc;font-size:16px;line-height:1.25;font-weight:800;letter-spacing:-.25px;text-transform:none}
+    .brand-context .brand-tagline{display:block;margin-top:3px;color:#8191ad;font-size:10px;letter-spacing:.15px;text-transform:none}
     .top-right{display:flex;align-items:center;gap:9px}
     .pill{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;background:#111b2c;border:1px solid var(--line);border-radius:999px;color:#c1cee2;font-size:12px;white-space:nowrap}
     .dot{height:7px;width:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px #42d39280}
@@ -120,11 +120,11 @@
     .compiler-download.ready .compiler-download-actions .btn{background:#111a29;border-color:#2b3b4e;color:#9fb0c4;box-shadow:none}
     @media(max-width:700px){.compiler-download-head{align-items:flex-start;flex-direction:column}.compiler-download-actions{width:100%}.compiler-download-actions .btn{flex:1}.compiler-download-title{font-size:11px}}
     @media(max-width:900px){.intro{align-items:flex-start;flex-direction:column}.privacy{max-width:100%}.workspace{grid-template-columns:1fr}.editor-panel{border-right:0;border-bottom:1px solid var(--line)}#editor{min-height:420px}.side-panel{min-height:510px}.toolbar{align-items:flex-start}.toolbar-left,.toolbar-right{max-width:100%}}
-    @media(max-width:580px){.shell{padding:15px 10px}.top-right .pill{display:none}.brand-logo{width:min(250px,68vw);max-height:64px}.brand-context{display:none}.toolbar{flex-direction:column}.toolbar-right{width:100%}.toolbar-right .btn{flex:1}.toolbar-left{width:100%;justify-content:space-between}.field{flex:1}.field select{max-width:130px}.below{grid-template-columns:1fr}.workspace{min-height:0}.editor-panel #editor{min-height:390px}#plainEditor{min-height:390px}.output-block{min-height:280px}#output{min-height:230px}.statusbar{align-items:flex-start}.panel-meta{display:none}}
+    @media(max-width:580px){.shell{padding:15px 10px}.top-right .pill{display:none}.brand-context strong{font-size:14px}.brand-context .brand-tagline{font-size:9px}.toolbar{flex-direction:column}.toolbar-right{width:100%}.toolbar-right .btn{flex:1}.toolbar-left{width:100%;justify-content:space-between}.field{flex:1}.field select{max-width:130px}.below{grid-template-columns:1fr}.workspace{min-height:0}.editor-panel #editor{min-height:390px}#plainEditor{min-height:390px}.output-block{min-height:280px}#output{min-height:230px}.statusbar{align-items:flex-start}.panel-meta{display:none}}
     @media(max-width:900px){body.focus-mode .workspace{grid-template-columns:1fr;overflow:auto}body.focus-mode .editor-panel{height:58vh;min-height:360px}body.focus-mode .side-panel{height:42vh;min-height:320px}body.focus-mode #editor,body.focus-mode #plainEditor{min-height:0}}
     @media(max-width:580px){body.focus-mode .toolbar{flex-direction:row;align-items:center;padding:7px 8px}body.focus-mode .toolbar-left{width:auto;justify-content:flex-start}body.focus-mode .toolbar-right{width:auto;flex:1}body.focus-mode .toolbar-right .btn{flex:1;padding:7px 6px;font-size:10px}body.focus-mode .file-label span:last-child{display:none}body.focus-mode .workspace{display:flex;flex-direction:column}body.focus-mode .editor-panel{height:58vh;min-height:320px;flex:none}body.focus-mode .side-panel{height:42vh;min-height:300px;flex:none}body.focus-mode .panel-meta{display:none}}
   </style>
-  <script src="./coi-serviceworker.min.js?v=20261014-ict-brand"></script>
+  <script src="./coi-serviceworker.min.js?v=20261014-text-brand"></script>
   <script type="importmap">
     {
       "imports": {
@@ -143,8 +143,10 @@
   <div class="shell">
     <header>
       <div class="brand">
-        <img class="brand-logo" src="./assets/ict-al-firdaus-logo.svg" alt="ICT Al Firdaus — Fun Coding Schools">
-        <div class="brand-context"><strong>C++ PLAYGROUND</strong>Belajar, tulis, jalankan.</div>
+        <div class="brand-context">
+          <strong>ICT Al Firdaus</strong>
+          <span class="brand-tagline">Fun Coding Schools · C++ Playground</span>
+        </div>
       </div>
       <div class="top-right"><span class="pill"><span class="dot"></span> Compiler di browser</span><span class="pill">C++11–C++20</span></div>
     </header>
@@ -247,6 +249,6 @@
     </section>
     <footer><span>ICT Al Firdaus · Fun Coding Schools · C++ Playground</span><span>Compiler oleh <a href="https://github.com/BertalanD/browsercc" target="_blank" rel="noreferrer">browsercc</a> · Dibuat untuk pembelajaran coding</span></footer>
   </div>
-  <script type="module" src="./app.js?v=20261014-ict-brand" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
+  <script type="module" src="./app.js?v=20261014-text-brand" onerror="document.getElementById('output').textContent = 'Editor gagal dimuat. Periksa koneksi ke CDN dan muat ulang halaman.';"></script>
 </body>
 </html>
