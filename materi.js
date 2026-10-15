@@ -4674,6 +4674,246 @@ const EXTRA_CHALLENGES = {
         }
       ]
     }
+  ],
+  "functions": [
+    {
+      "id": "functions-2",
+      "title": "Latihan 2 · Panggil dua kali",
+      "difficulty": "Mudah",
+      "task": "Buat fungsi salam() yang mencetak Siap belajar C++! dan panggil dua kali.",
+      "requirements": [
+        "Definisikan void salam().",
+        "Panggil salam() dua kali.",
+        "Output dua baris berisi Siap belajar C++!."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Siap belajar C++!\nSiap belajar C++!"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\nvoid salam() {\n    // TODO: tampilkan salam\n}\nint main() {\n    // TODO: panggil salam dua kali\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Siap belajar C++!\nSiap belajar C++!",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "functions-3",
+      "title": "Latihan 3 · Urutan dua fungsi",
+      "difficulty": "Tantangan",
+      "task": "Buat tampilkanAwal() yang mencetak MULAI dan tampilkanAkhir() yang mencetak SELESAI. Panggil sesuai urutan.",
+      "requirements": [
+        "Definisikan dua fungsi void terpisah.",
+        "Panggil tampilkanAwal() lebih dahulu.",
+        "Output dua baris: MULAI lalu SELESAI."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "MULAI\nSELESAI"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\nvoid tampilkanAwal() {\n    // TODO: cetak MULAI\n}\nvoid tampilkanAkhir() {\n    // TODO: cetak SELESAI\n}\nint main() {\n    // TODO: panggil kedua fungsi\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "MULAI\nSELESAI",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "function-param": [
+    {
+      "id": "function-param-2",
+      "title": "Latihan 2 · Salam sesuai nama",
+      "difficulty": "Mudah",
+      "task": "Buat fungsi sapa(string nama) yang mencetak Halo, diikuti nama dan tanda seru. Panggil dengan Budi.",
+      "requirements": [
+        "Fungsi memiliki parameter string nama.",
+        "Kirim argumen Budi.",
+        "Output: Halo, Budi!."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Halo, Budi!"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\nvoid sapa(string nama) {\n    // TODO: cetak Halo, nama!\n}\nint main() {\n    // TODO: panggil sapa(\"Budi\")\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Halo, Budi!",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "function-param-3",
+      "title": "Latihan 3 · Jumlah dua bilangan",
+      "difficulty": "Tantangan",
+      "task": "Buat jumlah(int a, int b) untuk menampilkan penjumlahan kedua parameter. Panggil dengan 12 dan 13.",
+      "requirements": [
+        "Gunakan dua parameter int.",
+        "Tampilkan a + b dari fungsi.",
+        "Output: 25."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "25"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\nvoid jumlah(int a, int b) {\n    // TODO: tampilkan a + b\n}\nint main() {\n    // TODO: panggil jumlah(12, 13)\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "25",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "function-default": [
+    {
+      "id": "function-default-2",
+      "title": "Latihan 2 · Default ongkir",
+      "difficulty": "Mudah",
+      "task": "Buat tampilkanOngkir(int ongkir = 5000) yang menampilkan Ongkir: diikuti nilai ongkir. Panggil tanpa argumen.",
+      "requirements": [
+        "Parameter ongkir memiliki default 5000.",
+        "Panggil tanpa argumen.",
+        "Output: Ongkir: 5000."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Ongkir: 5000"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\nvoid tampilkanOngkir(int ongkir = 5000) {\n    // TODO: cetak Ongkir dan nilainya\n}\nint main() {\n    // TODO: panggil tanpa argumen\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Ongkir: 5000",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "function-default-3",
+      "title": "Latihan 3 · Default dan pengganti",
+      "difficulty": "Tantangan",
+      "task": "Buat cetakNilai(int nilai, int bonus = 5). Cetak nilai akhir, lalu panggil dengan 70 dan dengan 70 serta 10.",
+      "requirements": [
+        "Parameter bonus memiliki default 5 dan berada di kanan.",
+        "Cetak nilai + bonus.",
+        "Output dua baris: Nilai akhir: 75 lalu Nilai akhir: 80."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Nilai akhir: 75\nNilai akhir: 80"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\nvoid cetakNilai(int nilai, int bonus = 5) {\n    // TODO: cetak Nilai akhir: dan nilai + bonus\n}\nint main() {\n    // TODO: panggil cetakNilai(70) lalu cetakNilai(70, 10)\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Nilai akhir: 75\nNilai akhir: 80",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "function-multiple": [
+    {
+      "id": "function-multiple-2",
+      "title": "Latihan 2 · Hitung luas",
+      "difficulty": "Mudah",
+      "task": "Buat tampilkanLuas(int panjang, int lebar) yang menampilkan luas. Panggil dengan 6 dan 5.",
+      "requirements": [
+        "Gunakan dua parameter int.",
+        "Hitung panjang * lebar.",
+        "Output: Luas: 30."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Luas: 30"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\nvoid tampilkanLuas(int panjang, int lebar) {\n    // TODO: cetak luas persegi panjang\n}\nint main() {\n    // TODO: panggil tampilkanLuas(6, 5)\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Luas: 30",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "function-multiple-3",
+      "title": "Latihan 3 · Tiga parameter",
+      "difficulty": "Tantangan",
+      "task": "Buat totalTiga(int a, int b, int c) untuk mencetak jumlah ketiganya. Panggil dengan 4, 6, dan 20.",
+      "requirements": [
+        "Fungsi memiliki tiga parameter int.",
+        "Jumlahkan semua parameter.",
+        "Output: 30."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "30"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\nvoid totalTiga(int a, int b, int c) {\n    // TODO: cetak a + b + c\n}\nint main() {\n    // TODO: panggil totalTiga(4, 6, 20)\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "30",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "function-return": [
+    {
+      "id": "function-return-2",
+      "title": "Latihan 2 · Nilai rata-rata",
+      "difficulty": "Mudah",
+      "task": "Buat double rataRata(int a, int b) yang mengembalikan rata-rata. Panggil dengan 6 dan 9 lalu cetak Rata-rata: 7.5.",
+      "requirements": [
+        "Tipe kembalian double.",
+        "Gunakan return (a + b) / 2.0.",
+        "Output: Rata-rata: 7.5."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Rata-rata: 7.5"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\ndouble rataRata(int a, int b) {\n    // TODO: return (a + b) / 2.0\n}\nint main() {\n    // TODO: cetak hasil rataRata(6, 9)\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Rata-rata: 7.5",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "function-return-3",
+      "title": "Latihan 3 · Nilai terbesar",
+      "difficulty": "Tantangan",
+      "task": "Buat int maksimum(int a, int b) yang mengembalikan bilangan lebih besar. Panggil dengan 18 dan 12 lalu tampilkan hasilnya.",
+      "requirements": [
+        "Tipe kembalian int.",
+        "Gunakan return untuk nilai terbesar.",
+        "Output: 18."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "18"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\nint maksimum(int a, int b) {\n    // TODO: return nilai yang lebih besar\n}\nint main() {\n    // TODO: tampilkan maksimum(18, 12)\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "18",
+          "visible": true
+        }
+      ]
+    }
   ]
 };
 
