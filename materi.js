@@ -740,6 +740,352 @@ const lessons = [
         "visible": true
       }
     ]
+  },
+  {
+    "id": "strings",
+    "title": "String dalam C++",
+    "category": "String",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_strings.asp",
+    "sourceLabel": "W3Schools — C++ Strings",
+    "summary": "String digunakan untuk menyimpan teks seperti nama, pesan, atau nama program. Di C++, tipe std::string tersedia melalui header string dan bisa diberi nilai teks menggunakan tanda petik dua.",
+    "concepts": [
+      {
+        "title": "Membuat string",
+        "body": "Tambahkan <code>#include &lt;string&gt;</code> lalu buat contoh <code>string nama = \"Alya\";</code>. Teks string memakai tanda petik dua, berbeda dengan char yang memakai tanda petik satu."
+      },
+      {
+        "title": "Menampilkan string",
+        "body": "Gunakan <code>cout</code> untuk menampilkan nilai string. Kamu dapat menggabungkan teks literal dan isi variabel dalam satu perintah output."
+      },
+      {
+        "title": "String bisa diubah",
+        "body": "Nilai string dapat diisi ulang atau digabungkan dengan teks lain. Pilih nama variabel yang jelas agar kode mudah dibaca."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "Halo, C++"
+    },
+    "task": "Buat variabel string bernama bahasa dengan nilai \"C++\", lalu tampilkan teks Halo, C++ menggunakan variabel tersebut.",
+    "requirements": [
+      "Sertakan header <string>.",
+      "Gunakan variabel string bernama bahasa.",
+      "Tampilkan teks Halo, diikuti nilai variabel bahasa."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan string bahasa\n    // TODO: tampilkan Halo, C++ dengan variabel bahasa\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "Halo, C++",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "string-concat",
+    "title": "Menggabungkan String",
+    "category": "String",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_strings_concat.asp",
+    "sourceLabel": "W3Schools — String Concatenation",
+    "summary": "String concatenation adalah proses menggabungkan dua atau lebih teks. Kamu dapat menampilkannya berdampingan menggunakan cout atau menggabungkan nilainya dengan operator +.",
+    "concepts": [
+      {
+        "title": "Menggabungkan dengan +",
+        "body": "Contoh <code>string nama = \"Alya\" + string(\" Putri\");</code> menggabungkan dua bagian teks. Saat menggabungkan string dengan string, operator <code>+</code> menghasilkan string baru."
+      },
+      {
+        "title": "Spasi tidak otomatis ditambahkan",
+        "body": "Jika ingin ada spasi di antara nama depan dan nama belakang, tambahkan <code>\" \"</code> secara eksplisit."
+      },
+      {
+        "title": "Menggabungkan dalam output",
+        "body": "Kamu juga bisa menulis <code>cout &lt;&lt; depan &lt;&lt; \" \" &lt;&lt; belakang;</code> tanpa membuat string gabungan terlebih dahulu."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "Hello World"
+    },
+    "task": "Buat string depan bernilai \"Hello\" dan belakang bernilai \"World\". Gabungkan keduanya dengan satu spasi dan tampilkan Hello World.",
+    "requirements": [
+      "Gunakan dua variabel string, depan dan belakang.",
+      "Gunakan operator + untuk menggabungkan string, termasuk satu spasi.",
+      "Output harus tepat: Hello World."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string depan = \"Hello\";\n    string belakang = \"World\";\n    // TODO: gabungkan kedua string dengan spasi dan tampilkan\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "Hello World",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "string-numbers",
+    "title": "String dan Angka",
+    "category": "String",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_strings_numbers.asp",
+    "sourceLabel": "W3Schools — Strings and Numbers",
+    "summary": "String menyimpan teks, sedangkan tipe numerik menyimpan angka untuk perhitungan. C++ menyediakan std::to_string() untuk mengubah angka menjadi string dan stoi() atau stod() untuk mengubah teks numerik menjadi angka.",
+    "concepts": [
+      {
+        "title": "Angka menjadi string",
+        "body": "Gunakan <code>to_string(angka)</code> untuk mengubah nilai numerik menjadi teks, misalnya <code>string teks = to_string(25);</code>."
+      },
+      {
+        "title": "String menjadi bilangan bulat",
+        "body": "Gunakan <code>stoi(teks)</code> untuk mengubah string berisi bilangan bulat menjadi int. Untuk bilangan desimal, C++ menyediakan <code>stod(teks)</code>."
+      },
+      {
+        "title": "Perhatikan jenis datanya",
+        "body": "String seperti <code>\"12\"</code> adalah teks, bukan angka yang langsung dijumlahkan. Ubah menjadi tipe numerik terlebih dahulu sebelum melakukan perhitungan."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "14"
+    },
+    "task": "Buat string umurTeks bernilai \"13\". Ubah menjadi int menggunakan stoi(), tambahkan 1, lalu tampilkan hasilnya.",
+    "requirements": [
+      "Gunakan string umurTeks = \"13\".",
+      "Gunakan stoi() sebelum melakukan penjumlahan.",
+      "Output harus tepat: 14."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string umurTeks = \"13\";\n    // TODO: konversi umurTeks dengan stoi, tambah 1, lalu tampilkan\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "14",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "string-length",
+    "title": "Panjang String",
+    "category": "String",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_strings_length.asp",
+    "sourceLabel": "W3Schools — String Length",
+    "summary": "Metode length() dan size() digunakan untuk mengetahui jumlah karakter dalam string. Keduanya memberikan hasil yang sama untuk std::string.",
+    "concepts": [
+      {
+        "title": "Menggunakan length()",
+        "body": "Contoh <code>string kata = \"Informatika\";</code> lalu <code>kata.length()</code> mengembalikan jumlah karakter dalam kata tersebut."
+      },
+      {
+        "title": "Menggunakan size()",
+        "body": "Metode <code>size()</code> juga mengembalikan jumlah karakter. Pilih length() atau size() sesuai gaya yang paling mudah kamu ingat."
+      },
+      {
+        "title": "Spasi juga dihitung",
+        "body": "Dalam string seperti <code>\"Belajar C++\"</code>, spasi di antara kata ikut dihitung sebagai satu karakter."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "11"
+    },
+    "task": "Buat string kata bernilai \"Informatika\", lalu tampilkan panjangnya menggunakan length().",
+    "requirements": [
+      "Gunakan variabel string bernama kata.",
+      "Gunakan metode length().",
+      "Output harus tepat: 11."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string kata = \"Informatika\";\n    // TODO: tampilkan jumlah karakter dengan length()\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "11",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "string-access",
+    "title": "Mengakses Karakter String",
+    "category": "String",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_strings_access.asp",
+    "sourceLabel": "W3Schools — Access Strings",
+    "summary": "Setiap karakter di dalam string memiliki indeks. Indeks dimulai dari 0, sehingga karakter pertama ada di indeks 0 dan karakter terakhir berada di indeks length() - 1.",
+    "concepts": [
+      {
+        "title": "Indeks dimulai dari nol",
+        "body": "Untuk string <code>\"KELAS\"</code>, indeks 0 berisi K, indeks 1 berisi E, dan indeks 4 berisi S."
+      },
+      {
+        "title": "Menggunakan operator []",
+        "body": "Gunakan <code>kata[0]</code> untuk membaca karakter pertama. Pastikan indeks yang digunakan masih berada dalam rentang string."
+      },
+      {
+        "title": "Menggunakan at()",
+        "body": "Metode <code>kata.at(1)</code> juga dapat mengambil karakter berdasarkan indeks dan melakukan pemeriksaan batas indeks."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "K S"
+    },
+    "task": "Buat string kata bernilai \"KELAS\". Tampilkan karakter pertama dan terakhir, pisahkan dengan satu spasi.",
+    "requirements": [
+      "Gunakan indeks 0 untuk karakter pertama.",
+      "Gunakan indeks kata.length() - 1 untuk karakter terakhir.",
+      "Output harus tepat: K S."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string kata = \"KELAS\";\n    // TODO: tampilkan karakter pertama dan karakter terakhir\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "K S",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "string-escape",
+    "title": "Escape Character dalam String",
+    "category": "String",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_strings_esc.asp",
+    "sourceLabel": "W3Schools — String Escape Characters",
+    "summary": "Escape sequence adalah kombinasi karakter yang diawali backslash untuk menampilkan karakter khusus di dalam string, seperti baris baru, tab, tanda petik, dan backslash itu sendiri.",
+    "concepts": [
+      {
+        "title": "Baris baru dan tab",
+        "body": "Gunakan <code>\\n</code> untuk membuat baris baru dan <code>\\t</code> untuk memberi tab di output."
+      },
+      {
+        "title": "Tanda petik di dalam string",
+        "body": "Gunakan <code>\\\"</code> untuk menampilkan tanda petik dua di dalam string yang dibatasi tanda petik dua."
+      },
+      {
+        "title": "Menampilkan backslash",
+        "body": "Gunakan <code>\\\\</code> untuk menampilkan satu karakter backslash. Escape sequence membantu menjaga teks tampil sesuai yang diinginkan."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "Nama: \"Alya\""
+    },
+    "task": "Tampilkan teks Nama: \"Alya\" dengan menggunakan escape sequence untuk tanda petik dua.",
+    "requirements": [
+      "Gunakan satu string dengan escape sequence \\\".",
+      "Output harus menampilkan tanda petik dua di sekitar Alya.",
+      "Output harus tepat: Nama: \"Alya\"."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: tampilkan Nama: \"Alya\" menggunakan escape sequence\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "Nama: \"Alya\"",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "string-input",
+    "title": "Input String",
+    "category": "String",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_strings_input.asp",
+    "sourceLabel": "W3Schools — String Input",
+    "summary": "Input string bisa dibaca menggunakan cin atau getline(). cin >> nama membaca satu kata hingga spasi, sedangkan getline(cin, nama) membaca seluruh baris termasuk spasi.",
+    "concepts": [
+      {
+        "title": "Input satu kata dengan cin",
+        "body": "Gunakan <code>cin &gt;&gt; nama;</code> jika input berupa satu kata tanpa spasi."
+      },
+      {
+        "title": "Input satu baris dengan getline",
+        "body": "Gunakan <code>getline(cin, nama);</code> untuk membaca seluruh baris, misalnya nama lengkap yang berisi spasi."
+      },
+      {
+        "title": "Memilih cara input",
+        "body": "Pilih cara membaca input sesuai kebutuhan. Jika getline() dipanggil setelah pembacaan angka dengan cin, perhatikan karakter newline yang masih tersisa di buffer."
+      }
+    ],
+    "example": {
+      "input": "Alya Putri",
+      "output": "Halo, Alya Putri!"
+    },
+    "task": "Gunakan getline(cin, nama) untuk membaca nama lengkap yang mungkin berisi spasi, lalu tampilkan dengan format Halo, [nama]!",
+    "requirements": [
+      "Gunakan string bernama nama.",
+      "Baca seluruh baris dengan getline(cin, nama).",
+      "Output harus mengikuti seluruh input, termasuk spasi."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string nama;\n    // TODO: baca nama lengkap dengan getline lalu tampilkan salam\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "Alya Putri",
+        "expected": "Halo, Alya Putri!",
+        "visible": true
+      },
+      {
+        "input": "Bima Saputra",
+        "expected": "Halo, Bima Saputra!",
+        "visible": true
+      },
+      {
+        "input": "Nisa Rahma",
+        "expected": "Halo, Nisa Rahma!",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "string-namespace",
+    "title": "Namespace String",
+    "category": "String",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_strings_namespace.asp",
+    "sourceLabel": "W3Schools — String Namespace",
+    "summary": "std::string adalah bagian dari namespace std. Kamu dapat menggunakan using namespace std; untuk mengakses nama-nama dari std tanpa awalan, atau menuliskan std:: secara eksplisit.",
+    "concepts": [
+      {
+        "title": "String berada di namespace std",
+        "body": "Tipe string standar ditulis lengkap sebagai <code>std::string</code>. Fungsi output dan input juga dapat ditulis sebagai <code>std::cout</code> dan <code>std::cin</code>."
+      },
+      {
+        "title": "Menggunakan using namespace std",
+        "body": "Dengan <code>using namespace std;</code>, kamu dapat menulis <code>string</code> dan <code>cout</code> tanpa awalan <code>std::</code>."
+      },
+      {
+        "title": "Mengapa std:: berguna?",
+        "body": "Menulis <code>std::</code> secara eksplisit menunjukkan asal nama dan mengurangi risiko benturan nama pada program yang lebih besar."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "Halo, C++"
+    },
+    "task": "Tulis program tanpa using namespace std;. Gunakan std::string untuk menyimpan \"C++\" dan std::cout untuk menampilkan Halo, C++.",
+    "requirements": [
+      "Jangan menggunakan using namespace std;.",
+      "Gunakan std::string dan std::cout secara eksplisit.",
+      "Output harus tepat: Halo, C++."
+    ],
+    "starter": "#include <iostream>\n#include <string>\n\nint main() {\n    // TODO: deklarasikan std::string bahasa dan tampilkan Halo, C++ dengan std::cout\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "Halo, C++",
+        "visible": true
+      }
+    ]
   }
 ];
 
@@ -1536,6 +1882,410 @@ const EXTRA_CHALLENGES = {
         {
           "input": "",
           "expected": "24 12",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "strings": [
+    {
+      "id": "strings-2",
+      "title": "Latihan 2 · Pesan singkat",
+      "difficulty": "Mudah",
+      "task": "Buat string pesan bernilai \"Selamat belajar\" lalu tampilkan isi variabel pesan.",
+      "requirements": [
+        "Gunakan variabel string bernama pesan.",
+        "Tampilkan isi variabel, bukan teks yang ditulis langsung di cout.",
+        "Output harus tepat: Selamat belajar."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Selamat belajar"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan dan tampilkan string pesan\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Selamat belajar",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "strings-3",
+      "title": "Latihan 3 · Ubah nilai string",
+      "difficulty": "Tantangan",
+      "task": "Buat string bahasa bernilai \"Java\", ubah nilainya menjadi \"C++\", lalu tampilkan nilai terakhir.",
+      "requirements": [
+        "Gunakan variabel string bernama bahasa.",
+        "Ubah nilai variabel setelah deklarasi.",
+        "Output harus tepat: C++."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "C++"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string bahasa = \"Java\";\n    // TODO: ubah bahasa menjadi C++ lalu tampilkan\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "C++",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "string-concat": [
+    {
+      "id": "string-concat-2",
+      "title": "Latihan 2 · Nama lengkap",
+      "difficulty": "Mudah",
+      "task": "Gabungkan string namaDepan = \"Alya\" dan namaBelakang = \"Putri\" menjadi Alya Putri.",
+      "requirements": [
+        "Gunakan operator + untuk menggabungkan string.",
+        "Tambahkan satu spasi di tengah.",
+        "Output harus tepat: Alya Putri."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Alya Putri"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string namaDepan = \"Alya\";\n    string namaBelakang = \"Putri\";\n    // TODO: gabungkan nama dengan spasi dan tampilkan\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Alya Putri",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "string-concat-3",
+      "title": "Latihan 3 · Buat kalimat",
+      "difficulty": "Tantangan",
+      "task": "Gabungkan string subjek = \"Saya\" dan kegiatan = \"belajar C++\" menjadi Saya sedang belajar C++.",
+      "requirements": [
+        "Gabungkan tiga bagian teks dengan operator +.",
+        "Tambahkan spasi agar kalimat terbaca dengan benar.",
+        "Output harus tepat: Saya sedang belajar C++."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Saya sedang belajar C++"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string subjek = \"Saya\";\n    string kegiatan = \"belajar C++\";\n    // TODO: gabungkan menjadi Saya sedang belajar C++\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Saya sedang belajar C++",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "string-numbers": [
+    {
+      "id": "string-numbers-2",
+      "title": "Latihan 2 · Angka menjadi string",
+      "difficulty": "Mudah",
+      "task": "Gunakan to_string(25) untuk membuat string teksAngka, lalu tampilkan dengan awalan Angka: .",
+      "requirements": [
+        "Gunakan to_string() untuk mengubah angka menjadi string.",
+        "Simpan hasilnya pada variabel string teksAngka.",
+        "Output harus tepat: Angka: 25."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Angka: 25"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    // TODO: ubah 25 menjadi string lalu tampilkan dengan awalan Angka:\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Angka: 25",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "string-numbers-3",
+      "title": "Latihan 3 · Konversi lalu jumlahkan",
+      "difficulty": "Tantangan",
+      "task": "Konversi string \"12\" dan \"8\" ke int menggunakan stoi(), lalu tampilkan hasil penjumlahannya.",
+      "requirements": [
+        "Gunakan stoi() pada kedua string.",
+        "Jumlahkan nilai numerik hasil konversi, bukan stringnya.",
+        "Output harus tepat: 20."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "20"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string a = \"12\";\n    string b = \"8\";\n    // TODO: konversi kedua string dengan stoi dan tampilkan jumlahnya\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "20",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "string-length": [
+    {
+      "id": "string-length-2",
+      "title": "Latihan 2 · Panjang C++",
+      "difficulty": "Mudah",
+      "task": "Buat string bahasa = \"C++\" dan tampilkan panjang string menggunakan size().",
+      "requirements": [
+        "Gunakan variabel string bernama bahasa.",
+        "Gunakan metode size().",
+        "Output harus tepat: 3."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "3"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string bahasa = \"C++\";\n    // TODO: tampilkan panjang string dengan size()\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "3",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "string-length-3",
+      "title": "Latihan 3 · Panjang kalimat",
+      "difficulty": "Tantangan",
+      "task": "Buat string kalimat = \"Belajar C++\" dan tampilkan jumlah karakternya. Spasi juga dihitung.",
+      "requirements": [
+        "Gunakan length() atau size().",
+        "Pastikan spasi di tengah kalimat ikut dihitung.",
+        "Output harus tepat: 11."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "11"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string kalimat = \"Belajar C++\";\n    // TODO: tampilkan jumlah karakter, termasuk spasi\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "11",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "string-access": [
+    {
+      "id": "string-access-2",
+      "title": "Latihan 2 · Karakter kedua",
+      "difficulty": "Mudah",
+      "task": "Buat string kata = \"KELAS\" dan tampilkan karakter kedua dengan indeks yang tepat.",
+      "requirements": [
+        "Ingat indeks string dimulai dari 0.",
+        "Karakter kedua berada di indeks 1.",
+        "Output harus tepat: E."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "E"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string kata = \"KELAS\";\n    // TODO: tampilkan karakter kedua\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "E",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "string-access-3",
+      "title": "Latihan 3 · Karakter terakhir",
+      "difficulty": "Tantangan",
+      "task": "Buat string kode = \"ICT2026\" dan tampilkan karakter terakhir menggunakan at().",
+      "requirements": [
+        "Gunakan metode at().",
+        "Gunakan indeks kode.length() - 1.",
+        "Output harus tepat: 6."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "6"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string kode = \"ICT2026\";\n    // TODO: tampilkan karakter terakhir menggunakan at()\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "6",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "string-escape": [
+    {
+      "id": "string-escape-2",
+      "title": "Latihan 2 · Dua baris",
+      "difficulty": "Mudah",
+      "task": "Tampilkan teks Baris 1 dan Baris 2 dalam dua baris menggunakan escape sequence \\n.",
+      "requirements": [
+        "Gunakan \\n di dalam string untuk membuat baris baru.",
+        "Jangan membuat dua output yang mengubah format hasil yang diminta.",
+        "Output harus terdiri dari dua baris yang diminta."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Baris 1\nBaris 2"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: tampilkan Baris 1 dan Baris 2 dengan escape sequence \\n\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Baris 1\nBaris 2",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "string-escape-3",
+      "title": "Latihan 3 · Tampilkan path",
+      "difficulty": "Tantangan",
+      "task": "Tampilkan teks Folder: C:\\ICT dengan satu karakter backslash di antara C: dan ICT.",
+      "requirements": [
+        "Gunakan escape sequence \\\\ untuk mencetak satu backslash.",
+        "Tampilkan awalan Folder: .",
+        "Output harus tepat: Folder: C:\\ICT."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Folder: C:\\ICT"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: tampilkan path Folder: C:\\\\ICT dengan escape sequence\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Folder: C:\\ICT",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "string-input": [
+    {
+      "id": "string-input-2",
+      "title": "Latihan 2 · Nama lengkap",
+      "difficulty": "Mudah",
+      "task": "Gunakan getline(cin, nama) untuk membaca nama lengkap dan tampilkan nama itu saja.",
+      "requirements": [
+        "Gunakan getline(), bukan cin >> nama.",
+        "Pertahankan spasi dalam nama lengkap.",
+        "Output harus sama persis dengan input."
+      ],
+      "example": {
+        "input": "Alya Putri",
+        "output": "Alya Putri"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string nama;\n    // TODO: baca satu baris penuh dan tampilkan nama\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "Alya Putri",
+          "expected": "Alya Putri",
+          "visible": true
+        },
+        {
+          "input": "Bima Saputra",
+          "expected": "Bima Saputra",
+          "visible": true
+        },
+        {
+          "input": "Nisa Rahma",
+          "expected": "Nisa Rahma",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "string-input-3",
+      "title": "Latihan 3 · Format biodata",
+      "difficulty": "Tantangan",
+      "task": "Baca satu baris nama lengkap dan satu baris kota menggunakan getline(). Tampilkan dengan format Nama: [nama] | Kota: [kota].",
+      "requirements": [
+        "Gunakan dua variabel string.",
+        "Gunakan getline() untuk membaca kedua baris input.",
+        "Pertahankan spasi pada nama lengkap dan kota."
+      ],
+      "example": {
+        "input": "Alya Putri\nPurwodadi",
+        "output": "Nama: Alya Putri | Kota: Purwodadi"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string nama;\n    string kota;\n    // TODO: baca dua baris dengan getline lalu tampilkan format biodata\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "Alya Putri\nPurwodadi",
+          "expected": "Nama: Alya Putri | Kota: Purwodadi",
+          "visible": true
+        },
+        {
+          "input": "Bima Saputra\nSemarang",
+          "expected": "Nama: Bima Saputra | Kota: Semarang",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "string-namespace": [
+    {
+      "id": "string-namespace-2",
+      "title": "Latihan 2 · std::string",
+      "difficulty": "Mudah",
+      "task": "Tanpa using namespace std;, deklarasikan std::string nama = \"Alya\" lalu tampilkan dengan std::cout.",
+      "requirements": [
+        "Jangan menggunakan using namespace std;.",
+        "Gunakan std::string dan std::cout.",
+        "Output harus tepat: Alya."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Alya"
+      },
+      "starter": "#include <iostream>\n#include <string>\n\nint main() {\n    // TODO: deklarasikan std::string nama dan tampilkan dengan std::cout\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Alya",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "string-namespace-3",
+      "title": "Latihan 3 · Namespace untuk input",
+      "difficulty": "Tantangan",
+      "task": "Tanpa using namespace std;, baca satu baris teks dengan std::getline(std::cin, pesan), lalu tampilkan isi pesan dengan std::cout.",
+      "requirements": [
+        "Gunakan std::string untuk variabel pesan.",
+        "Gunakan std::getline dan std::cin secara eksplisit.",
+        "Gunakan std::cout untuk menampilkan seluruh teks."
+      ],
+      "example": {
+        "input": "Halo C++",
+        "output": "Halo C++"
+      },
+      "starter": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string pesan;\n    // TODO: baca satu baris dengan std::getline lalu tampilkan dengan std::cout\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "Halo C++",
+          "expected": "Halo C++",
+          "visible": true
+        },
+        {
+          "input": "Belajar string",
+          "expected": "Belajar string",
           "visible": true
         }
       ]
