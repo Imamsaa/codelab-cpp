@@ -2129,6 +2129,52 @@ const lessons = [
         "visible": true
       }
     ]
+  },
+  {
+    "id": "math",
+    "title": "Math dalam C++",
+    "category": "Operator",
+    "level": "Pemula",
+    "duration": "12 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_math.asp",
+    "sourceLabel": "W3Schools — C++ Math",
+    "summary": "C++ menyediakan fungsi matematika untuk mencari nilai terbesar atau terkecil, akar kuadrat, pembulatan, nilai absolut, dan operasi matematika lainnya. Fungsi seperti sqrt(), round(), dan pow() tersedia melalui header <cmath>.",
+    "concepts": [
+      {
+        "title": "Fungsi max() dan min()",
+        "body": "Gunakan <code>max(a, b)</code> untuk mendapatkan nilai yang lebih besar dan <code>min(a, b)</code> untuk mendapatkan nilai yang lebih kecil. Contoh: <code>max(5, 10)</code> menghasilkan <code>10</code>."
+      },
+      {
+        "title": "Header cmath",
+        "body": "Tambahkan <code>#include &lt;cmath&gt;</code> untuk memakai fungsi matematika seperti <code>sqrt()</code>, <code>round()</code>, dan <code>pow()</code>."
+      },
+      {
+        "title": "Akar, pangkat, dan pembulatan",
+        "body": "<code>sqrt(64)</code> menghasilkan akar kuadrat 8, <code>pow(2, 3)</code> menghitung 2 pangkat 3, dan <code>round(2.6)</code> membulatkan menjadi 3."
+      },
+      {
+        "title": "Nilai absolut",
+        "body": "Fungsi <code>abs()</code> dapat digunakan untuk mendapatkan nilai absolut, yaitu jarak suatu angka dari nol. Contohnya, <code>abs(-7)</code> menghasilkan <code>7</code>."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "Nilai terbesar: 10\nAkar kuadrat: 8\nPangkat: 8"
+    },
+    "task": "Gunakan fungsi max(5, 10), sqrt(64), dan pow(2, 3). Tampilkan masing-masing hasil dengan label Nilai terbesar:, Akar kuadrat:, dan Pangkat:.",
+    "requirements": [
+      "Sertakan header <cmath> untuk fungsi matematika.",
+      "Gunakan max(5, 10), sqrt(64), dan pow(2, 3).",
+      "Output harus tepat tiga baris: Nilai terbesar: 10, Akar kuadrat: 8, dan Pangkat: 8."
+    ],
+    "starter": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    cout << \"Nilai terbesar: \" << max(5, 10) << endl;\n    // TODO: tampilkan Akar kuadrat menggunakan sqrt(64)\n    // TODO: tampilkan Pangkat menggunakan pow(2, 3)\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "Nilai terbesar: 10\nAkar kuadrat: 8\nPangkat: 8",
+        "visible": true
+      }
+    ]
   }
 ];
 
@@ -4738,7 +4784,55 @@ const EXTRA_CHALLENGES = {
         "Output: 18."
       ],
       "example": {
+    ,
+  "math": [
+    {
+      "id": "math-2",
+      "title": "Latihan 2 · Membulatkan angka",
+      "difficulty": "Mudah",
+      "task": "Gunakan round(4.7) untuk membulatkan angka dan tampilkan output Bulat: 5.",
+      "requirements": [
+        "Sertakan header <cmath>.",
+        "Gunakan fungsi round(4.7).",
+        "Output tepat: Bulat: 5."
+      ],
+      "example": {
         "input": "(tidak ada input)",
+        "output": "Bulat: 5"
+      },
+      "starter": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    // TODO: tampilkan \"Bulat: \" dan round(4.7)\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Bulat: 5",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "math-3",
+      "title": "Latihan 3 · Nilai absolut dan minimum",
+      "difficulty": "Tantangan",
+      "task": "Gunakan abs(-12) dan min(7, 3). Tampilkan output Absolut: 12 lalu Nilai terkecil: 3.",
+      "requirements": [
+        "Sertakan header <cmath>.",
+        "Gunakan abs(-12) dan min(7, 3).",
+        "Output tepat dua baris: Absolut: 12 lalu Nilai terkecil: 3."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Absolut: 12\nNilai terkecil: 3"
+      },
+      "starter": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    // TODO: tampilkan \"Absolut: \" dan abs(-12)\n    // TODO: tampilkan \"Nilai terkecil: \" dan min(7, 3)\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Absolut: 12\nNilai terkecil: 3",
+          "visible": true
+        }
+      ]
+    }
+  ]    "input": "(tidak ada input)",
         "output": "18"
       },
       "starter": "#include <iostream>\nusing namespace std;\nint maksimum(int a, int b) {\n    // TODO: return nilai yang lebih besar\n}\nint main() {\n    // TODO: tampilkan maksimum(18, 12)\n    return 0;\n}",
