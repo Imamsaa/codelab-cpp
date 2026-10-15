@@ -1697,6 +1697,174 @@ const lessons = [
         "visible": true
       }
     ]
+  },
+  {
+    "id": "arrays",
+    "title": "Array dalam C++",
+    "category": "Array",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_arrays.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Array menyimpan beberapa nilai dengan tipe data yang sama dalam satu variabel. Setiap elemen diakses menggunakan indeks yang dimulai dari 0.",
+    "concepts": [
+      {
+        "title": "Mendeklarasikan array",
+        "body": "Contoh <code>int nilai[3] = {80, 90, 100};</code> membuat array berisi tiga nilai integer."
+      },
+      {
+        "title": "Mengakses elemen",
+        "body": "Elemen pertama ada pada indeks 0, sehingga <code>nilai[0]</code> bernilai 80 dan <code>nilai[2]</code> bernilai 100."
+      },
+      {
+        "title": "Mengubah elemen",
+        "body": "Nilai elemen dapat diperbarui lewat indeks, misalnya <code>nilai[1] = 95;</code>. Pastikan indeks tidak keluar dari rentang array."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "80 90 100"
+    },
+    "task": "Buat array int nilai berisi {80, 90, 100}. Tampilkan ketiga elemen secara berurutan dan dipisahkan satu spasi.",
+    "requirements": [
+      "Deklarasikan array bernama nilai dengan tiga elemen.",
+      "Gunakan indeks 0, 1, dan 2 untuk menampilkan elemen.",
+      "Output harus tepat: 80 90 100."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan array nilai berisi 80, 90, 100\n    // TODO: tampilkan ketiga elemennya\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "80 90 100",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "arrays-loop",
+    "title": "Mengakses Array dengan Loop",
+    "category": "Array",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_arrays_loop.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Perulangan dapat digunakan untuk mengunjungi setiap elemen array. Loop dengan indeks cocok saat posisi elemen dibutuhkan atau ketika ukuran array diketahui.",
+    "concepts": [
+      {
+        "title": "Loop dengan indeks",
+        "body": "Pola umum: <code>for (int i = 0; i &lt; 4; i++)</code> lalu akses elemen menggunakan <code>data[i]</code>."
+      },
+      {
+        "title": "Mulai dari indeks 0",
+        "body": "Indeks pertama array adalah 0. Untuk array berisi empat elemen, indeks yang valid adalah 0 sampai 3."
+      },
+      {
+        "title": "Mengolah setiap elemen",
+        "body": "Dalam loop, elemen bisa ditampilkan satu per satu atau digunakan untuk menghitung total dan mencari nilai tertentu."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "2 4 6 8"
+    },
+    "task": "Buat array int data berisi {2, 4, 6, 8}. Gunakan for untuk menampilkan seluruh elemen dengan satu spasi.",
+    "requirements": [
+      "Gunakan array bernama data yang memiliki empat elemen.",
+      "Gunakan loop for dan akses elemen dengan data[i].",
+      "Output harus tepat: 2 4 6 8."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int data[] = {2, 4, 6, 8};\n    // TODO: gunakan for untuk menampilkan semua elemen array\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "2 4 6 8",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "arrays-omit",
+    "title": "Menghilangkan Ukuran Array",
+    "category": "Array",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_arrays_omit.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Ukuran array pada deklarasi dapat dihilangkan jika array langsung diberi daftar nilai awal. Compiler akan menghitung jumlah elemen dari daftar tersebut.",
+    "concepts": [
+      {
+        "title": "Ukuran disimpulkan dari initializer",
+        "body": "Contoh <code>int angka[] = {5, 10, 15, 20};</code> otomatis membuat array dengan empat elemen."
+      },
+      {
+        "title": "Tetap ada ukuran",
+        "body": "Walau ukuran tidak ditulis di dalam kurung siku, array tetap memiliki jumlah elemen tetap yang ditentukan saat kompilasi."
+      },
+      {
+        "title": "Periksa indeks",
+        "body": "Untuk empat elemen, indeks tetap dimulai dari 0 dan berakhir pada 3. Mengakses indeks 4 akan berada di luar rentang array."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "5 20"
+    },
+    "task": "Deklarasikan int angka[] tanpa menulis ukuran di dalam kurung siku, dengan nilai {5, 10, 15, 20}. Tampilkan elemen pertama dan terakhir.",
+    "requirements": [
+      "Tulis deklarasi sebagai int angka[] = {5, 10, 15, 20};.",
+      "Akses elemen pertama dan terakhir dengan indeks yang benar.",
+      "Output harus tepat: 5 20."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan angka[] tanpa ukuran yang ditulis eksplisit\n    // TODO: tampilkan elemen pertama dan terakhir\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "5 20",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "arrays-size",
+    "title": "Menghitung Ukuran Array",
+    "category": "Array",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_arrays_size.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Untuk array biasa yang masih berada dalam lingkup sebagai array, jumlah elemennya dapat dihitung dari ukuran total byte dibagi ukuran satu elemen.",
+    "concepts": [
+      {
+        "title": "Menggunakan sizeof",
+        "body": "Ekspresi <code>sizeof(data)</code> menghasilkan ukuran seluruh array dalam byte, sedangkan <code>sizeof(data[0])</code> menghasilkan ukuran satu elemen."
+      },
+      {
+        "title": "Rumus jumlah elemen",
+        "body": "Gunakan <code>sizeof(data) / sizeof(data[0])</code> untuk menghitung jumlah elemen pada array biasa yang dideklarasikan di lingkup tersebut."
+      },
+      {
+        "title": "Batasan rumus",
+        "body": "Rumus ini tidak bekerja dengan cara yang sama jika array telah diteruskan sebagai pointer ke fungsi. Untuk array biasa, gunakan rumus ini di tempat array dideklarasikan."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "5"
+    },
+    "task": "Buat array int data berisi {10, 20, 30, 40, 50}. Hitung jumlah elemennya menggunakan sizeof(data) / sizeof(data[0]) dan tampilkan hasilnya.",
+    "requirements": [
+      "Gunakan array bernama data berisi lima integer.",
+      "Hitung jumlah elemen dengan sizeof(data) / sizeof(data[0]).",
+      "Output harus tepat: 5."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int data[] = {10, 20, 30, 40, 50};\n    // TODO: hitung ukuran array dalam jumlah elemen\n    // TODO: tampilkan jumlah elemennya\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "5",
+        "visible": true
+      }
+    ]
   }
 ];
 
@@ -3641,6 +3809,198 @@ const EXTRA_CHALLENGES = {
         {
           "input": "",
           "expected": "10",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "arrays": [
+    {
+      "id": "arrays-2",
+      "title": "Latihan 2 · Ubah elemen array",
+      "difficulty": "Mudah",
+      "task": "Buat array int nilai berisi {10, 20, 30}. Ubah elemen kedua menjadi 25, lalu tampilkan ketiga elemen.",
+      "requirements": [
+        "Gunakan array bernama nilai.",
+        "Perbarui elemen kedua menggunakan indeks 1.",
+        "Output harus tepat: 10 25 30."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "10 25 30"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int nilai[] = {10, 20, 30};\n    // TODO: ubah elemen kedua menjadi 25 dan tampilkan semua elemen\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "10 25 30",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "arrays-3",
+      "title": "Latihan 3 · Tampilkan terbalik",
+      "difficulty": "Tantangan",
+      "task": "Buat array int data berisi {3, 6, 9, 12}. Gunakan indeks untuk menampilkan elemennya dari belakang ke depan.",
+      "requirements": [
+        "Gunakan array berisi empat elemen.",
+        "Mulai dari indeks terakhir dan bergerak menuju indeks 0.",
+        "Output harus tepat: 12 9 6 3."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "12 9 6 3"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int data[] = {3, 6, 9, 12};\n    // TODO: gunakan for untuk menampilkan array dari belakang ke depan\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "12 9 6 3",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "arrays-loop": [
+    {
+      "id": "arrays-loop-2",
+      "title": "Latihan 2 · Jumlah array",
+      "difficulty": "Mudah",
+      "task": "Gunakan for untuk menjumlahkan array {3, 5, 7}. Tampilkan jumlahnya.",
+      "requirements": [
+        "Gunakan loop for untuk mengunjungi elemen array.",
+        "Tambahkan setiap elemen ke variabel total.",
+        "Output harus tepat: 15."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "15"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int data[] = {3, 5, 7};\n    int total = 0;\n    // TODO: jumlahkan semua elemen dengan loop for\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "15",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "arrays-loop-3",
+      "title": "Latihan 3 · Hitung nilai tinggi",
+      "difficulty": "Tantangan",
+      "task": "Gunakan for untuk menghitung berapa elemen array {60, 85, 90, 70, 95} yang >= 80.",
+      "requirements": [
+        "Gunakan loop untuk memeriksa setiap elemen.",
+        "Tambahkan penghitung jika elemen >= 80.",
+        "Output harus tepat: 3."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "3"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int nilai[] = {60, 85, 90, 70, 95};\n    int jumlah = 0;\n    // TODO: hitung nilai >= 80 menggunakan for\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "3",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "arrays-omit": [
+    {
+      "id": "arrays-omit-2",
+      "title": "Latihan 2 · Ukuran otomatis",
+      "difficulty": "Mudah",
+      "task": "Deklarasikan int data[] dengan nilai {3, 6, 9}. Tampilkan elemen terakhir menggunakan indeks 2.",
+      "requirements": [
+        "Jangan menulis ukuran eksplisit di dalam kurung siku deklarasi array.",
+        "Compiler menyimpulkan jumlah elemen dari initializer.",
+        "Output harus tepat: 9."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "9"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan int data[] dengan nilai {3, 6, 9}\n    // TODO: tampilkan elemen indeks 2\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "9",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "arrays-omit-3",
+      "title": "Latihan 3 · Cetak array otomatis",
+      "difficulty": "Tantangan",
+      "task": "Deklarasikan int angka[] dengan nilai {1, 4, 7, 10}. Gunakan range-based for untuk menampilkan setiap elemen.",
+      "requirements": [
+        "Hilangkan angka ukuran dalam tanda kurung siku deklarasi array.",
+        "Gunakan range-based for: for (int n : angka).",
+        "Output harus tepat: 1 4 7 10."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "1 4 7 10"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan int angka[] tanpa ukuran\n    // TODO: tampilkan elemen dengan range-based for\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "1 4 7 10",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "arrays-size": [
+    {
+      "id": "arrays-size-2",
+      "title": "Latihan 2 · Ukuran empat elemen",
+      "difficulty": "Mudah",
+      "task": "Buat array char huruf berisi {'A', 'B', 'C', 'D'}. Hitung dan tampilkan jumlah elemennya menggunakan sizeof.",
+      "requirements": [
+        "Gunakan array char dengan empat elemen.",
+        "Gunakan sizeof(huruf) / sizeof(huruf[0]).",
+        "Output harus tepat: 4."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "4"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    char huruf[] = {'A', 'B', 'C', 'D'};\n    // TODO: hitung jumlah elemen menggunakan sizeof\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "4",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "arrays-size-3",
+      "title": "Latihan 3 · Jumlah dan rata-rata",
+      "difficulty": "Tantangan",
+      "task": "Gunakan array int nilai berisi {70, 80, 90, 100}. Hitung jumlah elemennya dengan sizeof, jumlahkan semua nilai dengan for, lalu tampilkan jumlah elemen dan rata-ratanya. Rata-rata ditampilkan sebagai bilangan bulat.",
+      "requirements": [
+        "Hitung jumlah elemen menggunakan sizeof(nilai) / sizeof(nilai[0]).",
+        "Gunakan for untuk menghitung total nilai.",
+        "Output harus tepat: 4 85."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "4 85"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int nilai[] = {70, 80, 90, 100};\n    // TODO: hitung jumlah elemen dengan sizeof\n    // TODO: jumlahkan nilai menggunakan for\n    // TODO: tampilkan jumlah elemen dan rata-rata\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "4 85",
           "visible": true
         }
       ]
