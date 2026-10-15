@@ -2138,15 +2138,15 @@ const lessons = [
     "duration": "12 menit",
     "sourceUrl": "https://www.w3schools.com/cpp/cpp_math.asp",
     "sourceLabel": "W3Schools — C++ Math",
-    "summary": "C++ menyediakan fungsi matematika untuk mencari nilai terbesar atau terkecil, akar kuadrat, pembulatan, nilai absolut, dan operasi matematika lainnya. Fungsi seperti sqrt(), round(), dan pow() tersedia melalui header <cmath>.",
+    "summary": "C++ menyediakan fungsi untuk mencari nilai terbesar dan terkecil, akar kuadrat, pembulatan, pangkat, serta nilai absolut. max() dan min() menggunakan header <algorithm>, sedangkan sqrt(), round(), pow(), dan abs() tersedia melalui <cmath>.",
     "concepts": [
       {
         "title": "Fungsi max() dan min()",
         "body": "Gunakan <code>max(a, b)</code> untuk mendapatkan nilai yang lebih besar dan <code>min(a, b)</code> untuk mendapatkan nilai yang lebih kecil. Contoh: <code>max(5, 10)</code> menghasilkan <code>10</code>."
       },
       {
-        "title": "Header cmath",
-        "body": "Tambahkan <code>#include &lt;cmath&gt;</code> untuk memakai fungsi matematika seperti <code>sqrt()</code>, <code>round()</code>, dan <code>pow()</code>."
+        "title": "Header algorithm dan cmath",
+        "body": "Tambahkan <code>#include &lt;algorithm&gt;</code> untuk memakai <code>max()</code> dan <code>min()</code>. Untuk <code>sqrt()</code>, <code>round()</code>, <code>pow()</code>, dan <code>abs()</code>, gunakan <code>#include &lt;cmath&gt;</code>."
       },
       {
         "title": "Akar, pangkat, dan pembulatan",
@@ -2163,11 +2163,12 @@ const lessons = [
     },
     "task": "Gunakan fungsi max(5, 10), sqrt(64), dan pow(2, 3). Tampilkan masing-masing hasil dengan label Nilai terbesar:, Akar kuadrat:, dan Pangkat:.",
     "requirements": [
-      "Sertakan header <cmath> untuk fungsi matematika.",
+      "Sertakan header <algorithm> untuk fungsi max().",
+      "Sertakan header <cmath> untuk sqrt() dan pow().",
       "Gunakan max(5, 10), sqrt(64), dan pow(2, 3).",
       "Output harus tepat tiga baris: Nilai terbesar: 10, Akar kuadrat: 8, dan Pangkat: 8."
     ],
-    "starter": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    cout << \"Nilai terbesar: \" << max(5, 10) << endl;\n    // TODO: tampilkan Akar kuadrat menggunakan sqrt(64)\n    // TODO: tampilkan Pangkat menggunakan pow(2, 3)\n    return 0;\n}",
+    "starter": "#include <iostream>\n#include <algorithm>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    cout << \"Nilai terbesar: \" << max(5, 10) << endl;\n    // TODO: tampilkan Akar kuadrat menggunakan sqrt(64)\n    // TODO: tampilkan Pangkat menggunakan pow(2, 3)\n    return 0;\n}",
     "tests": [
       {
         "input": "",
@@ -4587,19 +4588,20 @@ const EXTRA_CHALLENGES = {
         "difficulty": "Tantangan",
         "task": "Gunakan abs(-12) dan min(7, 3). Tampilkan output Absolut: 12 lalu Nilai terkecil: 3.",
         "requirements": [
-          "Sertakan header <cmath>.",
+          "Sertakan header <algorithm> untuk min().",
+          "Sertakan header <cmath> untuk abs().",
           "Gunakan abs(-12) dan min(7, 3).",
           "Output tepat dua baris: Absolut: 12 lalu Nilai terkecil: 3."
         ],
         "example": {
           "input": "(tidak ada input)",
-          "output": "Absolut: 12\\nNilai terkecil: 3"
+          "output": "Absolut: 12\nNilai terkecil: 3"
         },
-        "starter": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    // TODO: tampilkan \"Absolut: \" dan abs(-12)\n    // TODO: tampilkan \"Nilai terkecil: \" dan min(7, 3)\n    return 0;\n}",
+        "starter": "#include <iostream>\n#include <algorithm>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    // TODO: tampilkan \"Absolut: \" dan abs(-12)\n    // TODO: tampilkan \"Nilai terkecil: \" dan min(7, 3)\n    return 0;\n}",
         "tests": [
           {
             "input": "",
-            "expected": "Absolut: 12\\nNilai terkecil: 3",
+            "expected": "Absolut: 12\nNilai terkecil: 3",
             "visible": true
           }
         ]
