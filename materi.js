@@ -4745,6 +4745,9 @@ for (const lesson of lessons) {
 
 
 const lessonList = document.getElementById("lessonList");
+const lessonSearch = document.getElementById("lessonSearch");
+const lessonProgressFilter = document.getElementById("lessonProgressFilter");
+const lessonFilterSummary = document.getElementById("lessonFilterSummary");
 const lessonTitle = document.getElementById("lessonTitle");
 const lessonCategory = document.getElementById("lessonCategory");
 const lessonLevel = document.getElementById("lessonLevel");
@@ -4999,7 +5002,29 @@ function updateProgress() {
 }
 
 function renderLessonList() {
-  lessonList.innerHTML = lessons.map((lesson, index) => {
+  const searchTerm = lessonSearch.value.trim().toLocaleLowerCase("id");
+  const progressFilter = lessonProgressFilter.value;
+  const visibleLessons = lessons
+    .map((lesson, index) => ({ lesson, index }))
+    .filter(({ lesson }) => {
+      const matchesSearch = !searchTerm ||
+        lesson.title.toLocaleLowerCase("id").includes(searchTerm) ||
+        lesson.category.toLocaleLowerCase("id").includes(searchTerm);
+      if (!matchesSearch) return false;
+
+      if (progressFilter === "complete") return isLessonComplete(lesson);
+      if (progressFilter === "incomplete") return !isLessonComplete(lesson);
+      return true;
+    });
+
+  lessonFilterSummary.textContent = visibleLessons.length + " dari " + lessons.length + " materi";
+
+  if (visibleLessons.length === 0) {
+    lessonList.innerHTML = '<div class="nav-empty">Materi tidak ditemukan.<br>Coba kata kunci atau filter lain.</div>';
+    return;
+  }
+
+  lessonList.innerHTML = visibleLessons.map(({ lesson, index }) => {
     const active = lesson.id === currentLesson.id;
     const complete = isLessonComplete(lesson);
     const practiceCount = (lesson.challenges || []).length;
@@ -5541,6 +5566,24 @@ async function initializeEditor() {
 lessonList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-lesson-id]");
   if (button) selectLesson(button.dataset.lessonId);
+});
+lessonSearch.addEventListener("input", renderLessonList);
+lessonProgressFilter.addEventListener("change", renderLessonList);
+window.addEventListener("keydown", (event) => {
+  if (event.key === "/" && !event.ctrlKey && !event.metaKey && !event.altKey) {
+    const target = event.target;
+    const isTyping = target instanceof HTMLElement &&
+      (target.isContentEditable || /INPUT|TEXTAREA|SELECT/.test(target.tagName));
+    if (!isTyping) {
+      event.preventDefault();
+      lessonSearch.focus();
+      lessonSearch.select();
+    }
+  }
+  if (event.key === "Escape" && document.activeElement === lessonSearch && lessonSearch.value) {
+    lessonSearch.value = "";
+    renderLessonList();
+  }
 });
 challengeButtons.addEventListener("click", (event) => {
   const button = event.target.closest("[data-challenge-index]");
