@@ -4572,7 +4572,7 @@ const EXTRA_CHALLENGES = {
           "input": "(tidak ada input)",
           "output": "Bulat: 5"
         },
-        "starter": "#include <iostream>\\n#include <cmath>\\nusing namespace std;\\n\\nint main() {\\n    // TODO: tampilkan \\"Bulat: \\" dan round(4.7)\\n    return 0;\\n}",
+        "starter": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    // TODO: tampilkan \"Bulat: \" dan round(4.7)\n    return 0;\n}",
         "tests": [
           {
             "input": "",
@@ -4595,7 +4595,7 @@ const EXTRA_CHALLENGES = {
           "input": "(tidak ada input)",
           "output": "Absolut: 12\\nNilai terkecil: 3"
         },
-        "starter": "#include <iostream>\\n#include <cmath>\\nusing namespace std;\\n\\nint main() {\\n    // TODO: tampilkan \\"Absolut: \\" dan abs(-12)\\n    // TODO: tampilkan \\"Nilai terkecil: \\" dan min(7, 3)\\n    return 0;\\n}",
+        "starter": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    // TODO: tampilkan \"Absolut: \" dan abs(-12)\n    // TODO: tampilkan \"Nilai terkecil: \" dan min(7, 3)\n    return 0;\n}",
         "tests": [
           {
             "input": "",
