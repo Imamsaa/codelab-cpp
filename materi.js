@@ -4670,55 +4670,7 @@ const EXTRA_CHALLENGES = {
         "input": "(tidak ada input)",
         "output": "Luas: 30"
       },
-      "starter": "#include <iostream>\nusing namespace std;\nvoid tampilkanLuas(int panjang, int lebar) {\n    // TODO: cetak luas persegi panjang\n}\nint main() {\n    // TODO: panggil t,
-  "scope": [
-    {
-      "id": "scope-2",
-      "title": "Latihan 2 · Variabel lokal",
-      "difficulty": "Mudah",
-      "task": "Buat fungsi tampilkanUmur() yang memiliki variabel lokal int umur = 13 dan menampilkan Umur: 13. Panggil fungsi dari main().",
-      "requirements": [
-        "Deklarasikan umur di dalam fungsi tampilkanUmur().",
-        "Gunakan variabel umur saat mencetak output.",
-        "Output tepat: Umur: 13."
-      ],
-      "example": {
-        "input": "(tidak ada input)",
-        "output": "Umur: 13"
-      },
-      "starter": "#include <iostream>\nusing namespace std;\n\nvoid tampilkanUmur() {\n    // TODO: buat variabel lokal umur = 13\n    // TODO: tampilkan \"Umur: \" dan umur\n}\n\nint main() {\n    // TODO: panggil tampilkanUmur()\n    return 0;\n}",
-      "tests": [
-        {
-          "input": "",
-          "expected": "Umur: 13",
-          "visible": true
-        }
-      ]
-    },
-    {
-      "id": "scope-3",
-      "title": "Latihan 3 · Global dan lokal",
-      "difficulty": "Tantangan",
-      "task": "Buat variabel global int poin = 10. Buat fungsi tampilkanPoin() dengan variabel lokal int bonus = 4. Fungsi harus menampilkan Poin: 10 Bonus: 4. Panggil fungsi dari main().",
-      "requirements": [
-        "Deklarasikan poin di luar fungsi mana pun.",
-        "Deklarasikan bonus di dalam tampilkanPoin().",
-        "Gunakan kedua variabel dan hasilkan output tepat: Poin: 10 Bonus: 4."
-      ],
-      "example": {
-        "input": "(tidak ada input)",
-        "output": "Poin: 10 Bonus: 4"
-      },
-      "starter": "#include <iostream>\nusing namespace std;\n\n// TODO: deklarasikan variabel global poin = 10\n\nvoid tampilkanPoin() {\n    // TODO: deklarasikan variabel lokal bonus = 4\n    // TODO: cetak Poin: diikuti poin dan Bonus: diikuti bonus\n}\n\nint main() {\n    // TODO: panggil tampilkanPoin()\n    return 0;\n}",
-      "tests": [
-        {
-          "input": "",
-          "expected": "Poin: 10 Bonus: 4",
-          "visible": true
-        }
-      ]
-    }
-  ]ampilkanLuas(6, 5)\n    return 0;\n}",
+      "starter": "#include <iostream>\nusing namespace std;\nvoid tampilkanLuas(int panjang, int lebar) {\n    // TODO: cetak luas persegi panjang\n}\nint main() {\n    // TODO: panggil tampilkanLuas(6, 5)\n    return 0;\n}",
       "tests": [
         {
           "input": "",
@@ -4794,6 +4746,54 @@ const EXTRA_CHALLENGES = {
         {
           "input": "",
           "expected": "18",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "scope": [
+    {
+      "id": "scope-2",
+      "title": "Latihan 2 · Variabel lokal",
+      "difficulty": "Mudah",
+      "task": "Buat fungsi tampilkanUmur() yang memiliki variabel lokal int umur = 13 dan menampilkan Umur: 13. Panggil fungsi dari main().",
+      "requirements": [
+        "Deklarasikan umur di dalam fungsi tampilkanUmur().",
+        "Gunakan variabel umur saat mencetak output.",
+        "Output tepat: Umur: 13."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Umur: 13"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nvoid tampilkanUmur() {\n    // TODO: buat variabel lokal umur = 13\n    // TODO: tampilkan \"Umur: \" dan umur\n}\n\nint main() {\n    // TODO: panggil tampilkanUmur()\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Umur: 13",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "scope-3",
+      "title": "Latihan 3 · Global dan lokal",
+      "difficulty": "Tantangan",
+      "task": "Buat variabel global int poin = 10. Buat fungsi tampilkanPoin() dengan variabel lokal int bonus = 4. Fungsi harus menampilkan Poin: 10 Bonus: 4. Panggil fungsi dari main().",
+      "requirements": [
+        "Deklarasikan poin di luar fungsi mana pun.",
+        "Deklarasikan bonus di dalam tampilkanPoin().",
+        "Gunakan kedua variabel dan hasilkan output tepat: Poin: 10 Bonus: 4."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Poin: 10 Bonus: 4"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\n// TODO: deklarasikan variabel global poin = 10\n\nvoid tampilkanPoin() {\n    // TODO: deklarasikan variabel lokal bonus = 4\n    // TODO: cetak Poin: diikuti poin dan Bonus: diikuti bonus\n}\n\nint main() {\n    // TODO: panggil tampilkanPoin()\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Poin: 10 Bonus: 4",
           "visible": true
         }
       ]
