@@ -2177,6 +2177,73 @@ const lessons = [
       }
     ]
   }
+  {
+    "id": "string-methods",
+    "title": "Object dan Method pada String",
+    "category": "String & Object",
+    "level": "Pemula",
+    "duration": "15 menit",
+    "sourceUrl": "https://www.w3schools.com/CPP/cpp_ref_string.asp",
+    "sourceLabel": "W3Schools — C++ String Library Reference",
+    "summary": "Dalam C++, string dapat digunakan sebagai object yang menyimpan teks. Object memiliki method yang dipanggil menggunakan tanda titik, misalnya perintah.length(). Kita akan memakai pola object.method() untuk membaca, mengubah, dan memecah teks perintah seperti MOTOR:120 sebagai persiapan memahami object pada pemrograman robotik.",
+    "concepts": [
+      {
+        "title": "Apa itu object dan method?",
+        "body": "Perhatikan <code>string perintah = \"MAJU\";</code>. Variabel <code>perintah</code> adalah object bertipe <code>string</code> yang menyimpan teks. <strong>Method</strong> adalah fungsi yang dipanggil melalui object, dengan pola <code>namaObject.namaMethod(argument)</code>. Contoh: <code>perintah.length()</code> meminta panjang teks yang disimpan pada object <code>perintah</code>. Tanda titik (<code>.</code>) menghubungkan object dengan method-nya."
+      },
+      {
+        "title": "Method untuk membaca informasi",
+        "body": "Method <code>length()</code> atau <code>size()</code> mengembalikan jumlah karakter. <code>empty()</code> memeriksa apakah string kosong. <code>at(0)</code> mengambil karakter pada indeks 0 (karakter pertama), sedangkan <code>find(\":\")</code> mencari posisi teks atau karakter. Jika pencarian gagal, <code>find()</code> mengembalikan <code>string::npos</code>. Method-method ini membaca informasi; biasanya tidak mengubah isi object."
+      },
+      {
+        "title": "Method untuk mengubah isi object",
+        "body": "Method <code>append()</code> menambahkan teks pada bagian akhir object. Misalnya, <code>string perintah = \"SERVO:\";</code> lalu <code>perintah.append(\"90\");</code> menghasilkan <code>SERVO:90</code>. Method <code>clear()</code> menghapus seluruh isi string. Perhatikan bahwa method seperti <code>append()</code> dan <code>clear()</code> mengubah object yang dipanggil."
+      },
+      {
+        "title": "Memecah teks perintah robot",
+        "body": "Robot dapat menerima teks seperti <code>MOTOR:120</code>: bagian sebelum titik dua adalah nama aksi dan bagian setelahnya adalah nilai. Gunakan <code>find(':')</code> untuk menemukan pemisah, lalu <code>substr(posisiAwal, jumlahKarakter)</code> untuk mengambil sebagian teks. Contohnya, <code>perintah.substr(0, pemisah)</code> menghasilkan <code>MOTOR</code>. Pola ini memperkenalkan cara mengolah perintah berbentuk teks sebelum siswa menghubungkannya dengan perangkat nyata."
+      },
+      {
+        "title": "Hubungannya dengan object robotik",
+        "body": "Nanti pada Arduino, kamu mungkin melihat kode seperti <code>servo.attach(9)</code> atau <code>servo.write(90)</code>. Bentuknya serupa: ada object, tanda titik, nama method, dan argumen di dalam tanda kurung. Namun, method yang tersedia ditentukan oleh tipe object dan library yang digunakan. <code>string</code> memiliki method untuk teks, sedangkan object <code>Servo</code> memiliki method untuk mengendalikan servo. Contoh di playground ini hanya mengolah teks; belum mengendalikan hardware."
+      }
+    ],
+    "example": {
+      "input": "MOTOR:120",
+      "output": "Aksi: MOTOR\nNilai: 120"
+    },
+    "task": "Buat program yang membaca satu kata perintah seperti MOTOR:120. Gunakan method find() untuk menemukan titik dua dan substr() untuk memisahkan aksi serta nilainya. Jika titik dua tidak ditemukan, tampilkan Perintah tidak valid.",
+    "requirements": [
+      "Gunakan object string untuk menyimpan input perintah.",
+      "Gunakan find(':') untuk mencari pemisah dan periksa hasilnya terhadap string::npos.",
+      "Gunakan substr() untuk mengambil nama aksi dan nilai.",
+      "Untuk input MOTOR:120, output harus dua baris: Aksi: MOTOR dan Nilai: 120.",
+      "Jika input tidak memiliki titik dua, tampilkan Perintah tidak valid."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string perintah;\n    cin >> perintah;\n\n    // TODO: cari posisi titik dua dengan find(':')\n    // TODO: jika tidak ditemukan, tampilkan Perintah tidak valid\n    // TODO: pisahkan aksi dan nilai dengan substr()\n    // TODO: tampilkan aksi dan nilai pada dua baris\n\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "MOTOR:120",
+        "expected": "Aksi: MOTOR\nNilai: 120",
+        "visible": true
+      },
+      {
+        "input": "SERVO:90",
+        "expected": "Aksi: SERVO\nNilai: 90",
+        "visible": true
+      },
+      {
+        "input": "LED:1",
+        "expected": "Aksi: LED\nNilai: 1",
+        "visible": true
+      },
+      {
+        "input": "MAJU",
+        "expected": "Perintah tidak valid",
+        "visible": true
+      }
+    ]
+  }
 ];
 
 
@@ -4606,7 +4673,73 @@ const EXTRA_CHALLENGES = {
           }
         ]
       }
-    ]
+    ],
+  "string-methods": [
+    {
+      "id": "string-methods-2",
+      "title": "Latihan 2 · Menambahkan nilai servo",
+      "difficulty": "Mudah",
+      "task": "Buat string perintah dengan nilai awal SERVO:, lalu gunakan method append(\"90\") agar menjadi SERVO:90. Tampilkan Perintah: SERVO:90 dan Panjang: 8 pada dua baris.",
+      "requirements": [
+        "Buat object string bernama perintah dengan nilai awal SERVO:.",
+        "Gunakan method append(\"90\") untuk mengubah isi object.",
+        "Gunakan length() untuk menghitung jumlah karakter.",
+        "Output harus tepat: Perintah: SERVO:90 lalu Panjang: 8."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Perintah: SERVO:90\nPanjang: 8"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string perintah = \"SERVO:\";\n    // TODO: tambahkan teks 90 dengan append()\n    // TODO: tampilkan perintah dan panjangnya dengan length()\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Perintah: SERVO:90\nPanjang: 8",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "string-methods-3",
+      "title": "Latihan 3 · Membaca perintah robot",
+      "difficulty": "Tantangan",
+      "task": "Baca satu perintah dengan format AKSI:NILAI. Gunakan find() dan substr() untuk menampilkan aksi dan nilai, atau tampilkan Perintah tidak valid jika tidak ada titik dua.",
+      "requirements": [
+        "Baca input ke object string.",
+        "Gunakan find(':') untuk menemukan pemisah.",
+        "Bandingkan posisi hasil find() dengan string::npos.",
+        "Gunakan substr() untuk mengambil bagian sebelum dan sesudah pemisah.",
+        "Pastikan program lolos seluruh test case yang tersedia."
+      ],
+      "example": {
+        "input": "MOTOR:120",
+        "output": "Aksi: MOTOR\nNilai: 120"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string perintah;\n    cin >> perintah;\n\n    // TODO: cari posisi pemisah dengan find(':')\n    // TODO: periksa apakah pemisah ditemukan\n    // TODO: pisahkan aksi dan nilai dengan substr()\n    // TODO: tampilkan aksi dan nilai\n\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "MOTOR:120",
+          "expected": "Aksi: MOTOR\nNilai: 120",
+          "visible": true
+        },
+        {
+          "input": "SERVO:90",
+          "expected": "Aksi: SERVO\nNilai: 90",
+          "visible": true
+        },
+        {
+          "input": "LED:1",
+          "expected": "Aksi: LED\nNilai: 1",
+          "visible": true
+        },
+        {
+          "input": "MAJU",
+          "expected": "Perintah tidak valid",
+          "visible": true
+        }
+      ]
+    }
+  ]
 
 };
 
