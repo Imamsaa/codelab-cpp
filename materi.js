@@ -1865,6 +1865,224 @@ const lessons = [
         "visible": true
       }
     ]
+  },
+  {
+    "id": "functions",
+    "title": "Fungsi dalam C++",
+    "category": "Fungsi",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_functions.asp",
+    "sourceLabel": "W3Schools — C++ Functions",
+    "summary": "Fungsi adalah kumpulan instruksi yang diberi nama dan dapat dipanggil saat dibutuhkan. Fungsi membantu membagi program menjadi bagian kecil yang mudah dibaca, diuji, dan digunakan kembali.",
+    "concepts": [
+      {
+        "title": "Mendefinisikan fungsi",
+        "body": "Fungsi memiliki tipe kembalian, nama, tanda kurung, dan blok kode. Contohnya, <code>void sapa()</code> mendefinisikan fungsi bernama <code>sapa</code> yang tidak mengembalikan nilai."
+      },
+      {
+        "title": "Memanggil fungsi",
+        "body": "Kode di dalam fungsi dijalankan ketika fungsi dipanggil, misalnya dengan menulis <code>sapa();</code>. Program C++ tetap dimulai dari fungsi <code>main()</code>."
+      },
+      {
+        "title": "Mengapa menggunakan fungsi?",
+        "body": "Fungsi membuat program lebih terstruktur dan mengurangi penulisan kode berulang. Kita dapat memberi nama sesuai tugasnya, seperti <code>hitungTotal()</code> atau <code>tampilkanMenu()</code>."
+      },
+      {
+        "title": "Posisi definisi fungsi",
+        "body": "Dalam contoh pemula, definisikan fungsi di atas <code>main()</code> agar compiler mengetahui fungsi tersebut saat dipanggil."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "Halo dari fungsi!"
+    },
+    "task": "Buat fungsi void sapa() yang menampilkan teks Halo dari fungsi! Panggil fungsi tersebut dari main().",
+    "requirements": [
+      "Definisikan fungsi bernama sapa dengan tipe kembalian void.",
+      "Panggil sapa() dari dalam main().",
+      "Output harus tepat: Halo dari fungsi!."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nvoid sapa() {\n    // TODO: tampilkan \"Halo dari fungsi!\"\n}\n\nint main() {\n    // TODO: panggil fungsi sapa\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "Halo dari fungsi!",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "function-param",
+    "title": "Parameter Fungsi",
+    "category": "Fungsi",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_function_param.asp",
+    "sourceLabel": "W3Schools — C++ Functions",
+    "summary": "Parameter membuat fungsi dapat menerima data dari pemanggilnya. Nilai yang dikirim saat fungsi dipanggil disebut argumen, sedangkan nama variabel pada definisi fungsi disebut parameter.",
+    "concepts": [
+      {
+        "title": "Menambahkan parameter",
+        "body": "Parameter ditulis di dalam tanda kurung pada definisi fungsi, lengkap dengan tipe datanya. Contoh: <code>void tampilkanSkor(int skor)</code> menerima bilangan bulat bernama <code>skor</code>."
+      },
+      {
+        "title": "Mengirim argumen",
+        "body": "Saat memanggil fungsi, kirim nilai di dalam tanda kurung, misalnya <code>tampilkanSkor(85);</code>. Angka <code>85</code> adalah argumen yang diteruskan ke parameter <code>skor</code>."
+      },
+      {
+        "title": "Tipe harus sesuai",
+        "body": "Pilih tipe parameter sesuai data yang diperlukan, seperti <code>int</code> untuk bilangan bulat atau <code>string</code> untuk teks. Sertakan <code>#include <string></code> jika menggunakan <code>string</code>."
+      },
+      {
+        "title": "Manfaat parameter",
+        "body": "Dengan parameter, fungsi yang sama bisa digunakan untuk nilai berbeda tanpa menulis ulang isi fungsi."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "Skor: 85"
+    },
+    "task": "Buat fungsi void tampilkanSkor(int skor) yang mencetak Skor: diikuti nilai parameter. Panggil fungsi dengan argumen 85.",
+    "requirements": [
+      "Fungsi harus memiliki parameter int bernama skor.",
+      "Panggil fungsi dengan argumen 85.",
+      "Output harus tepat: Skor: 85."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nvoid tampilkanSkor(int skor) {\n    // TODO: tampilkan \"Skor: \" dan nilai skor\n}\n\nint main() {\n    // TODO: panggil tampilkanSkor dengan argumen 85\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "Skor: 85",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "function-default",
+    "title": "Parameter Default",
+    "category": "Fungsi",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_function_default.asp",
+    "sourceLabel": "W3Schools — C++ Functions",
+    "summary": "Parameter default memiliki nilai bawaan yang digunakan jika pemanggil tidak mengirim argumen untuk parameter tersebut. Argumen tetap dapat diberikan untuk mengganti nilai bawaan.",
+    "concepts": [
+      {
+        "title": "Menentukan nilai default",
+        "body": "Tulis nilai bawaan setelah tanda sama dengan pada parameter, misalnya <code>void sapa(string negara = \"Indonesia\")</code>."
+      },
+      {
+        "title": "Memakai atau mengganti default",
+        "body": "Pemanggilan <code>sapa()</code> menggunakan nilai <code>Indonesia</code>, sedangkan <code>sapa(\"Jepang\")</code> memakai nilai yang dikirim, yaitu <code>Jepang</code>."
+      },
+      {
+        "title": "Urutan parameter default",
+        "body": "Jika fungsi memiliki beberapa parameter dan ada yang memakai nilai default, letakkan parameter default di bagian paling kanan agar argumen yang tidak diberikan tidak membuat posisi argumen ambigu."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "Saya dari Jepang\nSaya dari Indonesia"
+    },
+    "task": "Buat fungsi void sapa dengan parameter string negara yang memiliki nilai default Indonesia. Panggil sapa(\"Jepang\") lalu panggil sapa() tanpa argumen.",
+    "requirements": [
+      "Gunakan parameter string negara dengan nilai default Indonesia.",
+      "Panggil fungsi sekali dengan argumen Jepang dan sekali tanpa argumen.",
+      "Output harus dua baris: Saya dari Jepang lalu Saya dari Indonesia."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid sapa(string negara = \"Indonesia\") {\n    // TODO: tampilkan \"Saya dari \" dan negara\n}\n\nint main() {\n    // TODO: panggil sapa(\"Jepang\") lalu sapa()\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "Saya dari Jepang\nSaya dari Indonesia",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "function-multiple",
+    "title": "Banyak Parameter Fungsi",
+    "category": "Fungsi",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_function_multiple.asp",
+    "sourceLabel": "W3Schools — C++ Functions",
+    "summary": "Sebuah fungsi dapat menerima lebih dari satu parameter. Parameter dipisahkan dengan koma, dan urutan argumen saat pemanggilan harus sesuai dengan urutan serta tipe parameter pada definisi.",
+    "concepts": [
+      {
+        "title": "Menulis beberapa parameter",
+        "body": "Contoh definisi <code>void tampilkanData(string nama, int umur)</code> menerima dua parameter: teks <code>nama</code> dan bilangan bulat <code>umur</code>."
+      },
+      {
+        "title": "Urutan argumen",
+        "body": "Saat dipanggil sebagai <code>tampilkanData(\"Alya\", 13)</code>, argumen pertama masuk ke <code>nama</code> dan argumen kedua masuk ke <code>umur</code>."
+      },
+      {
+        "title": "Pemisah koma",
+        "body": "Gunakan koma untuk memisahkan parameter pada definisi fungsi maupun argumen saat pemanggilan. Pastikan jumlah dan urutannya benar."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "Alya berumur 13 tahun."
+    },
+    "task": "Buat fungsi void tampilkanData(string nama, int umur). Panggil dengan nilai Alya dan 13, lalu tampilkan Alya berumur 13 tahun.",
+    "requirements": [
+      "Fungsi menerima dua parameter dengan tipe string dan int.",
+      "Kirim argumen Alya terlebih dahulu, lalu 13.",
+      "Output harus tepat: Alya berumur 13 tahun."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid tampilkanData(string nama, int umur) {\n    // TODO: tampilkan nama, \" berumur \", umur, \" tahun.\"\n}\n\nint main() {\n    // TODO: panggil tampilkanData dengan \"Alya\" dan 13\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "Alya berumur 13 tahun.",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "function-return",
+    "title": "Nilai Kembalian Fungsi",
+    "category": "Fungsi",
+    "level": "Pemula",
+    "duration": "12 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_function_return.asp",
+    "sourceLabel": "W3Schools — C++ Functions",
+    "summary": "Fungsi dapat mengembalikan hasil melalui return. Tipe kembalian pada definisi harus sesuai dengan nilai yang dikembalikan, misalnya int untuk hasil bilangan bulat.",
+    "concepts": [
+      {
+        "title": "Tipe kembalian",
+        "body": "Pada definisi <code>int luasPersegiPanjang(int panjang, int lebar)</code>, kata <code>int</code> sebelum nama fungsi menunjukkan bahwa hasilnya berupa bilangan bulat."
+      },
+      {
+        "title": "Menggunakan return",
+        "body": "Statement <code>return</code> mengirimkan nilai kembali kepada pemanggil dan mengakhiri eksekusi fungsi tersebut. Contoh: <code>return panjang * lebar;</code>."
+      },
+      {
+        "title": "Menyimpan hasil",
+        "body": "Nilai yang dikembalikan dapat disimpan dalam variabel, dipakai dalam ekspresi, atau langsung ditampilkan. Berbeda dengan <code>void</code>, fungsi bertipe <code>int</code> perlu mengembalikan nilai yang sesuai."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "Luas: 24"
+    },
+    "task": "Buat fungsi int luasPersegiPanjang(int panjang, int lebar) yang mengembalikan hasil panjang dikali lebar. Panggil dengan 6 dan 4, lalu tampilkan Luas: 24.",
+    "requirements": [
+      "Fungsi memiliki tipe kembalian int.",
+      "Gunakan return untuk mengembalikan panjang * lebar.",
+      "Simpan hasil pemanggilan dengan argumen 6 dan 4, lalu tampilkan Luas: 24."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint luasPersegiPanjang(int panjang, int lebar) {\n    // TODO: kembalikan hasil panjang * lebar\n}\n\nint main() {\n    // TODO: panggil fungsi dengan 6 dan 4\n    // TODO: tampilkan \"Luas: \" dan hasilnya\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "Luas: 24",
+        "visible": true
+      }
+    ]
   }
 ];
 
@@ -4006,7 +4224,247 @@ const EXTRA_CHALLENGES = {
       ]
     }
   ]
-
+,
+  "functions": [
+    {
+      "id": "functions-2",
+      "title": "Latihan 2 · Panggil dua kali",
+      "difficulty": "Mudah",
+      "task": "Buat fungsi void salam() yang menampilkan Siap belajar C++!. Panggil fungsi tersebut dua kali sehingga teks muncul pada dua baris.",
+      "requirements": [
+        "Definisikan fungsi void salam().",
+        "Panggil salam() sebanyak dua kali.",
+        "Output harus dua baris berisi Siap belajar C++!."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Siap belajar C++!\nSiap belajar C++!"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nvoid salam() {\n    // TODO: tampilkan \"Siap belajar C++!\"\n}\n\nint main() {\n    // TODO: panggil salam dua kali\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Siap belajar C++!\nSiap belajar C++!",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "functions-3",
+      "title": "Latihan 3 · Urutan dua fungsi",
+      "difficulty": "Tantangan",
+      "task": "Buat dua fungsi void: tampilkanAwal() mencetak MULAI dan tampilkanAkhir() mencetak SELESAI. Panggil keduanya dengan urutan yang benar.",
+      "requirements": [
+        "Definisikan kedua fungsi terpisah.",
+        "Panggil tampilkanAwal() sebelum tampilkanAkhir().",
+        "Output harus dua baris: MULAI lalu SELESAI."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "MULAI\nSELESAI"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nvoid tampilkanAwal() {\n    // TODO: tampilkan MULAI\n}\n\nvoid tampilkanAkhir() {\n    // TODO: tampilkan SELESAI\n}\n\nint main() {\n    // TODO: panggil kedua fungsi dengan urutan yang benar\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "MULAI\nSELESAI",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "function-param": [
+    {
+      "id": "function-param-2",
+      "title": "Latihan 2 · Salam sesuai nama",
+      "difficulty": "Mudah",
+      "task": "Buat fungsi void sapa(string nama) yang mencetak Halo, diikuti nama dan tanda seru. Panggil dengan argumen Budi.",
+      "requirements": [
+        "Fungsi memiliki satu parameter string bernama nama.",
+        "Panggil fungsi dengan argumen Budi.",
+        "Output harus tepat: Halo, Budi!."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Halo, Budi!"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid sapa(string nama) {\n    // TODO: tampilkan \"Halo, \" + nama + \"!\"\n}\n\nint main() {\n    // TODO: panggil sapa dengan \"Budi\"\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Halo, Budi!",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "function-param-3",
+      "title": "Latihan 3 · Jumlah dua bilangan",
+      "difficulty": "Tantangan",
+      "task": "Buat fungsi void jumlah(int a, int b) yang menampilkan hasil penjumlahan kedua parameter. Panggil dengan 12 dan 13.",
+      "requirements": [
+        "Gunakan dua parameter int bernama a dan b.",
+        "Jumlahkan kedua parameter di dalam fungsi.",
+        "Output harus tepat: 25."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "25"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nvoid jumlah(int a, int b) {\n    // TODO: tampilkan a + b\n}\n\nint main() {\n    // TODO: panggil jumlah dengan 12 dan 13\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "25",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "function-default": [
+    {
+      "id": "function-default-2",
+      "title": "Latihan 2 · Default ongkir",
+      "difficulty": "Mudah",
+      "task": "Buat fungsi void tampilkanOngkir(int ongkir = 5000) yang menampilkan Ongkir: diikuti nilai ongkir. Panggil tanpa argumen.",
+      "requirements": [
+        "Parameter ongkir bertipe int dengan default 5000.",
+        "Panggil tampilkanOngkir() tanpa argumen.",
+        "Output harus tepat: Ongkir: 5000."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Ongkir: 5000"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nvoid tampilkanOngkir(int ongkir = 5000) {\n    // TODO: tampilkan \"Ongkir: \" dan ongkir\n}\n\nint main() {\n    // TODO: panggil tampilkanOngkir tanpa argumen\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Ongkir: 5000",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "function-default-3",
+      "title": "Latihan 3 · Default dan pengganti",
+      "difficulty": "Tantangan",
+      "task": "Buat fungsi void cetakNilai(int nilai, int bonus = 5) yang menampilkan Nilai akhir: lalu hasil nilai + bonus. Panggil dengan 70, lalu dengan 70 dan 10.",
+      "requirements": [
+        "Parameter bonus bertipe int dan memiliki default 5.",
+        "Parameter default berada di posisi paling kanan.",
+        "Output dua baris: Nilai akhir: 75 lalu Nilai akhir: 80."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Nilai akhir: 75\nNilai akhir: 80"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nvoid cetakNilai(int nilai, int bonus = 5) {\n    // TODO: tampilkan \"Nilai akhir: \" dan nilai + bonus\n}\n\nint main() {\n    // TODO: panggil dengan 70, lalu 70 dan 10\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Nilai akhir: 75\nNilai akhir: 80",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "function-multiple": [
+    {
+      "id": "function-multiple-2",
+      "title": "Latihan 2 · Hitung luas",
+      "difficulty": "Mudah",
+      "task": "Buat fungsi void tampilkanLuas(int panjang, int lebar) yang menampilkan Luas: diikuti perkalian kedua parameter. Panggil dengan 6 dan 5.",
+      "requirements": [
+        "Gunakan dua parameter int.",
+        "Urutan argumen adalah panjang lalu lebar.",
+        "Output harus tepat: Luas: 30."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Luas: 30"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nvoid tampilkanLuas(int panjang, int lebar) {\n    // TODO: tampilkan \"Luas: \" dan panjang * lebar\n}\n\nint main() {\n    // TODO: panggil tampilkanLuas dengan 6 dan 5\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Luas: 30",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "function-multiple-3",
+      "title": "Latihan 3 · Tiga parameter",
+      "difficulty": "Tantangan",
+      "task": "Buat fungsi void totalTiga(int a, int b, int c) yang menampilkan jumlah ketiga parameter. Panggil dengan 4, 6, dan 20.",
+      "requirements": [
+        "Fungsi memiliki tiga parameter int.",
+        "Panggil fungsi dengan urutan argumen 4, 6, dan 20.",
+        "Output harus tepat: 30."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "30"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nvoid totalTiga(int a, int b, int c) {\n    // TODO: tampilkan a + b + c\n}\n\nint main() {\n    // TODO: panggil totalTiga dengan 4, 6, dan 20\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "30",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "function-return": [
+    {
+      "id": "function-return-2",
+      "title": "Latihan 2 · Nilai rata-rata",
+      "difficulty": "Mudah",
+      "task": "Buat fungsi double rataRata(int a, int b) yang mengembalikan rata-rata kedua bilangan. Panggil dengan 6 dan 9 lalu tampilkan Rata-rata: 7.5.",
+      "requirements": [
+        "Gunakan tipe kembalian double.",
+        "Kembalikan (a + b) / 2.0 agar hasil bisa pecahan.",
+        "Output harus tepat: Rata-rata: 7.5."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Rata-rata: 7.5"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\ndouble rataRata(int a, int b) {\n    // TODO: return (a + b) / 2.0\n}\n\nint main() {\n    // TODO: tampilkan \"Rata-rata: \" dan hasil rataRata(6, 9)\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Rata-rata: 7.5",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "function-return-3",
+      "title": "Latihan 3 · Kembalikan nilai terbesar",
+      "difficulty": "Tantangan",
+      "task": "Buat fungsi int maksimum(int a, int b) yang mengembalikan bilangan yang lebih besar. Panggil dengan 18 dan 12, lalu tampilkan hasilnya.",
+      "requirements": [
+        "Fungsi memiliki tipe kembalian int.",
+        "Gunakan return untuk mengembalikan nilai yang lebih besar.",
+        "Output harus tepat: 18."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "18"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint maksimum(int a, int b) {\n    // TODO: return nilai yang lebih besar\n}\n\nint main() {\n    // TODO: tampilkan hasil maksimum(18, 12)\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "18",
+          "visible": true
+        }
+      ]
+    }
+  ]
 };
 
 for (const lesson of lessons) {
