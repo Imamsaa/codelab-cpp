@@ -1086,6 +1086,308 @@ const lessons = [
         "visible": true
       }
     ]
+  },
+  {
+    "id": "conditions",
+    "title": "Kondisi dengan if",
+    "category": "Percabangan",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_conditions.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Pernyataan if menjalankan blok kode hanya ketika kondisi bernilai true. Kondisi umum memakai operator perbandingan.",
+    "concepts": [
+      {
+        "title": "Struktur if",
+        "body": "Bentuk dasar: <code>if (kondisi) { ... }</code>. Isi blok dijalankan hanya saat kondisi benar."
+      },
+      {
+        "title": "Ekspresi Boolean",
+        "body": "Ekspresi seperti <code>nilai &gt;= 75</code> menghasilkan true atau false."
+      },
+      {
+        "title": "Blok kode",
+        "body": "Kurung kurawal <code>{ }</code> menandai perintah yang bergantung pada kondisi."
+      }
+    ],
+    "example": {
+      "input": "80",
+      "output": "Lulus\nPemeriksaan selesai"
+    },
+    "task": "Baca satu nilai int. Jika nilai >= 75 tampilkan Lulus. Apa pun nilainya, tampilkan Pemeriksaan selesai pada baris berikutnya.",
+    "requirements": [
+      "Baca nilai menggunakan cin.",
+      "Gunakan if dengan kondisi nilai >= 75.",
+      "Tampilkan Pemeriksaan selesai di luar blok if."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int nilai;\n    cin >> nilai;\n    // TODO: jika nilai >= 75, tampilkan Lulus\n    cout << \"Pemeriksaan selesai\";\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "80",
+        "expected": "Lulus\nPemeriksaan selesai",
+        "visible": true
+      },
+      {
+        "input": "60",
+        "expected": "Pemeriksaan selesai",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "conditions-else",
+    "title": "Kondisi if...else",
+    "category": "Percabangan",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_conditions_else.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "if...else menyediakan dua jalur: satu saat kondisi true dan satu saat false. Hanya satu blok yang dijalankan.",
+    "concepts": [
+      {
+        "title": "Dua kemungkinan",
+        "body": "Struktur: <code>if (kondisi) { ... } else { ... }</code>."
+      },
+      {
+        "title": "Else tanpa kondisi tambahan",
+        "body": "Bagian <code>else</code> adalah jalur alternatif ketika kondisi if false."
+      },
+      {
+        "title": "Syarat yang tepat",
+        "body": "Contohnya, nilai minimal 75 untuk lulus."
+      }
+    ],
+    "example": {
+      "input": "80",
+      "output": "Lulus"
+    },
+    "task": "Baca nilai ujian. Tampilkan Lulus jika nilai >= 75, dan Tidak lulus jika kondisi salah.",
+    "requirements": [
+      "Gunakan if dan else.",
+      "Gunakan kondisi nilai >= 75.",
+      "Nilai 80 menghasilkan Lulus, nilai 60 menghasilkan Tidak lulus."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int nilai;\n    cin >> nilai;\n    // TODO: tampilkan Lulus atau Tidak lulus dengan if...else\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "80",
+        "expected": "Lulus",
+        "visible": true
+      },
+      {
+        "input": "60",
+        "expected": "Tidak lulus",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "conditions-elseif",
+    "title": "Kondisi else if",
+    "category": "Percabangan",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_conditions_elseif.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "else if memeriksa beberapa kondisi secara berurutan. Blok pertama dengan kondisi true yang dijalankan.",
+    "concepts": [
+      {
+        "title": "Banyak cabang",
+        "body": "Struktur umum: <code>if (...) { ... } else if (...) { ... } else { ... }</code>."
+      },
+      {
+        "title": "Urutan kondisi",
+        "body": "Periksa batas nilai dari yang tertinggi ke terendah."
+      },
+      {
+        "title": "Jalur terakhir",
+        "body": "Bagian <code>else</code> dijalankan ketika semua kondisi sebelumnya false."
+      }
+    ],
+    "example": {
+      "input": "85",
+      "output": "B"
+    },
+    "task": "Tentukan predikat: A untuk nilai >= 90, B untuk >= 80, C untuk >= 70, dan D untuk nilai lainnya.",
+    "requirements": [
+      "Gunakan if, else if, dan else.",
+      "Periksa ambang dari tertinggi ke terendah.",
+      "Input 85 menghasilkan B."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int nilai;\n    cin >> nilai;\n    // TODO: tentukan predikat dengan if...else if...else\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "95",
+        "expected": "A",
+        "visible": true
+      },
+      {
+        "input": "85",
+        "expected": "B",
+        "visible": true
+      },
+      {
+        "input": "72",
+        "expected": "C",
+        "visible": true
+      },
+      {
+        "input": "55",
+        "expected": "D",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "conditions-shorthand",
+    "title": "Operator Ternary (if singkat)",
+    "category": "Percabangan",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_conditions_shorthand.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Operator ternary ?: memilih satu dari dua nilai berdasarkan kondisi. Cocok untuk assignment sederhana.",
+    "concepts": [
+      {
+        "title": "Bentuk ternary",
+        "body": "Sintaks: <code>kondisi ? nilaiJikaBenar : nilaiJikaSalah</code>."
+      },
+      {
+        "title": "Simpan hasil",
+        "body": "Contoh: <code>string status = (umur &gt;= 17) ? \"Dewasa\" : \"Belum dewasa\";</code>."
+      },
+      {
+        "title": "Kapan digunakan",
+        "body": "Untuk cabang kompleks dengan banyak perintah, if...else biasanya lebih mudah dibaca."
+      }
+    ],
+    "example": {
+      "input": "18",
+      "output": "Dewasa"
+    },
+    "task": "Baca umur. Gunakan operator ternary untuk menampilkan Dewasa jika umur >= 17, atau Belum dewasa jika kurang.",
+    "requirements": [
+      "Gunakan operator ?:, bukan if...else.",
+      "Gunakan kondisi umur >= 17.",
+      "Input 18 menghasilkan Dewasa, input 12 menghasilkan Belum dewasa."
+    ],
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    int umur;\n    cin >> umur;\n    // TODO: pilih status menggunakan operator ternary\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "18",
+        "expected": "Dewasa",
+        "visible": true
+      },
+      {
+        "input": "12",
+        "expected": "Belum dewasa",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "conditions-nested",
+    "title": "Nested if (if Bersarang)",
+    "category": "Percabangan",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_conditions_nested.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Nested if adalah if di dalam if lain. Kondisi dalam diperiksa setelah kondisi luar terpenuhi.",
+    "concepts": [
+      {
+        "title": "Kondisi luar dan dalam",
+        "body": "If luar memeriksa syarat utama; jika benar, program dapat memeriksa syarat kedua di dalamnya."
+      },
+      {
+        "title": "Pasangan else",
+        "body": "Letakkan else pada tingkat yang sesuai supaya jelas if mana yang menjadi pasangannya."
+      },
+      {
+        "title": "Kapan digunakan",
+        "body": "Nested if berguna saat keputusan kedua baru relevan setelah keputusan pertama terpenuhi."
+      }
+    ],
+    "example": {
+      "input": "14\n1",
+      "output": "Boleh masuk"
+    },
+    "task": "Baca umur dan punyaKartu (1 berarti punya kartu, 0 tidak). Jika umur >= 13, gunakan nested if: punya kartu menampilkan Boleh masuk, tidak punya kartu menampilkan Perlu kartu. Jika umur kurang dari 13 tampilkan Usia belum cukup.",
+    "requirements": [
+      "Baca dua integer: umur dan punyaKartu.",
+      "Gunakan if di dalam if untuk memeriksa kartu setelah usia memenuhi syarat.",
+      "Tangani ketiga kemungkinan."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int umur, punyaKartu;\n    cin >> umur >> punyaKartu;\n    // TODO: gunakan nested if untuk memeriksa usia dan kartu\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "14\n1",
+        "expected": "Boleh masuk",
+        "visible": true
+      },
+      {
+        "input": "14\n0",
+        "expected": "Perlu kartu",
+        "visible": true
+      },
+      {
+        "input": "10\n1",
+        "expected": "Usia belum cukup",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "conditions-logical",
+    "title": "Kondisi dengan Operator Logika",
+    "category": "Percabangan",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_conditions_logical.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Operator logika memeriksa beberapa syarat sekaligus: AND (&&), OR (||), dan NOT (!).",
+    "concepts": [
+      {
+        "title": "AND (&&)",
+        "body": "<code>A &amp;&amp; B</code> bernilai true hanya jika A dan B true."
+      },
+      {
+        "title": "OR (||)",
+        "body": "<code>A || B</code> bernilai true jika minimal satu kondisi true."
+      },
+      {
+        "title": "NOT (!)",
+        "body": "<code>!A</code> membalik nilai boolean. Gunakan tanda kurung untuk ekspresi panjang."
+      }
+    ],
+    "example": {
+      "input": "14\n1",
+      "output": "Boleh ikut"
+    },
+    "task": "Baca umur dan punyaIzin (1 berarti punya izin, 0 tidak). Tampilkan Boleh ikut jika umur >= 13 DAN punyaIzin == 1; selain itu tampilkan Belum memenuhi syarat.",
+    "requirements": [
+      "Baca umur dan punyaIzin.",
+      "Gabungkan syarat dengan &&.",
+      "Boleh ikut hanya jika kedua syarat terpenuhi."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int umur, punyaIzin;\n    cin >> umur >> punyaIzin;\n    // TODO: gabungkan syarat usia dan izin dengan &&\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "14\n1",
+        "expected": "Boleh ikut",
+        "visible": true
+      },
+      {
+        "input": "14\n0",
+        "expected": "Belum memenuhi syarat",
+        "visible": true
+      },
+      {
+        "input": "10\n1",
+        "expected": "Belum memenuhi syarat",
+        "visible": true
+      }
+    ]
   }
 ];
 
@@ -2290,11 +2592,394 @@ const EXTRA_CHALLENGES = {
         }
       ]
     }
+  ],
+  "conditions": [
+    {
+      "id": "conditions-2",
+      "title": "Latihan 2 · Cek bilangan positif",
+      "difficulty": "Mudah",
+      "task": "Baca integer. Jika angka > 0 tampilkan Positif. Selalu tampilkan Selesai pada baris berikutnya.",
+      "requirements": [
+        "Gunakan if untuk angka > 0.",
+        "Tampilkan Selesai di luar if.",
+        "Input 4 menghasilkan dua baris; input 0 hanya Selesai."
+      ],
+      "example": {
+        "input": "4",
+        "output": "Positif\nSelesai"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int angka;\n    cin >> angka;\n    // TODO: jika angka positif, tampilkan Positif\n    cout << \"Selesai\";\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "4",
+          "expected": "Positif\nSelesai",
+          "visible": true
+        },
+        {
+          "input": "0",
+          "expected": "Selesai",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "conditions-3",
+      "title": "Latihan 3 · Nilai minimum",
+      "difficulty": "Tantangan",
+      "task": "Baca skor. Jika skor >= 50 tampilkan Memenuhi. Selalu tampilkan Ujian selesai setelah pemeriksaan.",
+      "requirements": [
+        "Gunakan if tanpa else.",
+        "Gunakan skor >= 50.",
+        "Tampilkan Ujian selesai di luar if."
+      ],
+      "example": {
+        "input": "70",
+        "output": "Memenuhi\nUjian selesai"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int skor;\n    cin >> skor;\n    // TODO: jika skor >= 50 tampilkan Memenuhi\n    cout << \"Ujian selesai\";\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "70",
+          "expected": "Memenuhi\nUjian selesai",
+          "visible": true
+        },
+        {
+          "input": "30",
+          "expected": "Ujian selesai",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "conditions-else": [
+    {
+      "id": "conditions-else-2",
+      "title": "Latihan 2 · Ganjil atau genap",
+      "difficulty": "Mudah",
+      "task": "Baca integer. Gunakan if...else untuk menampilkan Genap jika angka % 2 == 0, jika tidak Ganjil.",
+      "requirements": [
+        "Gunakan if dan else.",
+        "Gunakan operator %.",
+        "Input 8 menghasilkan Genap; input 5 menghasilkan Ganjil."
+      ],
+      "example": {
+        "input": "8",
+        "output": "Genap"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int angka;\n    cin >> angka;\n    // TODO: tentukan genap atau ganjil\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "8",
+          "expected": "Genap",
+          "visible": true
+        },
+        {
+          "input": "5",
+          "expected": "Ganjil",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "conditions-else-3",
+      "title": "Latihan 3 · Positif atau bukan",
+      "difficulty": "Tantangan",
+      "task": "Baca integer. Tampilkan Positif jika angka > 0, jika tidak tampilkan Nol atau negatif.",
+      "requirements": [
+        "Gunakan if...else.",
+        "Gunakan angka > 0.",
+        "Angka 0 bukan positif."
+      ],
+      "example": {
+        "input": "-3",
+        "output": "Nol atau negatif"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int angka;\n    cin >> angka;\n    // TODO: tampilkan Positif atau Nol atau negatif\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "5",
+          "expected": "Positif",
+          "visible": true
+        },
+        {
+          "input": "0",
+          "expected": "Nol atau negatif",
+          "visible": true
+        },
+        {
+          "input": "-3",
+          "expected": "Nol atau negatif",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "conditions-elseif": [
+    {
+      "id": "conditions-elseif-2",
+      "title": "Latihan 2 · Kategori umur",
+      "difficulty": "Mudah",
+      "task": "Baca umur: Anak jika < 13, Remaja jika < 18, dan Dewasa untuk sisanya.",
+      "requirements": [
+        "Gunakan if, else if, dan else.",
+        "Urutkan batas umur.",
+        "Umur 15 menghasilkan Remaja."
+      ],
+      "example": {
+        "input": "15",
+        "output": "Remaja"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int umur;\n    cin >> umur;\n    // TODO: kategori umur dengan if...else if...else\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "10",
+          "expected": "Anak",
+          "visible": true
+        },
+        {
+          "input": "15",
+          "expected": "Remaja",
+          "visible": true
+        },
+        {
+          "input": "20",
+          "expected": "Dewasa",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "conditions-elseif-3",
+      "title": "Latihan 3 · Tarif tiket",
+      "difficulty": "Tantangan",
+      "task": "Baca umur: tarif 10000 jika umur < 12, 15000 jika umur < 18, dan 25000 untuk sisanya.",
+      "requirements": [
+        "Gunakan if...else if...else.",
+        "Urutkan batas umur.",
+        "Umur 16 menghasilkan 15000."
+      ],
+      "example": {
+        "input": "16",
+        "output": "15000"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int umur;\n    cin >> umur;\n    // TODO: tentukan tarif tiket dengan if...else if...else\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "8",
+          "expected": "10000",
+          "visible": true
+        },
+        {
+          "input": "16",
+          "expected": "15000",
+          "visible": true
+        },
+        {
+          "input": "25",
+          "expected": "25000",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "conditions-shorthand": [
+    {
+      "id": "conditions-shorthand-2",
+      "title": "Latihan 2 · Genap atau ganjil",
+      "difficulty": "Mudah",
+      "task": "Baca integer dan gunakan ternary untuk menampilkan Genap atau Ganjil.",
+      "requirements": [
+        "Gunakan ?: tanpa if...else.",
+        "Gunakan angka % 2 == 0.",
+        "Input 9 menghasilkan Ganjil."
+      ],
+      "example": {
+        "input": "9",
+        "output": "Ganjil"
+      },
+      "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    int angka;\n    cin >> angka;\n    // TODO: pilih Genap atau Ganjil dengan ternary\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "8",
+          "expected": "Genap",
+          "visible": true
+        },
+        {
+          "input": "9",
+          "expected": "Ganjil",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "conditions-shorthand-3",
+      "title": "Latihan 3 · Nilai terbesar",
+      "difficulty": "Tantangan",
+      "task": "Baca dua integer a dan b. Gunakan ternary untuk menampilkan nilai yang lebih besar; jika sama tampilkan a.",
+      "requirements": [
+        "Gunakan ?: untuk memilih nilai.",
+        "Baca dua integer.",
+        "Input 8 12 menghasilkan 12; input 5 5 menghasilkan 5."
+      ],
+      "example": {
+        "input": "8 12",
+        "output": "12"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    // TODO: pilih nilai terbesar dengan ternary\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "8 12",
+          "expected": "12",
+          "visible": true
+        },
+        {
+          "input": "5 5",
+          "expected": "5",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "conditions-nested": [
+    {
+      "id": "conditions-nested-2",
+      "title": "Latihan 2 · Diskon member",
+      "difficulty": "Mudah",
+      "task": "Baca total belanja dan status member (1 member). Jika total >= 100000 gunakan nested if: member mendapat Diskon 20%, bukan member Diskon 10%. Jika kurang, Tanpa diskon.",
+      "requirements": [
+        "Gunakan nested if untuk memeriksa member setelah total belanja memenuhi syarat.",
+        "Tangani tiga kondisi.",
+        "Input 120000 1 menghasilkan Diskon 20%."
+      ],
+      "example": {
+        "input": "120000 1",
+        "output": "Diskon 20%"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int total, member;\n    cin >> total >> member;\n    // TODO: gunakan nested if untuk menentukan diskon\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "120000 1",
+          "expected": "Diskon 20%",
+          "visible": true
+        },
+        {
+          "input": "120000 0",
+          "expected": "Diskon 10%",
+          "visible": true
+        },
+        {
+          "input": "50000 1",
+          "expected": "Tanpa diskon",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "conditions-nested-3",
+      "title": "Latihan 3 · Akses ruang lab",
+      "difficulty": "Tantangan",
+      "task": "Baca umur dan peran (1 guru, 0 siswa). Guru mendapat Akses penuh. Jika siswa, nested if memeriksa umur >= 13 untuk Akses siswa; selain itu Ditolak.",
+      "requirements": [
+        "Periksa peran dengan if luar.",
+        "Gunakan nested if untuk usia siswa.",
+        "Uji guru, siswa cukup umur, dan siswa belum cukup umur."
+      ],
+      "example": {
+        "input": "15 0",
+        "output": "Akses siswa"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int umur, guru;\n    cin >> umur >> guru;\n    // TODO: guru akses penuh; periksa umur siswa dengan nested if\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "30 1",
+          "expected": "Akses penuh",
+          "visible": true
+        },
+        {
+          "input": "15 0",
+          "expected": "Akses siswa",
+          "visible": true
+        },
+        {
+          "input": "10 0",
+          "expected": "Ditolak",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "conditions-logical": [
+    {
+      "id": "conditions-logical-2",
+      "title": "Latihan 2 · Akses perpustakaan",
+      "difficulty": "Mudah",
+      "task": "Baca umur dan punyaKartu. Tampilkan Diizinkan hanya jika umur >= 12 dan punya kartu; jika tidak Ditolak.",
+      "requirements": [
+        "Gabungkan dua syarat dengan &&.",
+        "Gunakan if...else.",
+        "Input 12 1 menghasilkan Diizinkan."
+      ],
+      "example": {
+        "input": "12 1",
+        "output": "Diizinkan"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int umur, punyaKartu;\n    cin >> umur >> punyaKartu;\n    // TODO: periksa umur dan kartu dengan &&\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "12 1",
+          "expected": "Diizinkan",
+          "visible": true
+        },
+        {
+          "input": "15 0",
+          "expected": "Ditolak",
+          "visible": true
+        },
+        {
+          "input": "10 1",
+          "expected": "Ditolak",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "conditions-logical-3",
+      "title": "Latihan 3 · Beasiswa",
+      "difficulty": "Tantangan",
+      "task": "Baca nilai dan pendapatan (juta). Tampilkan Beasiswa jika (nilai >= 90 dan pendapatan <= 4) atau nilai >= 95. Selain itu Belum memenuhi syarat.",
+      "requirements": [
+        "Gunakan && dan ||.",
+        "Gunakan kondisi (nilai >= 90 && pendapatan <= 4) || nilai >= 95.",
+        "Uji ketiga kemungkinan."
+      ],
+      "example": {
+        "input": "92 3",
+        "output": "Beasiswa"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int nilai, pendapatan;\n    cin >> nilai >> pendapatan;\n    // TODO: periksa (nilai >= 90 && pendapatan <= 4) || nilai >= 95\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "92 3",
+          "expected": "Beasiswa",
+          "visible": true
+        },
+        {
+          "input": "96 8",
+          "expected": "Beasiswa",
+          "visible": true
+        },
+        {
+          "input": "88 2",
+          "expected": "Belum memenuhi syarat",
+          "visible": true
+        }
+      ]
+    }
   ]
 
 };
 
-for (const lesson of lessons) {
+for (const lesson of lessons {
   if (lesson.kind === "reading") continue;
   const firstChallenge = {
     id: lesson.id + "-1",
