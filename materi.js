@@ -4610,6 +4610,57 @@ const EXTRA_CHALLENGES = {
       ]
     }
   ],
+  "scope": [
+    {
+      "id": "scope-2",
+      "title": "Latihan 2 · Nama lokal dan global",
+      "difficulty": "Mudah",
+      "task": "Deklarasikan variabel global int level = 1. Di dalam fungsi tampilkanLevel(), deklarasikan variabel lokal dengan nama sama, int level = 7. Tampilkan Level global: 1 dari main(), lalu panggil tampilkanLevel() untuk menampilkan Level lokal: 7.",
+      "requirements": [
+        "Deklarasikan variabel global level bernilai 1 di luar semua fungsi.",
+        "Deklarasikan variabel lokal level bernilai 7 di dalam tampilkanLevel().",
+        "Tampilkan variabel global dari main() sebelum memanggil tampilkanLevel().",
+        "Output harus tepat dua baris: Level global: 1 dan Level lokal: 7."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Level global: 1\nLevel lokal: 7"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\n// TODO: deklarasikan variabel global level bernilai 1\n\nvoid tampilkanLevel() {\n    // TODO: deklarasikan variabel lokal level bernilai 7\n    // TODO: tampilkan Level lokal: 7\n}\n\nint main() {\n    // TODO: tampilkan Level global menggunakan variabel global\n    // TODO: panggil tampilkanLevel()\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Level global: 1\nLevel lokal: 7",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "scope-3",
+      "title": "Latihan 3 · Scope di dalam blok",
+      "difficulty": "Tantangan",
+      "task": "Buat variabel int baterai = 100 di dalam main(). Tampilkan Baterai awal: 100. Buat blok baru dengan kurung kurawal, deklarasikan variabel lokal bernama baterai bernilai 75, lalu tampilkan Baterai dalam blok: 75. Setelah blok berakhir, tampilkan kembali Baterai luar blok: 100.",
+      "requirements": [
+        "Deklarasikan baterai bernilai 100 di dalam main(), di luar blok tambahan.",
+        "Gunakan pasangan kurung kurawal untuk membuat scope baru.",
+        "Di dalam blok, deklarasikan variabel baterai kedua bernilai 75 dan tampilkan nilainya.",
+        "Setelah blok berakhir, tampilkan kembali variabel baterai luar yang bernilai 100.",
+        "Output harus tepat tiga baris sesuai contoh."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Baterai awal: 100\nBaterai dalam blok: 75\nBaterai luar blok: 100"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int baterai = 100;\n    cout << \"Baterai awal: \" << baterai << endl;\n\n    {\n        // TODO: deklarasikan baterai lokal bernilai 75\n        // TODO: tampilkan Baterai dalam blok\n    }\n\n    // TODO: tampilkan Baterai luar blok menggunakan variabel awal\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Baterai awal: 100\nBaterai dalam blok: 75\nBaterai luar blok: 100",
+          "visible": true
+        }
+      ]
+    }
+  ],
   "math": [
       {
         "id": "math-2",
