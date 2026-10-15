@@ -1388,6 +1388,315 @@ const lessons = [
         "visible": true
       }
     ]
+  },
+  {
+    "id": "switch-statement",
+    "title": "Pernyataan switch",
+    "category": "Kontrol Alur",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_switch.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "switch memilih satu cabang berdasarkan nilai ekspresi, biasanya integer atau karakter. Setiap cabang ditandai case dan dapat diakhiri break agar eksekusi tidak berlanjut ke case berikutnya.",
+    "concepts": [
+      {
+        "title": "Struktur switch",
+        "body": "Gunakan <code>switch (pilihan) { case 1: ... break; }</code> untuk memilih cabang berdasarkan nilai."
+      },
+      {
+        "title": "Case dan default",
+        "body": "Setiap <code>case</code> memeriksa nilai tertentu. Bagian <code>default</code> dijalankan jika tidak ada case yang cocok."
+      },
+      {
+        "title": "Fungsi break",
+        "body": "<code>break;</code> menghentikan switch sehingga program tidak melanjutkan eksekusi ke case selanjutnya."
+      }
+    ],
+    "example": {
+      "input": "2",
+      "output": "Selasa"
+    },
+    "task": "Baca angka hari dari 1 sampai 3. Gunakan switch untuk menampilkan Senin, Selasa, atau Rabu; tampilkan Hari tidak valid untuk angka lainnya.",
+    "requirements": [
+      "Gunakan switch dan minimal tiga case.",
+      "Setiap case berakhir dengan break.",
+      "Input 2 menghasilkan Selasa; input 8 menghasilkan Hari tidak valid."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int hari;\n    cin >> hari;\n    // TODO: gunakan switch untuk memilih nama hari\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "1",
+        "expected": "Senin",
+        "visible": true
+      },
+      {
+        "input": "2",
+        "expected": "Selasa",
+        "visible": true
+      },
+      {
+        "input": "3",
+        "expected": "Rabu",
+        "visible": true
+      },
+      {
+        "input": "8",
+        "expected": "Hari tidak valid",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "while-loop",
+    "title": "Perulangan while",
+    "category": "Kontrol Alur",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_while_loop.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Perulangan while menjalankan kembali blok kode selama kondisi bernilai true. Kondisi diperiksa sebelum setiap putaran, sehingga blok bisa saja tidak dijalankan sama sekali.",
+    "concepts": [
+      {
+        "title": "Kondisi while",
+        "body": "Bentuk dasar: <code>while (kondisi) { ... }</code>. Jika kondisi false sejak awal, blok tidak dijalankan."
+      },
+      {
+        "title": "Perubahan variabel",
+        "body": "Pastikan variabel kondisi berubah di dalam loop agar perulangan dapat berhenti."
+      },
+      {
+        "title": "Hindari infinite loop",
+        "body": "Jika kondisi terus true karena variabel tidak diperbarui dengan benar, program dapat berjalan tanpa henti."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "1 2 3 4 5"
+    },
+    "task": "Gunakan while untuk menampilkan angka 1 sampai 5 secara berurutan, dipisahkan satu spasi.",
+    "requirements": [
+      "Gunakan while, bukan for.",
+      "Mulai dari angka 1 dan ulangi selama angka <= 5.",
+      "Naikkan angka setiap putaran."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int angka = 1;\n    // TODO: gunakan while untuk menampilkan angka 1 sampai 5\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "1 2 3 4 5",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "do-while-loop",
+    "title": "Perulangan do...while",
+    "category": "Kontrol Alur",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_do_while_loop.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Perulangan do...while mirip dengan while, tetapi kondisi diperiksa setelah blok dijalankan. Karena itu, blok do...while selalu dijalankan setidaknya satu kali.",
+    "concepts": [
+      {
+        "title": "Letak kondisi",
+        "body": "Sintaksnya <code>do { ... } while (kondisi);</code>. Perhatikan titik koma setelah while."
+      },
+      {
+        "title": "Minimal satu putaran",
+        "body": "Walaupun kondisi awal mungkin false setelah pemeriksaan, blok sudah berjalan satu kali sebelum kondisi diperiksa."
+      },
+      {
+        "title": "Perbarui nilai",
+        "body": "Seperti while, ubah variabel kondisi di dalam blok agar loop dapat berhenti."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "1 2 3"
+    },
+    "task": "Gunakan do...while untuk menampilkan angka 1 sampai 3, dipisahkan satu spasi.",
+    "requirements": [
+      "Gunakan do...while, bukan while biasa.",
+      "Tampilkan angka sebelum menaikkan nilainya.",
+      "Pastikan sintaks while di akhir memiliki titik koma."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int angka = 1;\n    // TODO: gunakan do...while untuk menampilkan 1 sampai 3\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "1 2 3",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "for-loop",
+    "title": "Perulangan for",
+    "category": "Kontrol Alur",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_for_loop.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Perulangan for biasanya digunakan ketika jumlah pengulangan diketahui. Dalam satu baris, for memuat inisialisasi, kondisi, dan perubahan nilai.",
+    "concepts": [
+      {
+        "title": "Tiga bagian for",
+        "body": "Sintaks <code>for (inisialisasi; kondisi; perubahan)</code> menjalankan inisialisasi sekali, memeriksa kondisi, lalu melakukan perubahan setelah setiap putaran."
+      },
+      {
+        "title": "Hitung mundur atau maju",
+        "body": "Ubah nilai awal, kondisi, dan langkah seperti <code>i++</code> atau <code>i--</code> untuk mengatur urutan."
+      },
+      {
+        "title": "Akumulasi nilai",
+        "body": "Loop dapat dipakai untuk menghitung total, misalnya menambahkan semua angka dari 1 sampai 5 ke variabel total."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "15"
+    },
+    "task": "Gunakan for untuk menjumlahkan angka 1 sampai 5, lalu tampilkan totalnya.",
+    "requirements": [
+      "Gunakan perulangan for.",
+      "Mulai total dari 0 lalu tambahkan nilai i pada setiap putaran.",
+      "Output harus tepat: 15."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int total = 0;\n    // TODO: gunakan for untuk menjumlahkan 1 sampai 5\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "15",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "nested-for-loop",
+    "title": "Nested for (Perulangan Bersarang)",
+    "category": "Kontrol Alur",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_for_loop_nested.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Nested for adalah perulangan for yang berada di dalam perulangan for lain. Loop luar biasanya mengatur baris, sedangkan loop dalam mengatur kolom atau item pada setiap baris.",
+    "concepts": [
+      {
+        "title": "Loop luar dan dalam",
+        "body": "Loop luar berjalan satu kali untuk setiap baris. Pada setiap putaran loop luar, loop dalam menjalankan seluruh putarannya."
+      },
+      {
+        "title": "Membuat pola",
+        "body": "Nested for dapat digunakan untuk membentuk pola bintang, tabel perkalian, dan grid."
+      },
+      {
+        "title": "Perhatikan baris baru",
+        "body": "Setelah loop dalam selesai, cetak baris baru agar hasil setiap putaran loop luar tampil pada baris berbeda."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "***\n***\n***"
+    },
+    "task": "Gunakan nested for untuk mencetak pola persegi berisi tiga baris. Setiap baris berisi tiga karakter bintang tanpa spasi.",
+    "requirements": [
+      "Gunakan dua perulangan for yang bersarang.",
+      "Loop luar mengatur tiga baris dan loop dalam mencetak tiga bintang.",
+      "Cetak newline setelah setiap baris."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: gunakan nested for untuk mencetak persegi 3 x 3\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "***\n***\n***",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "range-based-for-loop",
+    "title": "Range-based for (Foreach)",
+    "category": "Kontrol Alur",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_for_loop_foreach.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Range-based for memudahkan program mengunjungi setiap elemen array atau koleksi tanpa mengelola indeks secara manual. Bentuk ini sering disebut foreach.",
+    "concepts": [
+      {
+        "title": "Bentuk range-based for",
+        "body": "Gunakan <code>for (int angka : data) { ... }</code> untuk mengambil setiap elemen array pada setiap putaran."
+      },
+      {
+        "title": "Tanpa indeks manual",
+        "body": "Kamu tidak perlu membuat variabel indeks atau memeriksa panjang array pada kondisi for."
+      },
+      {
+        "title": "Elemen dapat diproses",
+        "body": "Setiap elemen dapat ditampilkan, dijumlahkan, atau dipakai dalam perhitungan lain."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "12"
+    },
+    "task": "Gunakan range-based for untuk menjumlahkan semua elemen array {2, 4, 6}, lalu tampilkan totalnya.",
+    "requirements": [
+      "Buat array int berisi 2, 4, dan 6.",
+      "Gunakan range-based for dengan bentuk for (int angka : data).",
+      "Output harus tepat: 12."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int data[] = {2, 4, 6};\n    int total = 0;\n    // TODO: gunakan range-based for untuk menjumlahkan elemen array\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "12",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "break-statement",
+    "title": "Menghentikan Perulangan dengan break",
+    "category": "Kontrol Alur",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_break.asp",
+    "sourceLabel": "W3Schools",
+    "summary": "Pernyataan break langsung menghentikan perulangan atau switch terdekat. Perintah setelah loop tetap dijalankan setelah eksekusi keluar dari loop.",
+    "concepts": [
+      {
+        "title": "Keluar lebih awal",
+        "body": "Letakkan <code>break;</code> di dalam kondisi yang ingin menghentikan loop."
+      },
+      {
+        "title": "Break pada loop",
+        "body": "Misalnya, loop dapat mencari nilai tertentu lalu berhenti ketika nilai tersebut ditemukan."
+      },
+      {
+        "title": "Berbeda dengan continue",
+        "body": "break menghentikan seluruh loop, sedangkan continue melewatkan sisa perintah pada putaran saat ini dan melanjutkan ke putaran berikutnya."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "1 2 3 4"
+    },
+    "task": "Gunakan for dari 1 sampai 10. Jika angka mencapai 5, hentikan loop dengan break. Tampilkan angka yang dicetak sebelum loop berhenti.",
+    "requirements": [
+      "Gunakan for dan periksa kondisi angka == 5 di dalam loop.",
+      "Gunakan break agar angka 5 dan angka setelahnya tidak dicetak.",
+      "Output harus tepat: 1 2 3 4."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: loop 1 sampai 10 dan break saat angka == 5\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "1 2 3 4",
+        "visible": true
+      }
+    ]
   }
 ];
 
@@ -2971,6 +3280,367 @@ const EXTRA_CHALLENGES = {
         {
           "input": "88 2",
           "expected": "Belum memenuhi syarat",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "switch-statement": [
+    {
+      "id": "switch-statement-2",
+      "title": "Latihan 2 · Menu minuman",
+      "difficulty": "Mudah",
+      "task": "Baca pilihan 1, 2, atau 3. Gunakan switch untuk menampilkan Air jika 1, Teh jika 2, Kopi jika 3, atau Menu tidak tersedia untuk pilihan lain.",
+      "requirements": [
+        "Gunakan switch, case, break, dan default.",
+        "Tangani pilihan di luar 1 sampai 3.",
+        "Input 2 menghasilkan Teh."
+      ],
+      "example": {
+        "input": "2",
+        "output": "Teh"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int pilihan;\n    cin >> pilihan;\n    // TODO: tampilkan minuman dengan switch\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "1",
+          "expected": "Air",
+          "visible": true
+        },
+        {
+          "input": "2",
+          "expected": "Teh",
+          "visible": true
+        },
+        {
+          "input": "3",
+          "expected": "Kopi",
+          "visible": true
+        },
+        {
+          "input": "8",
+          "expected": "Menu tidak tersedia",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "switch-statement-3",
+      "title": "Latihan 3 · Operasi sederhana",
+      "difficulty": "Tantangan",
+      "task": "Baca operator karakter (+ atau -) lalu dua integer. Gunakan switch untuk menampilkan hasil penjumlahan atau pengurangan sesuai operator. Untuk operator lain tampilkan Operator tidak dikenal.",
+      "requirements": [
+        "Baca char operatorPilihan dan dua integer.",
+        "Gunakan switch untuk case '+' dan '-'.",
+        "Input + 8 3 menghasilkan 11; input - 8 3 menghasilkan 5."
+      ],
+      "example": {
+        "input": "+ 8 3",
+        "output": "11"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    char operatorPilihan;\n    int a, b;\n    cin >> operatorPilihan >> a >> b;\n    // TODO: gunakan switch untuk + dan -\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "+ 8 3",
+          "expected": "11",
+          "visible": true
+        },
+        {
+          "input": "- 8 3",
+          "expected": "5",
+          "visible": true
+        },
+        {
+          "input": "* 8 3",
+          "expected": "Operator tidak dikenal",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "while-loop": [
+    {
+      "id": "while-loop-2",
+      "title": "Latihan 2 · Hitung mundur",
+      "difficulty": "Mudah",
+      "task": "Gunakan while untuk menampilkan angka 5, 4, 3, 2, 1 dengan pemisah satu spasi.",
+      "requirements": [
+        "Gunakan while, bukan for.",
+        "Mulai dari 5 dan ulangi selama angka >= 1.",
+        "Kurangi angka setiap putaran."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "5 4 3 2 1"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int angka = 5;\n    // TODO: gunakan while untuk hitung mundur dari 5 sampai 1\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "5 4 3 2 1",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "while-loop-3",
+      "title": "Latihan 3 · Jumlah bilangan genap",
+      "difficulty": "Tantangan",
+      "task": "Gunakan while untuk menjumlahkan bilangan genap 2, 4, 6, 8, dan 10. Tampilkan totalnya.",
+      "requirements": [
+        "Mulai angka dari 2 dan gunakan while hingga angka <= 10.",
+        "Tambahkan angka ke total setiap putaran.",
+        "Tambahkan angka sebesar 2; output totalnya 30."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "30"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int angka = 2;\n    int total = 0;\n    // TODO: jumlahkan bilangan genap sampai 10 menggunakan while\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "30",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "do-while-loop": [
+    {
+      "id": "do-while-loop-2",
+      "title": "Latihan 2 · Jalankan minimal sekali",
+      "difficulty": "Mudah",
+      "task": "Gunakan do...while untuk mencetak angka 1 sekali. Buat kondisi loop angka < 1 agar setelah putaran pertama loop berhenti.",
+      "requirements": [
+        "Gunakan do...while.",
+        "Cetak angka sebelum kondisi diperiksa.",
+        "Output tetap harus 1 meskipun kondisi angka < 1 false."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "1"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int angka = 1;\n    // TODO: cetak sekali menggunakan do...while dengan kondisi angka < 1\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "1",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "do-while-loop-3",
+      "title": "Latihan 3 · Ulangi tiga kali",
+      "difficulty": "Tantangan",
+      "task": "Gunakan do...while untuk menampilkan teks Ulangi sebanyak tiga kali, masing-masing pada baris baru.",
+      "requirements": [
+        "Gunakan do...while.",
+        "Tambah penghitung setiap putaran.",
+        "Output terdiri dari tiga baris berisi Ulangi."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Ulangi\nUlangi\nUlangi"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int hitung = 1;\n    // TODO: tampilkan Ulangi tiga kali dengan do...while\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Ulangi\nUlangi\nUlangi",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "for-loop": [
+    {
+      "id": "for-loop-2",
+      "title": "Latihan 2 · Bilangan ganjil",
+      "difficulty": "Mudah",
+      "task": "Gunakan for untuk menampilkan bilangan ganjil dari 1 sampai 9, dipisahkan satu spasi.",
+      "requirements": [
+        "Gunakan perulangan for.",
+        "Mulai dari 1, berhenti di 9, dan tambahkan 2 setiap putaran.",
+        "Output harus tepat: 1 3 5 7 9."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "1 3 5 7 9"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: gunakan for untuk menampilkan 1, 3, 5, 7, 9\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "1 3 5 7 9",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "for-loop-3",
+      "title": "Latihan 3 · Faktorial sederhana",
+      "difficulty": "Tantangan",
+      "task": "Gunakan for untuk menghitung faktorial 5 (1 × 2 × 3 × 4 × 5) lalu tampilkan hasilnya.",
+      "requirements": [
+        "Mulai variabel hasil dari 1.",
+        "Gunakan for untuk mengalikan hasil dengan angka 1 sampai 5.",
+        "Output harus tepat: 120."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "120"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int hasil = 1;\n    // TODO: hitung faktorial 5 menggunakan for\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "120",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "nested-for-loop": [
+    {
+      "id": "nested-for-loop-2",
+      "title": "Latihan 2 · Segitiga bintang",
+      "difficulty": "Mudah",
+      "task": "Gunakan nested for untuk mencetak pola tiga baris: *, **, dan ***.",
+      "requirements": [
+        "Gunakan for di dalam for.",
+        "Jumlah bintang per baris sama dengan nomor baris.",
+        "Cetak newline setelah setiap baris."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "*\n**\n***"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: cetak segitiga bintang dengan nested for\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "*\n**\n***",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "nested-for-loop-3",
+      "title": "Latihan 3 · Tabel perkalian",
+      "difficulty": "Tantangan",
+      "task": "Gunakan nested for untuk mencetak tabel perkalian 1 sampai 3. Setiap baris menampilkan tiga hasil perkalian yang dipisahkan spasi.",
+      "requirements": [
+        "Gunakan dua perulangan for.",
+        "Loop luar mengatur angka 1 sampai 3 dan loop dalam mengalikan dengan 1 sampai 3.",
+        "Output tiga baris: 1 2 3, 2 4 6, dan 3 6 9."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "1 2 3\n2 4 6\n3 6 9"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: cetak tabel perkalian 1 sampai 3 dengan nested for\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "1 2 3\n2 4 6\n3 6 9",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "range-based-for-loop": [
+    {
+      "id": "range-based-for-loop-2",
+      "title": "Latihan 2 · Tampilkan array",
+      "difficulty": "Mudah",
+      "task": "Gunakan range-based for untuk menampilkan setiap angka pada array {3, 6, 9}, dipisahkan satu spasi.",
+      "requirements": [
+        "Gunakan sintaks for (int angka : data).",
+        "Jangan memakai indeks manual.",
+        "Output harus tepat: 3 6 9."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "3 6 9"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int data[] = {3, 6, 9};\n    // TODO: tampilkan elemen array dengan range-based for\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "3 6 9",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "range-based-for-loop-3",
+      "title": "Latihan 3 · Hitung nilai lebih dari lima",
+      "difficulty": "Tantangan",
+      "task": "Gunakan range-based for untuk menghitung berapa elemen array {2, 7, 4, 9, 1, 8} yang lebih besar dari 5.",
+      "requirements": [
+        "Gunakan range-based for tanpa indeks manual.",
+        "Tambahkan penghitung jika angka > 5.",
+        "Output harus tepat: 3."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "3"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int data[] = {2, 7, 4, 9, 1, 8};\n    int jumlah = 0;\n    // TODO: hitung elemen yang lebih besar dari 5\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "3",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "break-statement": [
+    {
+      "id": "break-statement-2",
+      "title": "Latihan 2 · Cari angka 4",
+      "difficulty": "Mudah",
+      "task": "Gunakan for dari 1 sampai 8. Jika angka sama dengan 4, hentikan loop dengan break; tampilkan angka sebelumnya saja.",
+      "requirements": [
+        "Gunakan for dan break.",
+        "Periksa angka == 4 sebelum cout agar angka 4 tidak tercetak.",
+        "Output harus tepat: 1 2 3."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "1 2 3"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: cetak 1 sampai 8, tetapi break saat angka == 4\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "1 2 3",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "break-statement-3",
+      "title": "Latihan 3 · Hentikan saat total tercapai",
+      "difficulty": "Tantangan",
+      "task": "Tambahkan angka mulai dari 1 ke variabel total. Hentikan loop saat total >= 10 menggunakan break, lalu tampilkan total.",
+      "requirements": [
+        "Gunakan while atau for dan break.",
+        "Tambahkan angka ke total dalam setiap putaran.",
+        "Loop berhenti saat total mencapai 10; output harus tepat: 10."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "10"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int angka = 1;\n    int total = 0;\n    // TODO: tambahkan angka sampai total >= 10, lalu break\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "10",
           "visible": true
         }
       ]
