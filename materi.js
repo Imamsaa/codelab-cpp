@@ -2083,6 +2083,52 @@ const lessons = [
         "visible": true
       }
     ]
+  },
+  {
+    "id": "scope",
+    "title": "Scope dalam C++",
+    "category": "Variabel",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_scope.asp",
+    "sourceLabel": "W3Schools — C++ Scope",
+    "summary": "Scope menentukan bagian program tempat sebuah variabel dapat digunakan. Variabel lokal dibuat di dalam fungsi atau blok, sedangkan variabel global dideklarasikan di luar fungsi dan dapat diakses oleh fungsi-fungsi setelah deklarasinya.",
+    "concepts": [
+      {
+        "title": "Apa itu scope?",
+        "body": "<strong>Scope</strong> adalah wilayah kode tempat nama variabel dikenal. Memahami scope membantu mencegah penggunaan variabel di tempat yang tidak semestinya."
+      },
+      {
+        "title": "Local scope",
+        "body": "Variabel yang dideklarasikan di dalam fungsi atau blok, misalnya di dalam <code>main()</code> atau pasangan kurung kurawal <code>{ }</code>, hanya dapat digunakan di wilayah tersebut. Variabel lokal tidak dapat diakses langsung dari luar bloknya."
+      },
+      {
+        "title": "Global scope",
+        "body": "Variabel global dideklarasikan di luar semua fungsi. Setelah deklarasinya, variabel ini dapat diakses dari fungsi-fungsi di bawahnya. Gunakan variabel global dengan bijak agar perubahan nilainya tetap mudah dilacak."
+      },
+      {
+        "title": "Nama lokal dan global sama",
+        "body": "Jika variabel lokal dan global memiliki nama yang sama, nama lokal akan digunakan di dalam scope lokal tersebut. Karena itu, pilih nama variabel yang jelas untuk menghindari kebingungan."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "Skor: 80 Bonus: 5"
+    },
+    "task": "Deklarasikan variabel global int bonus = 5. Buat fungsi tampilkanSkor() yang memiliki variabel lokal int skor = 80 dan menampilkan Skor: 80 Bonus: 5. Panggil fungsi dari main().",
+    "requirements": [
+      "Deklarasikan bonus di luar semua fungsi agar menjadi variabel global.",
+      "Deklarasikan skor di dalam fungsi tampilkanSkor() agar menjadi variabel lokal.",
+      "Panggil tampilkanSkor() dari main() dan hasilkan output tepat: Skor: 80 Bonus: 5."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\n// TODO: deklarasikan variabel global bonus bernilai 5\n\nvoid tampilkanSkor() {\n    // TODO: deklarasikan variabel lokal skor bernilai 80\n    // TODO: tampilkan Skor: 80 Bonus: 5 menggunakan variabel\n}\n\nint main() {\n    // TODO: panggil tampilkanSkor()\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "Skor: 80 Bonus: 5",
+        "visible": true
+      }
+    ]
   }
 ];
 
@@ -4624,7 +4670,55 @@ const EXTRA_CHALLENGES = {
         "input": "(tidak ada input)",
         "output": "Luas: 30"
       },
-      "starter": "#include <iostream>\nusing namespace std;\nvoid tampilkanLuas(int panjang, int lebar) {\n    // TODO: cetak luas persegi panjang\n}\nint main() {\n    // TODO: panggil tampilkanLuas(6, 5)\n    return 0;\n}",
+      "starter": "#include <iostream>\nusing namespace std;\nvoid tampilkanLuas(int panjang, int lebar) {\n    // TODO: cetak luas persegi panjang\n}\nint main() {\n    // TODO: panggil t,
+  "scope": [
+    {
+      "id": "scope-2",
+      "title": "Latihan 2 · Variabel lokal",
+      "difficulty": "Mudah",
+      "task": "Buat fungsi tampilkanUmur() yang memiliki variabel lokal int umur = 13 dan menampilkan Umur: 13. Panggil fungsi dari main().",
+      "requirements": [
+        "Deklarasikan umur di dalam fungsi tampilkanUmur().",
+        "Gunakan variabel umur saat mencetak output.",
+        "Output tepat: Umur: 13."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Umur: 13"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nvoid tampilkanUmur() {\n    // TODO: buat variabel lokal umur = 13\n    // TODO: tampilkan \"Umur: \" dan umur\n}\n\nint main() {\n    // TODO: panggil tampilkanUmur()\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Umur: 13",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "scope-3",
+      "title": "Latihan 3 · Global dan lokal",
+      "difficulty": "Tantangan",
+      "task": "Buat variabel global int poin = 10. Buat fungsi tampilkanPoin() dengan variabel lokal int bonus = 4. Fungsi harus menampilkan Poin: 10 Bonus: 4. Panggil fungsi dari main().",
+      "requirements": [
+        "Deklarasikan poin di luar fungsi mana pun.",
+        "Deklarasikan bonus di dalam tampilkanPoin().",
+        "Gunakan kedua variabel dan hasilkan output tepat: Poin: 10 Bonus: 4."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "Poin: 10 Bonus: 4"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\n// TODO: deklarasikan variabel global poin = 10\n\nvoid tampilkanPoin() {\n    // TODO: deklarasikan variabel lokal bonus = 4\n    // TODO: cetak Poin: diikuti poin dan Bonus: diikuti bonus\n}\n\nint main() {\n    // TODO: panggil tampilkanPoin()\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "Poin: 10 Bonus: 4",
+          "visible": true
+        }
+      ]
+    }
+  ]ampilkanLuas(6, 5)\n    return 0;\n}",
       "tests": [
         {
           "input": "",
