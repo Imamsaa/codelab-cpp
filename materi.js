@@ -4555,8 +4555,9 @@ const EXTRA_CHALLENGES = {
           "visible": true
         }
       ]
-    },
-    "math": [
+    }
+  ],
+  "math": [
       {
         "id": "math-2",
         "title": "Latihan 2 · Membulatkan angka",
