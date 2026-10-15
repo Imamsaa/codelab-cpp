@@ -488,6 +488,258 @@ const lessons = [
         "visible": true
       }
     ]
+  },
+  {
+    "id": "operators",
+    "title": "Operator dalam C++",
+    "category": "Operator",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_operators.asp",
+    "sourceLabel": "W3Schools — C++ Operators",
+    "summary": "Operator adalah simbol yang menjalankan operasi pada nilai atau variabel. Operator digunakan untuk menghitung, memberi nilai, membandingkan, menggabungkan kondisi, dan menentukan urutan perhitungan.",
+    "concepts": [
+      {
+        "title": "Kelompok operator",
+        "body": "Operator aritmetika seperti <code>+</code> dan <code>*</code> melakukan perhitungan. Operator assignment seperti <code>=</code> dan <code>+=</code> memberi atau memperbarui nilai variabel."
+      },
+      {
+        "title": "Perbandingan dan logika",
+        "body": "Operator perbandingan seperti <code>&gt;</code> dan <code>==</code> menghasilkan nilai bool. Operator logika seperti <code>&amp;&amp;</code>, <code>||</code>, dan <code>!</code> menggabungkan atau membalik kondisi."
+      },
+      {
+        "title": "Pilih operator yang sesuai",
+        "body": "Tentukan dulu tujuan operasi: menghitung nilai, memperbarui variabel, membandingkan dua nilai, atau memeriksa beberapa kondisi."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "13 7 true"
+    },
+    "task": "Buat int a = 10 dan b = 3. Tampilkan hasil a + b, a - b, dan apakah a lebih besar dari b. Pisahkan hasil dengan satu spasi.",
+    "requirements": [
+      "Gunakan operator aritmetika + dan -.",
+      "Gunakan operator perbandingan >.",
+      "Gunakan boolalpha agar hasil perbandingan tampil true atau false."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 10;\n    int b = 3;\n    // TODO: tampilkan a+b, a-b, dan a>b dengan boolalpha\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "13 7 true",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "arithmetic-operators",
+    "title": "Operator Aritmetika",
+    "category": "Operator",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_operators_arithmetic.asp",
+    "sourceLabel": "W3Schools — Arithmetic Operators",
+    "summary": "Operator aritmetika digunakan untuk melakukan perhitungan matematika seperti penjumlahan, pengurangan, perkalian, pembagian, dan sisa pembagian.",
+    "concepts": [
+      {
+        "title": "Operasi dasar",
+        "body": "Gunakan <code>+</code> untuk penjumlahan, <code>-</code> untuk pengurangan, <code>*</code> untuk perkalian, dan <code>/</code> untuk pembagian."
+      },
+      {
+        "title": "Sisa pembagian (%)",
+        "body": "Operator <code>%</code> menghasilkan sisa pembagian bilangan bulat. Contohnya, <code>17 % 5</code> menghasilkan <code>2</code>."
+      },
+      {
+        "title": "Pembagian bilangan bulat",
+        "body": "Jika kedua operand bertipe int, <code>17 / 5</code> menghasilkan <code>3</code>, bukan <code>3.4</code>. Gunakan tipe desimal atau operand seperti <code>17.0 / 5</code> jika membutuhkan pecahan."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "22 12 85 3 2"
+    },
+    "task": "Gunakan int a = 17 dan b = 5. Tampilkan hasil a+b, a-b, a*b, a/b, dan a%b secara berurutan, dipisahkan satu spasi.",
+    "requirements": [
+      "Gunakan kelima operator +, -, *, /, dan %.",
+      "Pahami bahwa a/b memakai pembagian bilangan bulat karena a dan b bertipe int.",
+      "Output harus tepat: 22 12 85 3 2."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 17;\n    int b = 5;\n    // TODO: tampilkan hasil +, -, *, /, dan %\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "22 12 85 3 2",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "assignment-operators",
+    "title": "Operator Assignment",
+    "category": "Operator",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_operators_assignment.asp",
+    "sourceLabel": "W3Schools — Assignment Operators",
+    "summary": "Operator assignment memberikan nilai ke variabel atau memperbarui nilainya. Selain =, ada operator gabungan seperti +=, -=, *=, /=, dan %=.",
+    "concepts": [
+      {
+        "title": "Assignment dasar",
+        "body": "Operator <code>=</code> memberi nilai ke variabel, misalnya <code>int skor = 10;</code>. Tanda = pada assignment bukan operator untuk menguji kesamaan."
+      },
+      {
+        "title": "Assignment gabungan",
+        "body": "<code>skor += 5</code> setara dengan <code>skor = skor + 5</code>. Begitu juga <code>-=</code>, <code>*=</code>, <code>/=</code>, dan <code>%=</code>."
+      },
+      {
+        "title": "Urutan perubahan nilai",
+        "body": "Setiap operasi assignment memperbarui nilai yang tersimpan. Karena itu, hasil akhir bergantung pada urutan pernyataan yang dijalankan."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "30"
+    },
+    "task": "Mulai dengan int skor = 10. Tambahkan 5 menggunakan +=, kemudian kalikan skor dengan 2 menggunakan *=. Tampilkan nilai akhirnya.",
+    "requirements": [
+      "Gunakan operator += untuk menambah 5.",
+      "Gunakan operator *= untuk mengalikan nilai terbaru dengan 2.",
+      "Output harus tepat: 30."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int skor = 10;\n    // TODO: gunakan += dan *=, lalu tampilkan skor\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "30",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "comparison-operators",
+    "title": "Operator Perbandingan",
+    "category": "Operator",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_operators_comparison.asp",
+    "sourceLabel": "W3Schools — Comparison Operators",
+    "summary": "Operator perbandingan membandingkan dua nilai dan menghasilkan true atau false. Hasilnya sering digunakan sebagai syarat di dalam if dan perulangan.",
+    "concepts": [
+      {
+        "title": "Sama dengan dan tidak sama dengan",
+        "body": "Gunakan <code>==</code> untuk menguji kesamaan nilai dan <code>!=</code> untuk menguji apakah nilainya berbeda. Jangan tertukar dengan <code>=</code> yang digunakan untuk assignment."
+      },
+      {
+        "title": "Lebih besar atau lebih kecil",
+        "body": "Operator <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, dan <code>&lt;=</code> membandingkan besar-kecilnya dua nilai."
+      },
+      {
+        "title": "Output boolean",
+        "body": "Hasil perbandingan bertipe bool. Gunakan <code>cout &lt;&lt; boolalpha</code> jika ingin menampilkan kata <code>true</code> atau <code>false</code>, bukan <code>1</code> atau <code>0</code>."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "true false true"
+    },
+    "task": "Buat int a = 10 dan b = 7. Tampilkan hasil a > b, a == b, dan a != b menggunakan boolalpha, dipisahkan satu spasi.",
+    "requirements": [
+      "Gunakan operator >, ==, dan !=.",
+      "Gunakan boolalpha pada cout.",
+      "Output harus tepat: true false true."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 10;\n    int b = 7;\n    // TODO: tampilkan a>b, a==b, dan a!=b menggunakan boolalpha\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "true false true",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "logical-operators",
+    "title": "Operator Logika",
+    "category": "Operator",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_operators_logical.asp",
+    "sourceLabel": "W3Schools — Logical Operators",
+    "summary": "Operator logika menggabungkan atau membalik nilai boolean. Operator ini sering digunakan ketika sebuah keputusan memiliki satu atau beberapa syarat.",
+    "concepts": [
+      {
+        "title": "AND (&&)",
+        "body": "<code>A &amp;&amp; B</code> bernilai true hanya jika A dan B sama-sama true."
+      },
+      {
+        "title": "OR (||)",
+        "body": "<code>A || B</code> bernilai true jika setidaknya salah satu kondisi bernilai true."
+      },
+      {
+        "title": "NOT (!)",
+        "body": "<code>!A</code> membalik nilai boolean: true menjadi false, dan false menjadi true. Gunakan tanda kurung untuk memperjelas ekspresi yang lebih panjang."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "true"
+    },
+    "task": "Buat int umur = 14 dan bool punyaKartu = true. Tentukan bolehMasuk dengan kondisi umur >= 13 && punyaKartu, lalu tampilkan bolehMasuk menggunakan boolalpha.",
+    "requirements": [
+      "Gunakan variabel umur dan punyaKartu sesuai instruksi.",
+      "Gabungkan kondisi dengan operator &&.",
+      "Gunakan boolalpha agar output tepat: true."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int umur = 14;\n    bool punyaKartu = true;\n    // TODO: tentukan bolehMasuk dan tampilkan dengan boolalpha\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "true",
+        "visible": true
+      }
+    ]
+  },
+  {
+    "id": "operator-precedence",
+    "title": "Prioritas Operator",
+    "category": "Operator",
+    "level": "Pemula",
+    "duration": "10 menit",
+    "sourceUrl": "https://www.w3schools.com/cpp/cpp_operators_precedence.asp",
+    "sourceLabel": "W3Schools — Operator Precedence",
+    "summary": "Prioritas operator menentukan operasi mana yang dikerjakan lebih dahulu ketika sebuah ekspresi berisi beberapa operator. Tanda kurung dapat digunakan untuk menegaskan urutan yang diinginkan.",
+    "concepts": [
+      {
+        "title": "Perkalian lebih dahulu daripada penjumlahan",
+        "body": "Dalam <code>2 + 3 * 4</code>, perkalian dikerjakan lebih dahulu sehingga hasilnya <code>14</code>, bukan <code>20</code>."
+      },
+      {
+        "title": "Gunakan tanda kurung",
+        "body": "Ekspresi <code>(2 + 3) * 4</code> menghitung isi tanda kurung lebih dahulu, sehingga hasilnya <code>20</code>."
+      },
+      {
+        "title": "Urutan umum",
+        "body": "Secara umum, tanda kurung dikerjakan lebih dahulu, kemudian operator perkalian/pembagian sebelum penjumlahan/pengurangan, lalu perbandingan dan operator logika. Untuk ekspresi kompleks, tambahkan tanda kurung agar maksud kode jelas."
+      }
+    ],
+    "example": {
+      "input": "(tidak ada input)",
+      "output": "14 20"
+    },
+    "task": "Hitung dua ekspresi: hasil1 = 2 + 3 * 4 dan hasil2 = (2 + 3) * 4. Tampilkan kedua hasil dengan satu spasi.",
+    "requirements": [
+      "Buat dua variabel hasil1 dan hasil2.",
+      "Pertahankan tanda kurung pada ekspresi kedua.",
+      "Output harus tepat: 14 20."
+    ],
+    "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: hitung 2 + 3 * 4\n    // TODO: hitung (2 + 3) * 4\n    // TODO: tampilkan kedua hasil\n    return 0;\n}",
+    "tests": [
+      {
+        "input": "",
+        "expected": "14 20",
+        "visible": true
+      }
+    ]
   }
 ];
 
@@ -996,6 +1248,294 @@ const EXTRA_CHALLENGES = {
         {
           "input": "",
           "expected": "85.5",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "operators": [
+    {
+      "id": "operators-2",
+      "title": "Latihan 2 · Operator perkalian",
+      "difficulty": "Mudah",
+      "task": "Buat int x = 8 dan y = 2. Tampilkan x*y dan x/y dengan satu spasi.",
+      "requirements": [
+        "Gunakan operator * dan /.",
+        "Tampilkan hasil dari variabel, bukan angka hasil yang ditulis langsung.",
+        "Output harus tepat: 16 4."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "16 4"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x = 8;\n    int y = 2;\n    // TODO: tampilkan x*y dan x/y\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "16 4",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "operators-3",
+      "title": "Latihan 3 · Operator gabungan",
+      "difficulty": "Tantangan",
+      "task": "Buat int nilai = 12, tambahkan 3 dengan +=, lalu tampilkan nilai akhirnya.",
+      "requirements": [
+        "Gunakan operator +=.",
+        "Simpan perubahan pada variabel nilai.",
+        "Output harus tepat: 15."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "15"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int nilai = 12;\n    // TODO: tambahkan 3 dengan += lalu tampilkan nilai\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "15",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "arithmetic-operators": [
+    {
+      "id": "arithmetic-operators-2",
+      "title": "Latihan 2 · Jumlah dan hasil kali",
+      "difficulty": "Mudah",
+      "task": "Buat int x = 9 dan y = 4. Tampilkan x+y dan x*y dengan satu spasi.",
+      "requirements": [
+        "Gunakan operator + dan *.",
+        "Tampilkan hasil sesuai urutan instruksi.",
+        "Output harus tepat: 13 36."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "13 36"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x = 9;\n    int y = 4;\n    // TODO: tampilkan x+y dan x*y\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "13 36",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "arithmetic-operators-3",
+      "title": "Latihan 3 · Hasil bagi desimal",
+      "difficulty": "Tantangan",
+      "task": "Hitung 7.0 / 2 dan 7 % 2. Tampilkan hasilnya dengan satu angka desimal untuk hasil bagi, lalu sisa pembagian.",
+      "requirements": [
+        "Pastikan pembagian menggunakan operand desimal.",
+        "Gunakan fixed dan setprecision(1).",
+        "Output harus tepat: 3.5 1."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "3.5 1"
+      },
+      "starter": "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    // TODO: hitung hasil bagi desimal dan sisa pembagian\n    // TODO: tampilkan dengan format 3.5 1\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "3.5 1",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "assignment-operators": [
+    {
+      "id": "assignment-operators-2",
+      "title": "Latihan 2 · Kurangi nilai",
+      "difficulty": "Mudah",
+      "task": "Buat int poin = 20, kurangi dengan 7 menggunakan -=, lalu tampilkan poin.",
+      "requirements": [
+        "Gunakan operator -=.",
+        "Perbarui nilai variabel poin.",
+        "Output harus tepat: 13."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "13"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int poin = 20;\n    // TODO: kurangi 7 dengan -= lalu tampilkan poin\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "13",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "assignment-operators-3",
+      "title": "Latihan 3 · Sisa pembagian",
+      "difficulty": "Tantangan",
+      "task": "Buat int total = 50, gunakan %= 6 lalu += 4. Tampilkan nilai akhir.",
+      "requirements": [
+        "Gunakan operator %= dan += secara berurutan.",
+        "Ingat bahwa %= menyimpan sisa pembagian.",
+        "Output harus tepat: 6."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "6"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int total = 50;\n    // TODO: gunakan %= 6, lalu += 4, dan tampilkan total\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "6",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "comparison-operators": [
+    {
+      "id": "comparison-operators-2",
+      "title": "Latihan 2 · Memenuhi rentang",
+      "difficulty": "Mudah",
+      "task": "Buat int skor = 85. Tampilkan apakah skor >= 75 dan skor < 100 menggunakan boolalpha.",
+      "requirements": [
+        "Gunakan operator >= dan <.",
+        "Gunakan boolalpha.",
+        "Output harus tepat: true true."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "true true"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int skor = 85;\n    // TODO: tampilkan skor>=75 dan skor<100\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "true true",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "comparison-operators-3",
+      "title": "Latihan 3 · Nilai yang sama",
+      "difficulty": "Tantangan",
+      "task": "Buat int x = 5 dan y = 5. Tampilkan hasil x == y dan x <= y menggunakan boolalpha.",
+      "requirements": [
+        "Gunakan operator == dan <=.",
+        "Gunakan boolalpha untuk output.",
+        "Output harus tepat: true true."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "true true"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x = 5;\n    int y = 5;\n    // TODO: tampilkan x==y dan x<=y\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "true true",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "logical-operators": [
+    {
+      "id": "logical-operators-2",
+      "title": "Latihan 2 · Kondisi OR",
+      "difficulty": "Mudah",
+      "task": "Buat bool hujan = false dan membawaPayung = true. Tampilkan hasil !hujan || membawaPayung menggunakan boolalpha.",
+      "requirements": [
+        "Gunakan operator ! dan ||.",
+        "Pertahankan tanda kurung pada ekspresi jika diperlukan.",
+        "Output harus tepat: true."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "true"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    bool hujan = false;\n    bool membawaPayung = true;\n    // TODO: tampilkan !hujan || membawaPayung dengan boolalpha\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "true",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "logical-operators-3",
+      "title": "Latihan 3 · AND, OR, NOT",
+      "difficulty": "Tantangan",
+      "task": "Buat bool A = true dan B = false. Tampilkan A && B, A || B, dan !B dengan boolalpha.",
+      "requirements": [
+        "Gunakan operator &&, ||, dan !.",
+        "Tampilkan tiga hasil berurutan.",
+        "Output harus tepat: false true true."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "false true true"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    bool A = true;\n    bool B = false;\n    // TODO: tampilkan A&&B, A||B, dan !B dengan boolalpha\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "false true true",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "operator-precedence": [
+    {
+      "id": "operator-precedence-2",
+      "title": "Latihan 2 · Urutan operasi",
+      "difficulty": "Mudah",
+      "task": "Hitung nilai = 10 - 2 * 3 + 4 lalu tampilkan nilai.",
+      "requirements": [
+        "Ingat perkalian dikerjakan sebelum penjumlahan dan pengurangan.",
+        "Gunakan ekspresi sesuai instruksi tanpa mengubah urutannya.",
+        "Output harus tepat: 8."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "8"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // TODO: deklarasikan nilai dengan ekspresi 10 - 2 * 3 + 4\n    // TODO: tampilkan nilai\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "8",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "operator-precedence-3",
+      "title": "Latihan 3 · Bandingkan prioritas",
+      "difficulty": "Tantangan",
+      "task": "Buat int a = 6, b = 2, c = 3. Tampilkan (a+b)*c dan a+b*c secara berurutan.",
+      "requirements": [
+        "Gunakan tanda kurung pada ekspresi pertama.",
+        "Jangan menambahkan tanda kurung pada ekspresi kedua.",
+        "Output harus tepat: 24 12."
+      ],
+      "example": {
+        "input": "(tidak ada input)",
+        "output": "24 12"
+      },
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 6, b = 2, c = 3;\n    // TODO: tampilkan (a+b)*c dan a+b*c\n    return 0;\n}",
+      "tests": [
+        {
+          "input": "",
+          "expected": "24 12",
           "visible": true
         }
       ]
