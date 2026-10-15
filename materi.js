@@ -2178,6 +2178,7 @@ const lessons = [
     ]
   }
   {
+      {
     "id": "string-methods",
     "title": "Object dan Method pada String",
     "category": "String & Object",
@@ -2209,37 +2210,22 @@ const lessons = [
       }
     ],
     "example": {
-      "input": "MOTOR:120",
-      "output": "Aksi: MOTOR\nNilai: 120"
+      "input": "(tidak ada input)",
+      "output": "Perintah: MAJU\nPanjang: 4\nKarakter pertama: M\nKosong: false"
     },
-    "task": "Buat program yang membaca satu kata perintah seperti MOTOR:120. Gunakan method find() untuk menemukan titik dua dan substr() untuk memisahkan aksi serta nilainya. Jika titik dua tidak ditemukan, tampilkan Perintah tidak valid.",
+    "task": "Buat object string bernama perintah dengan nilai MAJU. Gunakan method length(), at(0), dan empty() untuk menampilkan isi perintah, jumlah karakter, karakter pertama, dan apakah string kosong.",
     "requirements": [
-      "Gunakan object string untuk menyimpan input perintah.",
-      "Gunakan find(':') untuk mencari pemisah dan periksa hasilnya terhadap string::npos.",
-      "Gunakan substr() untuk mengambil nama aksi dan nilai.",
-      "Untuk input MOTOR:120, output harus dua baris: Aksi: MOTOR dan Nilai: 120.",
-      "Jika input tidak memiliki titik dua, tampilkan Perintah tidak valid."
+      "Buat object string perintah dengan nilai \"MAJU\".",
+      "Gunakan length() untuk menghitung jumlah karakter.",
+      "Gunakan at(0) untuk mengambil karakter pertama.",
+      "Gunakan empty() dan boolalpha agar hasil tampil sebagai false.",
+      "Output harus tepat empat baris sesuai contoh."
     ],
-    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string perintah;\n    cin >> perintah;\n\n    // TODO: cari posisi titik dua dengan find(':')\n    // TODO: jika tidak ditemukan, tampilkan Perintah tidak valid\n    // TODO: pisahkan aksi dan nilai dengan substr()\n    // TODO: tampilkan aksi dan nilai pada dua baris\n\n    return 0;\n}",
+    "starter": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string perintah = \"MAJU\";\n\n    cout << \"Perintah: \" << perintah << endl;\n    // TODO: tampilkan panjang perintah dengan length()\n    // TODO: tampilkan karakter pertama dengan at(0)\n    // TODO: tampilkan hasil empty() dengan boolalpha\n\n    return 0;\n}",
     "tests": [
       {
-        "input": "MOTOR:120",
-        "expected": "Aksi: MOTOR\nNilai: 120",
-        "visible": true
-      },
-      {
-        "input": "SERVO:90",
-        "expected": "Aksi: SERVO\nNilai: 90",
-        "visible": true
-      },
-      {
-        "input": "LED:1",
-        "expected": "Aksi: LED\nNilai: 1",
-        "visible": true
-      },
-      {
-        "input": "MAJU",
-        "expected": "Perintah tidak valid",
+        "input": "",
+        "expected": "Perintah: MAJU\nPanjang: 4\nKarakter pertama: M\nKosong: false",
         "visible": true
       }
     ]
