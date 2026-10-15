@@ -2176,9 +2176,8 @@ const lessons = [
         "visible": true
       }
     ]
-  }
+  },
   {
-      {
     "id": "string-methods",
     "title": "Object dan Method pada String",
     "category": "String & Object",
